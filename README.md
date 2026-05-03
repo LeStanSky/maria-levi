@@ -44,6 +44,15 @@ Open `http://localhost:3000` for the public site, `http://localhost:3000/admin` 
 | `pnpm user:create` etc. | User management — placeholders, wired up in Phase 1. |
 | `pnpm test` | Vitest integration + Playwright e2e (Phase 1+). |
 
+## Git hooks
+
+Managed by Husky 9 (set up automatically by `pnpm install`'s `prepare` script).
+
+- **pre-commit:** `lint-staged` runs Biome auto-fix on staged files only. Fast (~1-2s); never blocks WIP commits.
+- **pre-push:** full `tsc --noEmit` + Vitest integration suite. Tests are skipped automatically if no `.env` file exists (run before Neon is wired up). Use `git push --no-verify` only as a last resort.
+
+CI runs the same checks plus the production build, against a Postgres 16 service container.
+
 ## Project layout
 
 ```

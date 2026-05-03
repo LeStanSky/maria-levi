@@ -2,7 +2,7 @@ name: pull_request
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 concurrency:
   group: pr-${{ github.ref }}
@@ -10,9 +10,31 @@ concurrency:
 
 jobs:
   verify:
-    name: Lint, typecheck, build
+    name: Lint, typecheck, build, test
     runs-on: ubuntu-latest
     timeout-minutes: 15
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: ci
+          POSTGRES_PASSWORD: ci
+          POSTGRES_DB: ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U ci"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgres://ci:ci@localhost:5432/ci?sslmode=disable
+      PAYLOAD_SECRET: ci-only-not-a-real-secret-1234567890abcdef
+      PAYLOAD_DB_PUSH: 'true'
+      NEXT_PUBLIC_SITE_URL: https://example.com
+
     steps:
       - uses: actions/checkout@v4
 
@@ -36,7 +58,6 @@ jobs:
 
       - name: Build
         run: pnpm build
-        env:
-          DATABASE_URL: postgres://ci:ci@localhost:5432/ci?sslmode=disable
-          PAYLOAD_SECRET: ci-only-not-a-real-secret-1234567890abcdef
-          NEXT_PUBLIC_SITE_URL: https://example.com
+
+      - name: Test (Vitest integration)
+        run: pnpm test:int

@@ -1,0 +1,8 @@
+pnpm exec tsc --noEmit
+
+if [ ! -f .env ]; then
+  echo "pre-push: skipping integration tests — no .env file (set DATABASE_URL to enable)"
+  exit 0
+fi
+
+pnpm exec vitest run --config ./vitest.config.mts
