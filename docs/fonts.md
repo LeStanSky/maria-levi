@@ -9,7 +9,7 @@ Self-hosted variable web fonts. We do not load anything from Google Fonts CDN at
 | `fraunces-latin-wght-normal.woff2` | Fraunces | `wght` (full range, 100–900) | latin | fontsource via jsDelivr |
 | `inter-latin-wght-normal.woff2` | Inter | `wght` (full range, 100–900) | latin | fontsource via jsDelivr |
 
-Italic variants are intentionally **not bundled** — Concept C (see TZ §7.1) uses Fraunces light without italic. If a future page needs italic, re-download from the same source and update this file.
+Italic variants are intentionally **not bundled** — the design system uses Fraunces light without italic. If a future page needs italic, re-download from the same source and update this file.
 
 ## Source URLs
 

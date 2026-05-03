@@ -4,13 +4,11 @@ Editorial-first portfolio site for fashion / personal-brand photographer Maria L
 
 **Stack.** Next.js 16 (App Router) · Payload CMS v3 · Postgres (Neon) · Cloudflare R2 + Cloudflare Images · Vercel · Tailwind v4 · Biome.
 
-Single-language (en-US), inquiry-driven (no e-commerce, no online booking). Full technical specification lives in `maria_v1/maria-levi-tz-v1.md`.
+Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Phase 0 — Foundation.** Repo scaffolded, design tokens for Concept C (white background, Fraunces light + Inter), self-hosted variable fonts, basic Sidebar + Footer + primitives. Not yet deployed.
-
-See TZ §11 for the full 8-week roadmap.
+**Phase 0 — Foundation.** Repo scaffolded, design tokens (white background, Fraunces light display + Inter body), self-hosted variable fonts, Sidebar / Footer / primitives. Not yet deployed.
 
 ## Local setup
 
@@ -64,7 +62,6 @@ src/
   payload.config.ts    — root Payload configuration
 docs/                  — fonts.md, future content-editing-guide.md, etc.
 scripts/users/         — admin/editor user management CLIs
-maria_v1/              — project brief, TZ v1, design moodboard
 ```
 
 ## Phase 0 deliverables — done locally
@@ -89,7 +86,7 @@ maria_v1/              — project brief, TZ v1, design moodboard
 - [ ] Sentry project — install via `npx @sentry/wizard@latest -i nextjs` (it edits `next.config.ts`, adds configs, adds `@sentry/nextjs` dep). Paste DSN.
 - [ ] Resend — verify `marialeviphoto.com` (needs DNS access from Maria), set up SPF/DKIM/DMARC.
 
-## Phase 0 exit criteria (TZ §11.1)
+## Phase 0 exit criteria
 
 - [ ] Preview deploy on Vercel renders homepage with Fraunces + Inter loaded.
 - [ ] `/admin` reachable and Stanislav can log in.
