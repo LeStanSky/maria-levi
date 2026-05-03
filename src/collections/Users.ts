@@ -54,6 +54,7 @@ export const Users: CollectionConfig = {
           collection: 'users',
           id: user.id,
           data: { lastLogin: new Date().toISOString() },
+          req,
         })
       },
     ],

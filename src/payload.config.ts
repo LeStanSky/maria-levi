@@ -11,6 +11,10 @@ import { Users } from './collections/Users'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
+const allowedOrigins = [process.env.NEXT_PUBLIC_SITE_URL, 'http://localhost:3000'].filter(
+  (origin): origin is string => Boolean(origin),
+)
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -24,6 +28,8 @@ export default buildConfig({
   collections: [Users, Media],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
+  cors: allowedOrigins,
+  csrf: allowedOrigins,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
