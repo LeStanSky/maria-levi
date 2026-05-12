@@ -43,6 +43,9 @@ export default buildConfig({
     meta: {
       titleSuffix: ' · Maria Levi Admin',
     },
+    components: {
+      afterNavLinks: ['/admin/components/LogoutLink#LogoutLink'],
+    },
   },
   collections: [
     // Content
