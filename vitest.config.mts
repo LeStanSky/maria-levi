@@ -9,5 +9,8 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     include: ['tests/int/**/*.int.spec.ts'],
     hookTimeout: 60_000,
+    // Prevent Payload from running pushDevSchema against the shared Neon DB on every test run.
+    // The schema is already current; re-pushing hits "constraint already exists" errors.
+    env: { PAYLOAD_DB_PUSH: 'false' },
   },
 })
