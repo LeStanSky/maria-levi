@@ -17,6 +17,7 @@
     "generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
     "generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",
     "seed:admin": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/seed-admin.ts",
     "user:create": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/create.ts",
     "user:list": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/list.ts",

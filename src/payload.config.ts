@@ -5,8 +5,27 @@ import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
+import { BlogCategories } from './collections/BlogCategories'
+import { BlogPosts } from './collections/BlogPosts'
+import { FaqEntries } from './collections/FaqEntries'
+import { Leads } from './collections/Leads'
+import { LocalLandingPages } from './collections/LocalLandingPages'
 import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
+import { PortfolioCategories } from './collections/PortfolioCategories'
+import { PortfolioSeries } from './collections/PortfolioSeries'
+import { Redirects } from './collections/Redirects'
+import { Services } from './collections/Services'
+import { Tags } from './collections/Tags'
+import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
+import { AboutPage } from './globals/AboutPage'
+import { ContactPage } from './globals/ContactPage'
+import { FaqPage } from './globals/FaqPage'
+import { LeadMagnetSettings } from './globals/LeadMagnetSettings'
+import { Navigation } from './globals/Navigation'
+import { ServicesIndex } from './globals/ServicesIndex'
+import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +44,42 @@ export default buildConfig({
       titleSuffix: ' · Maria Levi Admin',
     },
   },
-  collections: [Users, Media],
+  collections: [
+    // Content
+    Pages,
+    BlogPosts,
+    BlogCategories,
+    // Portfolio
+    PortfolioCategories,
+    PortfolioSeries,
+    Tags,
+    // Services & Pricing
+    Services,
+    FaqEntries,
+    // Content / Social proof
+    Testimonials,
+    // Local SEO
+    LocalLandingPages,
+    // Inbox
+    Leads,
+    // System
+    Media,
+    Redirects,
+    Users,
+  ],
+  globals: [
+    // Content
+    AboutPage,
+    ContactPage,
+    FaqPage,
+    // Services & Pricing
+    ServicesIndex,
+    // Marketing
+    LeadMagnetSettings,
+    // System
+    Navigation,
+    SiteSettings,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   cors: allowedOrigins,
