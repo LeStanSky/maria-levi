@@ -67,8 +67,20 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    pages: Page;
+    'blog-posts': BlogPost;
+    'blog-categories': BlogCategory;
+    'portfolio-categories': PortfolioCategory;
+    'portfolio-series': PortfolioSery;
+    tags: Tag;
+    services: Service;
+    'faq-entries': FaqEntry;
+    testimonials: Testimonial;
+    'local-landing-pages': LocalLandingPage;
+    leads: Lead;
     media: Media;
+    redirects: Redirect;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,8 +88,20 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
+    'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
+    'portfolio-categories': PortfolioCategoriesSelect<false> | PortfolioCategoriesSelect<true>;
+    'portfolio-series': PortfolioSeriesSelect<false> | PortfolioSeriesSelect<true>;
+    tags: TagsSelect<false> | TagsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    'faq-entries': FaqEntriesSelect<false> | FaqEntriesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    'local-landing-pages': LocalLandingPagesSelect<false> | LocalLandingPagesSelect<true>;
+    leads: LeadsSelect<false> | LeadsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    redirects: RedirectsSelect<false> | RedirectsSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -87,8 +111,24 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'about-page': AboutPage;
+    'contact-page': ContactPage;
+    'faq-page': FaqPage;
+    'services-index': ServicesIndex;
+    'lead-magnet-settings': LeadMagnetSetting;
+    navigation: Navigation;
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'about-page': AboutPageSelect<false> | AboutPageSelect<true>;
+    'contact-page': ContactPageSelect<false> | ContactPageSelect<true>;
+    'faq-page': FaqPageSelect<false> | FaqPageSelect<true>;
+    'services-index': ServicesIndexSelect<false> | ServicesIndexSelect<true>;
+    'lead-magnet-settings': LeadMagnetSettingsSelect<false> | LeadMagnetSettingsSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -116,6 +156,1536 @@ export interface UserAuthOperations {
     email: string;
     password: string;
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  /**
+   * Mark this as the site homepage (only one page should have this)
+   */
+  isHomepage?: boolean | null;
+  /**
+   * Page content — add and reorder blocks
+   */
+  pageBuilder?:
+    | (
+        | {
+            slides: {
+              image: number | Media;
+              id?: string | null;
+            }[];
+            /**
+             * Milliseconds between slides (default 5000)
+             */
+            autoplayInterval?: number | null;
+            tagline?: string | null;
+            /**
+             * Small label above tagline
+             */
+            tag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero-slider';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'intro-block';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            subtitle?: string | null;
+            series?: (number | PortfolioSery)[] | null;
+            viewAllLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolio-teaser';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            services?: (number | Service)[] | null;
+            displayMode?: ('grid' | 'list') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-teaser';
+          }
+        | {
+            testimonial?: (number | null) | Testimonial;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonial-spread';
+          }
+        | {
+            testimonials?: (number | Testimonial)[] | null;
+            columns?: ('2' | '3') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials-grid';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about-preview';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            posts?: (number | BlogPost)[] | null;
+            viewAllLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-teaser';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            formVariant?: ('short' | 'full') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact-split';
+          }
+        | {
+            images?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            caption?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image-pair';
+          }
+        | {
+            quote: string;
+            attribution?: string | null;
+            style?: ('bordered' | 'plain') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pull-quote';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            steps: {
+              title: string;
+              description?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'process-steps';
+          }
+        | {
+            headline: string;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            ctaLabel: string;
+            ctaLink: string;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-banner';
+          }
+        | {
+            headline?: string | null;
+            body?: string | null;
+            placeholder?: string | null;
+            /**
+             * Flodesk tag to apply on subscribe
+             */
+            flodeskTag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsletter-form';
+          }
+        | {
+            headline?: string | null;
+            entries?: (number | FaqEntry)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq-accordion';
+          }
+        | {
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'rich-text-block';
+          }
+        | {
+            image: number | Media;
+            caption?: string | null;
+            width?: ('narrow' | 'wide' | 'full') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'media-block';
+          }
+        | {
+            size?: ('small' | 'medium' | 'large' | 'xl') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'spacer';
+          }
+      )[]
+    | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe the image for accessibility and SEO (required)
+   */
+  alt: string;
+  /**
+   * Optional caption displayed below the image
+   */
+  caption?: string | null;
+  /**
+   * Photo credit (defaults to "Maria Levi")
+   */
+  creditPhotographer?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-series".
+ */
+export interface PortfolioSery {
+  id: number;
+  /**
+   * e.g. "Sweet Cycle", "Solstice", "Tiffany Hour"
+   */
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  category: number | PortfolioCategory;
+  /**
+   * Sub-category slug (Brand only) — e.g. "personal-brand"
+   */
+  subcategory?: string | null;
+  /**
+   * e.g. "Editorial · 2026"
+   */
+  eyebrow?: string | null;
+  /**
+   * One-liner about the series mood
+   */
+  tagline?: string | null;
+  /**
+   * Context: where, for whom, the mood of the shoot
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Thumbnail shown in the category grid
+   */
+  coverImage: number | Media;
+  /**
+   * Full-bleed hero on the series page (falls back to coverImage)
+   */
+  heroImage?: (number | null) | Media;
+  /**
+   * Drag to reorder. Each photo needs alt text.
+   */
+  photos?:
+    | {
+        image: number | Media;
+        caption?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Locations, themes, moods for cross-linking
+   */
+  tags?: (number | Tag)[] | null;
+  /**
+   * City slugs where this shoot took place (used by city landing pages)
+   */
+  cityTags?:
+    | {
+        /**
+         * e.g. "manhattan", "hoboken"
+         */
+        city: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Show in Portfolio Teaser on the homepage
+   */
+  featured?: boolean | null;
+  /**
+   * Order within its category
+   */
+  displayOrder?: number | null;
+  /**
+   * "More like this" — up to 3 related series
+   */
+  relatedSeries?: (number | PortfolioSery)[] | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-categories".
+ */
+export interface PortfolioCategory {
+  id: number;
+  /**
+   * e.g. "Portrait Photography", "Personal Brand"
+   */
+  name: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  /**
+   * Small label above the headline on the category page
+   */
+  eyebrow?: string | null;
+  /**
+   * Poetic one-liner shown under the category name
+   */
+  subtitle?: string | null;
+  coverImage: number | Media;
+  /**
+   * Long-form description shown on the category page
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Enable for Brand Photography only
+   */
+  hasSubcategories?: boolean | null;
+  /**
+   * Sub-categories within this category (Brand only)
+   */
+  subcategories?:
+    | {
+        name: string;
+        slug: string;
+        description?: string | null;
+        coverImage?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Controls order in navigation and portfolio index
+   */
+  displayOrder?: number | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags".
+ */
+export interface Tag {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  type: 'location' | 'mood' | 'theme' | 'style' | 'season';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  /**
+   * e.g. "Personal Brand Photography"
+   */
+  name: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  nicheKey: 'personal-brand' | 'portrait' | 'model-tests' | 'commercial';
+  eyebrow?: string | null;
+  /**
+   * Short value proposition (1–2 sentences)
+   */
+  tagline?: string | null;
+  /**
+   * Long-form description for the niche page
+   */
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  heroImage: number | Media;
+  /**
+   * Thumbnail shown on the Services index page
+   */
+  coverImage?: (number | null) | Media;
+  /**
+   * Uncheck for Commercial (no fixed packages)
+   */
+  hasPackages?: boolean | null;
+  /**
+   * Pricing tiers for this niche
+   */
+  packages?:
+    | {
+        /**
+         * e.g. "Essential", "Professional", "Premium Branding"
+         */
+        name: string;
+        tier?: ('essential' | 'professional' | 'premium') | null;
+        /**
+         * Starting price in USD (numbers only, e.g. 395)
+         */
+        priceFrom: number;
+        /**
+         * Override auto-generated label e.g. "Starting at $395"
+         */
+        priceLabel?: string | null;
+        /**
+         * e.g. "Perfect for a quick content refresh"
+         */
+        subtitle?: string | null;
+        image: number | Media;
+        features?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        ctaLabel?: string | null;
+        /**
+         * Show "Most Popular" badge on this package
+         */
+        popular?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Custom pricing note for Commercial (shown instead of packages)
+   */
+  commercialNote?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Step-by-step process for "How it works" section
+   */
+  processSteps?:
+    | {
+        title: string;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Wardrobe/preparation tip shown on the niche page
+   */
+  whatToWearTip?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Portfolio series showcasing this niche
+   */
+  relatedSeries?: (number | PortfolioSery)[] | null;
+  relatedTestimonials?: (number | Testimonial)[] | null;
+  /**
+   * FAQ entries relevant to this service
+   */
+  faqs?: (number | FaqEntry)[] | null;
+  displayOrder?: number | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  /**
+   * e.g. "Alina K." — first name + last initial
+   */
+  clientName: string;
+  quote: string;
+  /**
+   * Short headline for journal-spread layout (optional)
+   */
+  quoteHeadline?: string | null;
+  clientPhoto?: (number | null) | Media;
+  /**
+   * Which niche does this testimonial relate to?
+   */
+  sessionType?: (number | null) | Service;
+  /**
+   * Link to the portfolio series from this session (if published)
+   */
+  relatedSeries?: (number | null) | PortfolioSery;
+  /**
+   * Show on the homepage
+   */
+  featured?: boolean | null;
+  displayOrder?: number | null;
+  dateReceived?: string | null;
+  /**
+   * Admin only: client has given permission to publish this testimonial
+   */
+  consentVerified?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq-entries".
+ */
+export interface FaqEntry {
+  id: number;
+  question: string;
+  answer: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  category?: ('general' | 'pricing' | 'process' | 'preparation' | 'delivery') | null;
+  /**
+   * Link to a specific service if this FAQ is niche-specific
+   */
+  relatedNiche?: (number | null) | Service;
+  /**
+   * Show on the homepage FAQ section
+   */
+  featured?: boolean | null;
+  displayOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts".
+ */
+export interface BlogPost {
+  id: number;
+  title: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  /**
+   * Short preview for blog index and SEO description (max 200 chars)
+   */
+  excerpt?: string | null;
+  coverImage: number | Media;
+  categories?: (number | BlogCategory)[] | null;
+  /**
+   * Article content — add and reorder blocks
+   */
+  body?:
+    | (
+        | {
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'rich-text-block';
+          }
+        | {
+            image: number | Media;
+            caption?: string | null;
+            width?: ('narrow' | 'wide' | 'full') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'media-block';
+          }
+        | {
+            quote: string;
+            attribution?: string | null;
+            style?: ('bordered' | 'plain') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pull-quote';
+          }
+        | {
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-quote';
+          }
+        | {
+            images?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-image-grid';
+          }
+        | {
+            /**
+             * YouTube or Vimeo URL
+             */
+            url: string;
+            caption?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-video-embed';
+          }
+        | {
+            tip: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-tip-callout';
+          }
+        | {
+            title: string;
+            description?: string | null;
+            url: string;
+            label?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-resource-link';
+          }
+        | {
+            title?: string | null;
+            subtitle?: string | null;
+            image?: (number | null) | Media;
+            /**
+             * PDF to deliver on subscribe
+             */
+            pdfFile?: (number | null) | Media;
+            flodeskTag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-lead-magnet-inline';
+          }
+      )[]
+    | null;
+  /**
+   * Up to 3 related articles shown at the bottom
+   */
+  relatedPosts?: (number | BlogPost)[] | null;
+  /**
+   * Cross-link to portfolio series (up to 2)
+   */
+  relatedSeries?: (number | PortfolioSery)[] | null;
+  /**
+   * City slugs if this post is relevant to city landing pages
+   */
+  cityTags?:
+    | {
+        city: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Niche tags for content filtering
+   */
+  nicheTags?:
+    | {
+        niche: 'personal-brand' | 'portrait' | 'model-tests' | 'commercial';
+        id?: string | null;
+      }[]
+    | null;
+  publishDate: string;
+  author?: string | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories".
+ */
+export interface BlogCategory {
+  id: number;
+  name: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  description?: string | null;
+  coverImage?: (number | null) | Media;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "local-landing-pages".
+ */
+export interface LocalLandingPage {
+  id: number;
+  /**
+   * e.g. "Manhattan", "Jersey City"
+   */
+  cityName: string;
+  /**
+   * URL-friendly identifier. Auto-generated from title, editable.
+   */
+  slug: string;
+  /**
+   * State abbreviation e.g. "NY", "NJ"
+   */
+  cityState?: string | null;
+  /**
+   * e.g. "Fashion & Personal Brand Photographer in Manhattan"
+   */
+  headline: string;
+  subhead?: string | null;
+  heroImage: number | Media;
+  /**
+   * Unique content about working in this city
+   */
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Additional blocks for this city page
+   */
+  pageBuilder?:
+    | (
+        | {
+            slides: {
+              image: number | Media;
+              id?: string | null;
+            }[];
+            /**
+             * Milliseconds between slides (default 5000)
+             */
+            autoplayInterval?: number | null;
+            tagline?: string | null;
+            /**
+             * Small label above tagline
+             */
+            tag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero-slider';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'intro-block';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            subtitle?: string | null;
+            series?: (number | PortfolioSery)[] | null;
+            viewAllLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'portfolio-teaser';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            services?: (number | Service)[] | null;
+            displayMode?: ('grid' | 'list') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'services-teaser';
+          }
+        | {
+            testimonial?: (number | null) | Testimonial;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonial-spread';
+          }
+        | {
+            testimonials?: (number | Testimonial)[] | null;
+            columns?: ('2' | '3') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'testimonials-grid';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            ctaLabel?: string | null;
+            ctaLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'about-preview';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            posts?: (number | BlogPost)[] | null;
+            viewAllLink?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'blog-teaser';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            formVariant?: ('short' | 'full') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'contact-split';
+          }
+        | {
+            images?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            caption?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image-pair';
+          }
+        | {
+            quote: string;
+            attribution?: string | null;
+            style?: ('bordered' | 'plain') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pull-quote';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            steps: {
+              title: string;
+              description?: string | null;
+              id?: string | null;
+            }[];
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'process-steps';
+          }
+        | {
+            headline: string;
+            body?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            ctaLabel: string;
+            ctaLink: string;
+            backgroundImage?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'cta-banner';
+          }
+        | {
+            headline?: string | null;
+            body?: string | null;
+            placeholder?: string | null;
+            /**
+             * Flodesk tag to apply on subscribe
+             */
+            flodeskTag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'newsletter-form';
+          }
+        | {
+            headline?: string | null;
+            entries?: (number | FaqEntry)[] | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'faq-accordion';
+          }
+        | {
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'rich-text-block';
+          }
+        | {
+            image: number | Media;
+            caption?: string | null;
+            width?: ('narrow' | 'wide' | 'full') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'media-block';
+          }
+        | {
+            size?: ('small' | 'medium' | 'large' | 'xl') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'spacer';
+          }
+        | {
+            /**
+             * Neighbourhood or area name
+             */
+            name: string;
+            description?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            image?: (number | null) | Media;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'city-highlight';
+          }
+        | {
+            service?: (number | null) | Service;
+            /**
+             * Override service headline with a city-specific version
+             */
+            localHeadline?: string | null;
+            localDescription?: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            } | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'service-for-city';
+          }
+        | {
+            headline?: string | null;
+            locations?:
+              | {
+                  name: string;
+                  address?: string | null;
+                  description?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'local-locations-list';
+          }
+        | {
+            headline?: string | null;
+            areas?:
+              | {
+                  name: string;
+                  /**
+                   * e.g. /photographer-in/hoboken
+                   */
+                  link?: string | null;
+                  image?: (number | null) | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'nearby-areas-grid';
+          }
+      )[]
+    | null;
+  /**
+   * Portfolio series shot in or near this city
+   */
+  featuredSeries?: (number | PortfolioSery)[] | null;
+  /**
+   * Testimonials from clients in this city
+   */
+  localTestimonials?: (number | Testimonial)[] | null;
+  /**
+   * Which services are most relevant for this city
+   */
+  localServices?: (number | Service)[] | null;
+  /**
+   * Well-known shooting locations in this city
+   */
+  popularLocations?:
+    | {
+        name: string;
+        address?: string | null;
+        description?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Neighbouring cities/areas for internal linking
+   */
+  nearbyAreas?:
+    | {
+        name: string;
+        /**
+         * e.g. /photographer-in/hoboken
+         */
+        link?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads".
+ */
+export interface Lead {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  /**
+   * Service name at time of submission (snapshot, not a relation)
+   */
+  sessionType?: string | null;
+  preferredDate?: string | null;
+  /**
+   * Preferred shooting location or city
+   */
+  location?: string | null;
+  budget?: ('under-500' | '500-1000' | '1000-2000' | '2000-plus' | 'not-sure') | null;
+  referralSource?: ('google' | 'instagram' | 'pinterest' | 'referral' | 'other') | null;
+  message?: string | null;
+  /**
+   * URL of the page where the form was submitted
+   */
+  pageSubmittedFrom?: string | null;
+  userAgent?: string | null;
+  submittedAt?: string | null;
+  status?: ('new' | 'contacted' | 'qualified' | 'booked' | 'declined' | 'spam') | null;
+  /**
+   * Admin-only notes about this lead
+   */
+  internalNotes?: string | null;
+  crmSyncStatus?: ('not-synced' | 'synced' | 'failed') | null;
+  /**
+   * HoneyBook ID once CRM is connected
+   */
+  crmExternalId?: string | null;
+  gdprAnonymizedAt?: string | null;
+  gdprAnonymizedBy?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -151,22 +1721,21 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
+ * via the `definition` "redirects".
  */
-export interface Media {
+export interface Redirect {
   id: number;
-  alt: string;
+  /**
+   * Old URL path (e.g. /old-slug)
+   */
+  from: string;
+  /**
+   * New URL path to redirect to
+   */
+  to: string;
+  statusCode: '301' | '302';
   updatedAt: string;
   createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -193,12 +1762,60 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'blog-posts';
+        value: number | BlogPost;
+      } | null)
+    | ({
+        relationTo: 'blog-categories';
+        value: number | BlogCategory;
+      } | null)
+    | ({
+        relationTo: 'portfolio-categories';
+        value: number | PortfolioCategory;
+      } | null)
+    | ({
+        relationTo: 'portfolio-series';
+        value: number | PortfolioSery;
+      } | null)
+    | ({
+        relationTo: 'tags';
+        value: number | Tag;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'faq-entries';
+        value: number | FaqEntry;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'local-landing-pages';
+        value: number | LocalLandingPage;
+      } | null)
+    | ({
+        relationTo: 'leads';
+        value: number | Lead;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'redirects';
+        value: number | Redirect;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -244,6 +1861,921 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  isHomepage?: T;
+  pageBuilder?:
+    | T
+    | {
+        'hero-slider'?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              autoplayInterval?: T;
+              tagline?: T;
+              tag?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'intro-block'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              body?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              imagePosition?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'portfolio-teaser'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              subtitle?: T;
+              series?: T;
+              viewAllLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'services-teaser'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              services?: T;
+              displayMode?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'testimonial-spread'?:
+          | T
+          | {
+              testimonial?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'testimonials-grid'?:
+          | T
+          | {
+              testimonials?: T;
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'about-preview'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              body?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-teaser'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              posts?: T;
+              viewAllLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'contact-split'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              body?: T;
+              image?: T;
+              formVariant?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'image-pair'?:
+          | T
+          | {
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'pull-quote'?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              style?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'process-steps'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cta-banner'?:
+          | T
+          | {
+              headline?: T;
+              body?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'newsletter-form'?:
+          | T
+          | {
+              headline?: T;
+              body?: T;
+              placeholder?: T;
+              flodeskTag?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'faq-accordion'?:
+          | T
+          | {
+              headline?: T;
+              entries?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'rich-text-block'?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'media-block'?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
+        spacer?:
+          | T
+          | {
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts_select".
+ */
+export interface BlogPostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  coverImage?: T;
+  categories?: T;
+  body?:
+    | T
+    | {
+        'rich-text-block'?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'media-block'?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'pull-quote'?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              style?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-quote'?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-image-grid'?:
+          | T
+          | {
+              images?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'blog-video-embed'?:
+          | T
+          | {
+              url?: T;
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-tip-callout'?:
+          | T
+          | {
+              tip?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-resource-link'?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              url?: T;
+              label?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-lead-magnet-inline'?:
+          | T
+          | {
+              title?: T;
+              subtitle?: T;
+              image?: T;
+              pdfFile?: T;
+              flodeskTag?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  relatedPosts?: T;
+  relatedSeries?: T;
+  cityTags?:
+    | T
+    | {
+        city?: T;
+        id?: T;
+      };
+  nicheTags?:
+    | T
+    | {
+        niche?: T;
+        id?: T;
+      };
+  publishDate?: T;
+  author?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-categories_select".
+ */
+export interface BlogCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  description?: T;
+  coverImage?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-categories_select".
+ */
+export interface PortfolioCategoriesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  eyebrow?: T;
+  subtitle?: T;
+  coverImage?: T;
+  description?: T;
+  hasSubcategories?: T;
+  subcategories?:
+    | T
+    | {
+        name?: T;
+        slug?: T;
+        description?: T;
+        coverImage?: T;
+        id?: T;
+      };
+  displayOrder?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio-series_select".
+ */
+export interface PortfolioSeriesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  subcategory?: T;
+  eyebrow?: T;
+  tagline?: T;
+  description?: T;
+  coverImage?: T;
+  heroImage?: T;
+  photos?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        id?: T;
+      };
+  tags?: T;
+  cityTags?:
+    | T
+    | {
+        city?: T;
+        id?: T;
+      };
+  featured?: T;
+  displayOrder?: T;
+  relatedSeries?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tags_select".
+ */
+export interface TagsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  nicheKey?: T;
+  eyebrow?: T;
+  tagline?: T;
+  description?: T;
+  heroImage?: T;
+  coverImage?: T;
+  hasPackages?: T;
+  packages?:
+    | T
+    | {
+        name?: T;
+        tier?: T;
+        priceFrom?: T;
+        priceLabel?: T;
+        subtitle?: T;
+        image?: T;
+        features?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        ctaLabel?: T;
+        popular?: T;
+        id?: T;
+      };
+  commercialNote?: T;
+  processSteps?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  whatToWearTip?: T;
+  relatedSeries?: T;
+  relatedTestimonials?: T;
+  faqs?: T;
+  displayOrder?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq-entries_select".
+ */
+export interface FaqEntriesSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  relatedNiche?: T;
+  featured?: T;
+  displayOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  clientName?: T;
+  quote?: T;
+  quoteHeadline?: T;
+  clientPhoto?: T;
+  sessionType?: T;
+  relatedSeries?: T;
+  featured?: T;
+  displayOrder?: T;
+  dateReceived?: T;
+  consentVerified?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "local-landing-pages_select".
+ */
+export interface LocalLandingPagesSelect<T extends boolean = true> {
+  cityName?: T;
+  slug?: T;
+  cityState?: T;
+  headline?: T;
+  subhead?: T;
+  heroImage?: T;
+  intro?: T;
+  pageBuilder?:
+    | T
+    | {
+        'hero-slider'?:
+          | T
+          | {
+              slides?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              autoplayInterval?: T;
+              tagline?: T;
+              tag?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'intro-block'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              body?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              imagePosition?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'portfolio-teaser'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              subtitle?: T;
+              series?: T;
+              viewAllLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'services-teaser'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              services?: T;
+              displayMode?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'testimonial-spread'?:
+          | T
+          | {
+              testimonial?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'testimonials-grid'?:
+          | T
+          | {
+              testimonials?: T;
+              columns?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'about-preview'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              body?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'blog-teaser'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              posts?: T;
+              viewAllLink?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'contact-split'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              body?: T;
+              image?: T;
+              formVariant?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'image-pair'?:
+          | T
+          | {
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'pull-quote'?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              style?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'process-steps'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              steps?:
+                | T
+                | {
+                    title?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'cta-banner'?:
+          | T
+          | {
+              headline?: T;
+              body?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              backgroundImage?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'newsletter-form'?:
+          | T
+          | {
+              headline?: T;
+              body?: T;
+              placeholder?: T;
+              flodeskTag?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'faq-accordion'?:
+          | T
+          | {
+              headline?: T;
+              entries?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'rich-text-block'?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'media-block'?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
+        spacer?:
+          | T
+          | {
+              size?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'city-highlight'?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              image?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'service-for-city'?:
+          | T
+          | {
+              service?: T;
+              localHeadline?: T;
+              localDescription?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'local-locations-list'?:
+          | T
+          | {
+              headline?: T;
+              locations?:
+                | T
+                | {
+                    name?: T;
+                    address?: T;
+                    description?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        'nearby-areas-grid'?:
+          | T
+          | {
+              headline?: T;
+              areas?:
+                | T
+                | {
+                    name?: T;
+                    link?: T;
+                    image?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+      };
+  featuredSeries?: T;
+  localTestimonials?: T;
+  localServices?: T;
+  popularLocations?:
+    | T
+    | {
+        name?: T;
+        address?: T;
+        description?: T;
+        id?: T;
+      };
+  nearbyAreas?:
+    | T
+    | {
+        name?: T;
+        link?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leads_select".
+ */
+export interface LeadsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  sessionType?: T;
+  preferredDate?: T;
+  location?: T;
+  budget?: T;
+  referralSource?: T;
+  message?: T;
+  pageSubmittedFrom?: T;
+  userAgent?: T;
+  submittedAt?: T;
+  status?: T;
+  internalNotes?: T;
+  crmSyncStatus?: T;
+  crmExternalId?: T;
+  gdprAnonymizedAt?: T;
+  gdprAnonymizedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  caption?: T;
+  creditPhotographer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "redirects_select".
+ */
+export interface RedirectsSelect<T extends boolean = true> {
+  from?: T;
+  to?: T;
+  statusCode?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -267,24 +2799,6 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media_select".
- */
-export interface MediaSelect<T extends boolean = true> {
-  alt?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  url?: T;
-  thumbnailURL?: T;
-  filename?: T;
-  mimeType?: T;
-  filesize?: T;
-  width?: T;
-  height?: T;
-  focalX?: T;
-  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -325,6 +2839,664 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page".
+ */
+export interface AboutPage {
+  id: number;
+  eyebrow?: string | null;
+  headline: string;
+  heroImage: number | Media;
+  /**
+   * First section of text (before pull-quote)
+   */
+  bodyPart1: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  pullQuote?: string | null;
+  pullQuoteAttribution?: string | null;
+  /**
+   * Second section of text (after pull-quote)
+   */
+  bodyPart2: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  imagePair?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Final closing section
+   */
+  bodyPart3?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * e.g. "I don't just create photos. I care about the woman behind them."
+   */
+  signoff?: string | null;
+  /**
+   * Credits row at the bottom — e.g. "Based in / New Jersey"
+   */
+  credits?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page".
+ */
+export interface ContactPage {
+  id: number;
+  eyebrow?: string | null;
+  headline: string;
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Left-side image in the split layout
+   */
+  heroImage: number | Media;
+  responseTime?: string | null;
+  /**
+   * "How did you hear about us?" dropdown options
+   */
+  referralOptions?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq-page".
+ */
+export interface FaqPage {
+  id: number;
+  eyebrow?: string | null;
+  headline: string;
+  intro?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Left-side image in the split layout
+   */
+  heroImage?: (number | null) | Media;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-index".
+ */
+export interface ServicesIndex {
+  id: number;
+  eyebrow?: string | null;
+  headline: string;
+  subtitle?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Select and order which services appear on this page
+   */
+  niches?: (number | Service)[] | null;
+  /**
+   * Override the default tax disclaimer (leave blank to use site default)
+   */
+  taxNoteOverride?: string | null;
+  seo?: {
+    /**
+     * Leave blank to auto-generate from title + " · Maria Levi Photography"
+     */
+    metaTitle?: string | null;
+    /**
+     * Leave blank to use excerpt or first paragraph (max 160 chars)
+     */
+    metaDescription?: string | null;
+    /**
+     * Leave blank to fall back to cover/hero image or site default
+     */
+    ogImage?: (number | null) | Media;
+    /**
+     * Optional comma-separated keywords
+     */
+    keywords?: string | null;
+    /**
+     * Hide this page from search engines
+     */
+    noIndex?: boolean | null;
+    /**
+     * Override canonical URL (leave blank in most cases)
+     */
+    canonical?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-magnet-settings".
+ */
+export interface LeadMagnetSetting {
+  id: number;
+  /**
+   * Master switch — turn the lead magnet popup on/off
+   */
+  enabled?: boolean | null;
+  title?: string | null;
+  subtitle?: string | null;
+  /**
+   * PDF cover preview
+   */
+  image?: (number | null) | Media;
+  /**
+   * The PDF delivered on subscribe (upload as Media)
+   */
+  pdfFile?: (number | null) | Media;
+  /**
+   * Flodesk tag applied on subscribe
+   */
+  flodeskTag?: string | null;
+  trigger?: ('delay-30s' | 'exit-intent' | 'scroll-50pct') | null;
+  placement?: ('popup' | 'footer-block' | 'blog-inline')[] | null;
+  successMessage?: string | null;
+  consentText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  /**
+   * Sidebar navigation links
+   */
+  mainNav?:
+    | {
+        label: string;
+        /**
+         * URL path e.g. /portfolio
+         */
+        link: string;
+        children?:
+          | {
+              label: string;
+              link: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  footerColumns?:
+    | {
+        heading?: string | null;
+        links?:
+          | {
+              label: string;
+              url: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Privacy, Terms, Cookies links in the footer
+   */
+  legalLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  brandName: string;
+  /**
+   * Default hero tagline
+   */
+  tagline?: string | null;
+  /**
+   * Inquiry emails are sent to this address
+   */
+  email: string;
+  phone?: string | null;
+  location?: {
+    city?: string | null;
+    region?: string | null;
+    country?: string | null;
+  };
+  socials?:
+    | {
+        platform: 'instagram' | 'pinterest' | 'tiktok' | 'facebook' | 'youtube' | 'linkedin';
+        url: string;
+        label?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Link to Pic-Time client portal
+   */
+  picTimeUrl?: string | null;
+  taxNote?: string | null;
+  travelNote?: string | null;
+  additionalNote?: string | null;
+  /**
+   * Auto-reply email body sent after form submission
+   */
+  inquiryAutoreply?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Fallback Open Graph image for pages without a specific one
+   */
+  defaultOgImage?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about-page_select".
+ */
+export interface AboutPageSelect<T extends boolean = true> {
+  eyebrow?: T;
+  headline?: T;
+  heroImage?: T;
+  bodyPart1?: T;
+  pullQuote?: T;
+  pullQuoteAttribution?: T;
+  bodyPart2?: T;
+  imagePair?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  bodyPart3?: T;
+  signoff?: T;
+  credits?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-page_select".
+ */
+export interface ContactPageSelect<T extends boolean = true> {
+  eyebrow?: T;
+  headline?: T;
+  intro?: T;
+  heroImage?: T;
+  responseTime?: T;
+  referralOptions?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faq-page_select".
+ */
+export interface FaqPageSelect<T extends boolean = true> {
+  eyebrow?: T;
+  headline?: T;
+  intro?: T;
+  heroImage?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services-index_select".
+ */
+export interface ServicesIndexSelect<T extends boolean = true> {
+  eyebrow?: T;
+  headline?: T;
+  subtitle?: T;
+  niches?: T;
+  taxNoteOverride?: T;
+  seo?:
+    | T
+    | {
+        metaTitle?: T;
+        metaDescription?: T;
+        ogImage?: T;
+        keywords?: T;
+        noIndex?: T;
+        canonical?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lead-magnet-settings_select".
+ */
+export interface LeadMagnetSettingsSelect<T extends boolean = true> {
+  enabled?: T;
+  title?: T;
+  subtitle?: T;
+  image?: T;
+  pdfFile?: T;
+  flodeskTag?: T;
+  trigger?: T;
+  placement?: T;
+  successMessage?: T;
+  consentText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  mainNav?:
+    | T
+    | {
+        label?: T;
+        link?: T;
+        children?:
+          | T
+          | {
+              label?: T;
+              link?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  footerColumns?:
+    | T
+    | {
+        heading?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              url?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  brandName?: T;
+  tagline?: T;
+  email?: T;
+  phone?: T;
+  location?:
+    | T
+    | {
+        city?: T;
+        region?: T;
+        country?: T;
+      };
+  socials?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        label?: T;
+        id?: T;
+      };
+  picTimeUrl?: T;
+  taxNote?: T;
+  travelNote?: T;
+  additionalNote?: T;
+  inquiryAutoreply?: T;
+  defaultOgImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
