@@ -9,8 +9,9 @@ export default defineConfig({
     setupFiles: ['./vitest.setup.ts'],
     include: ['tests/int/**/*.int.spec.ts'],
     hookTimeout: 60_000,
-    // Prevent Payload from running pushDevSchema against the shared Neon DB on every test run.
-    // The schema is already current; re-pushing hits "constraint already exists" errors.
-    env: { PAYLOAD_DB_PUSH: 'false' },
+    // Local default: skip pushDevSchema (shared Neon dev DB already has the schema —
+    // re-pushing hits "constraint already exists" errors). CI sets PAYLOAD_DB_PUSH=true
+    // via workflow env so a fresh Postgres service gets the schema pushed first.
+    env: { PAYLOAD_DB_PUSH: process.env.PAYLOAD_DB_PUSH ?? 'false' },
   },
 })
