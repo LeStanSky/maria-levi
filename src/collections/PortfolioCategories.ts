@@ -45,7 +45,6 @@ export const PortfolioCategories: CollectionConfig = {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'description',

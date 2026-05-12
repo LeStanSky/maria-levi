@@ -29,7 +29,6 @@ export const ContactPage: GlobalConfig = {
       name: 'heroImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
       admin: { description: 'Left-side image in the split layout' },
     },
     {

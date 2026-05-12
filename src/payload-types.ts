@@ -556,7 +556,7 @@ export interface PortfolioSery {
   /**
    * Thumbnail shown in the category grid
    */
-  coverImage: number | Media;
+  coverImage?: (number | null) | Media;
   /**
    * Full-bleed hero on the series page (falls back to coverImage)
    */
@@ -566,7 +566,7 @@ export interface PortfolioSery {
    */
   photos?:
     | {
-        image: number | Media;
+        image?: (number | null) | Media;
         caption?: string | null;
         id?: string | null;
       }[]
@@ -651,7 +651,7 @@ export interface PortfolioCategory {
    * Poetic one-liner shown under the category name
    */
   subtitle?: string | null;
-  coverImage: number | Media;
+  coverImage?: (number | null) | Media;
   /**
    * Long-form description shown on the category page
    */
@@ -772,7 +772,7 @@ export interface Service {
     };
     [k: string]: unknown;
   } | null;
-  heroImage: number | Media;
+  heroImage?: (number | null) | Media;
   /**
    * Thumbnail shown on the Services index page
    */
@@ -803,7 +803,7 @@ export interface Service {
          * e.g. "Perfect for a quick content refresh"
          */
         subtitle?: string | null;
-        image: number | Media;
+        image?: (number | null) | Media;
         features?:
           | {
               text: string;
@@ -990,7 +990,7 @@ export interface BlogPost {
    * Short preview for blog index and SEO description (max 200 chars)
    */
   excerpt?: string | null;
-  coverImage: number | Media;
+  coverImage?: (number | null) | Media;
   categories?: (number | BlogCategory)[] | null;
   /**
    * Article content — add and reorder blocks
@@ -1229,7 +1229,7 @@ export interface LocalLandingPage {
    */
   headline: string;
   subhead?: string | null;
-  heroImage: number | Media;
+  heroImage?: (number | null) | Media;
   /**
    * Unique content about working in this city
    */
@@ -2848,7 +2848,7 @@ export interface AboutPage {
   id: number;
   eyebrow?: string | null;
   headline: string;
-  heroImage: number | Media;
+  heroImage?: (number | null) | Media;
   /**
    * First section of text (before pull-quote)
    */
@@ -2889,7 +2889,7 @@ export interface AboutPage {
   };
   imagePair?:
     | {
-        image: number | Media;
+        image?: (number | null) | Media;
         id?: string | null;
       }[]
     | null;
@@ -2981,7 +2981,7 @@ export interface ContactPage {
   /**
    * Left-side image in the split layout
    */
-  heroImage: number | Media;
+  heroImage?: (number | null) | Media;
   responseTime?: string | null;
   /**
    * "How did you hear about us?" dropdown options

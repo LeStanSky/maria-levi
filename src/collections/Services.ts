@@ -59,7 +59,6 @@ export const Services: CollectionConfig = {
       name: 'heroImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'coverImage',
@@ -128,7 +127,6 @@ export const Services: CollectionConfig = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
-          required: true,
         },
         {
           name: 'features',

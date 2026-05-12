@@ -26,7 +26,6 @@ export const AboutPage: GlobalConfig = {
       name: 'heroImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'bodyPart1',
@@ -52,7 +51,7 @@ export const AboutPage: GlobalConfig = {
       name: 'imagePair',
       type: 'array',
       maxRows: 2,
-      fields: [{ name: 'image', type: 'upload', relationTo: 'media', required: true }],
+      fields: [{ name: 'image', type: 'upload', relationTo: 'media' }],
     },
     {
       name: 'bodyPart3',

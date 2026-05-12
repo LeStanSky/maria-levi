@@ -79,7 +79,6 @@ export const PortfolioSeries: CollectionConfig = {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',
-      required: true,
       admin: {
         description: 'Thumbnail shown in the category grid',
       },
@@ -103,7 +102,6 @@ export const PortfolioSeries: CollectionConfig = {
           name: 'image',
           type: 'upload',
           relationTo: 'media',
-          required: true,
         },
         {
           name: 'caption',
