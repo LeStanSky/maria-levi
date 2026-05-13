@@ -88,7 +88,7 @@ async function main() {
           {
             name: 'Essential',
             tier: 'essential',
-            priceFrom: 395,
+            priceFrom: 525,
             subtitle: 'Perfect for a quick content refresh',
             features: [
               { text: '1-hour session' },
@@ -100,7 +100,7 @@ async function main() {
           {
             name: 'Professional',
             tier: 'professional',
-            priceFrom: 695,
+            priceFrom: 895,
             subtitle: 'Ideal for an active social media presence',
             popular: true,
             features: [
@@ -114,7 +114,7 @@ async function main() {
           {
             name: 'Premium Branding',
             tier: 'premium',
-            priceFrom: 1200,
+            priceFrom: 1850,
             subtitle: 'Full brand story for launch campaigns',
             features: [
               { text: 'Half-day session (4 hours)' },
@@ -144,14 +144,14 @@ async function main() {
           {
             name: 'Essential',
             tier: 'essential',
-            priceFrom: 295,
+            priceFrom: 425,
             features: [{ text: '45-minute session' }, { text: '20 edited images' }],
             ctaLabel: 'Inquire',
           },
           {
             name: 'Professional',
             tier: 'professional',
-            priceFrom: 495,
+            priceFrom: 695,
             popular: true,
             features: [
               { text: '90-minute session' },
@@ -173,7 +173,7 @@ async function main() {
           {
             name: 'Essential',
             tier: 'essential',
-            priceFrom: 350,
+            priceFrom: 475,
             features: [
               { text: '2-hour session' },
               { text: '2 looks' },
