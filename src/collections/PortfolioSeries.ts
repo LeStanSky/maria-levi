@@ -3,6 +3,7 @@ import { isAdminOrEditor, publicRead } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { createRedirectHook } from '../hooks/createRedirect'
+import { revalidateCollection } from '../hooks/revalidatePage'
 
 export const PortfolioSeries: CollectionConfig = {
   slug: 'portfolio-series',
@@ -24,7 +25,7 @@ export const PortfolioSeries: CollectionConfig = {
     drafts: true,
   },
   hooks: {
-    afterChange: [createRedirectHook('portfolio-series', '/portfolio')],
+    afterChange: [createRedirectHook('portfolio-series', '/portfolio'), revalidateCollection],
   },
   fields: [
     {

@@ -4,6 +4,7 @@ import { isAdminOrEditor, publicRead } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { createRedirectHook } from '../hooks/createRedirect'
+import { revalidateCollection } from '../hooks/revalidatePage'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -28,7 +29,7 @@ export const Pages: CollectionConfig = {
     drafts: true,
   },
   hooks: {
-    afterChange: [createRedirectHook('pages', '')],
+    afterChange: [createRedirectHook('pages', ''), revalidateCollection],
   },
   fields: [
     {

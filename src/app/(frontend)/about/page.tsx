@@ -10,6 +10,8 @@ import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@/lib/richtext'
 import { buildMetadata } from '@/lib/seo'
 
+export const revalidate = 60
+
 const getAboutPage = cache(async () => {
   const payload = await getPayloadClient()
   return payload.findGlobal({ slug: 'about-page', draft: false })
