@@ -18,6 +18,8 @@ import type { PortfolioCategory } from '@/payload-types'
 
 type Props = { params: Promise<{ category: string; series: string }> }
 
+export const revalidate = 60
+
 const getSeries = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({

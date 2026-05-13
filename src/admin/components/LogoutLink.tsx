@@ -2,16 +2,16 @@ export const LogoutLink = () => {
   return (
     <a
       href="/logout"
-      className="nav__link"
       style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 'var(--base)',
-        padding: 'calc(var(--base) * 0.5) calc(var(--base) * 1.5)',
-        color: 'var(--theme-elevation-800)',
+        display: 'block',
+        padding: 'calc(var(--base) * 0.5) calc(var(--base) * 1)',
+        marginTop: 'calc(var(--base) * 0.25)',
+        color: 'var(--theme-elevation-650)',
         textDecoration: 'none',
-        fontSize: 'var(--font-size-base)',
-        borderRadius: 'var(--style-radius-s)',
+        fontSize: 'inherit',
+        fontFamily: 'inherit',
+        whiteSpace: 'nowrap',
+        lineHeight: 'inherit',
       }}
     >
       Log out
