@@ -32,7 +32,6 @@ jobs:
     env:
       DATABASE_URL: postgres://ci:ci@localhost:5432/ci?sslmode=disable
       PAYLOAD_SECRET: ci-only-not-a-real-secret-1234567890abcdef
-      PAYLOAD_DB_PUSH: 'true'
       NEXT_PUBLIC_SITE_URL: https://example.com
 
     steps:
@@ -55,6 +54,12 @@ jobs:
 
       - name: Typecheck
         run: pnpm typecheck
+
+      - name: Push schema to CI Postgres
+        env:
+          NODE_ENV: development
+          PAYLOAD_DB_PUSH: 'true'
+        run: pnpm db:push
 
       - name: Build
         run: pnpm build
