@@ -2984,6 +2984,10 @@ export interface ContactPage {
   heroImage?: (number | null) | Media;
   responseTime?: string | null;
   /**
+   * Where new inquiries are delivered. Change to Maria’s inbox once she has one set up.
+   */
+  inquiriesEmail: string;
+  /**
    * "How did you hear about us?" dropdown options
    */
   referralOptions?:
@@ -3334,6 +3338,7 @@ export interface ContactPageSelect<T extends boolean = true> {
   intro?: T;
   heroImage?: T;
   responseTime?: T;
+  inquiriesEmail?: T;
   referralOptions?:
     | T
     | {
