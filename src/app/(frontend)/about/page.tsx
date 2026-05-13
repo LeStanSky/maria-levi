@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
@@ -9,10 +10,10 @@ import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@/lib/richtext'
 import { buildMetadata } from '@/lib/seo'
 
-async function getAboutPage() {
+const getAboutPage = cache(async () => {
   const payload = await getPayloadClient()
   return payload.findGlobal({ slug: 'about-page', draft: false })
-}
+})
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getAboutPage()

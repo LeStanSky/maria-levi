@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { Breadcrumbs } from '@/components/primitives/Breadcrumbs'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
@@ -17,7 +18,7 @@ import type { PortfolioCategory } from '@/payload-types'
 
 type Props = { params: Promise<{ category: string; series: string }> }
 
-async function getSeries(slug: string) {
+const getSeries = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
     collection: 'portfolio-series',
@@ -27,7 +28,7 @@ async function getSeries(slug: string) {
     draft: false,
   })
   return result.docs[0]
-}
+})
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient()

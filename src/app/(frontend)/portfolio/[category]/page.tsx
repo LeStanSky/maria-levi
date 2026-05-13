@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
 import { Breadcrumbs } from '@/components/primitives/Breadcrumbs'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
@@ -13,7 +14,7 @@ import { buildMetadata } from '@/lib/seo'
 
 type Props = { params: Promise<{ category: string }> }
 
-async function getCategory(slug: string) {
+const getCategory = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
     collection: 'portfolio-categories',
@@ -22,9 +23,9 @@ async function getCategory(slug: string) {
     draft: false,
   })
   return result.docs[0]
-}
+})
 
-async function getSeriesForCategory(categoryId: number) {
+const getSeriesForCategory = cache(async (categoryId: number) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
     collection: 'portfolio-series',
@@ -34,7 +35,7 @@ async function getSeriesForCategory(categoryId: number) {
     draft: false,
   })
   return result.docs
-}
+})
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
