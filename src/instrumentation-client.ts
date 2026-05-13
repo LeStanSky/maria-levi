@@ -21,7 +21,11 @@ Sentry.init({
 
   tracesSampleRate: 1,
   enableLogs: true,
-  replaysSessionSampleRate: 0.1,
+  // Proactive session recording disabled — on every prod page load it costs CPU and
+  // ships rrweb activity to the client, hurting mobile Lighthouse. On-error replays
+  // still capture (replaysOnErrorSampleRate: 1.0), so we don't lose debug context
+  // when something actually breaks.
+  replaysSessionSampleRate: 0,
   replaysOnErrorSampleRate: 1.0,
   sendDefaultPii: false,
 
