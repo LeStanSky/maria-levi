@@ -17,16 +17,14 @@ Sentry.init({
 
   enabled,
 
-  integrations: [Sentry.replayIntegration()],
+  // Replay integration intentionally not loaded — rrweb adds ~50 KB to the initial
+  // client bundle and contributes meaningfully to mobile Lighthouse TBT. Trade-off
+  // accepted: exceptions still capture with full stack traces, just no DOM replay.
+  // Re-add by lazy-loading from a client error boundary if replay context becomes
+  // necessary for debugging (see Sentry.lazyLoadIntegration in their docs).
 
   tracesSampleRate: 1,
   enableLogs: true,
-  // Proactive session recording disabled — on every prod page load it costs CPU and
-  // ships rrweb activity to the client, hurting mobile Lighthouse. On-error replays
-  // still capture (replaysOnErrorSampleRate: 1.0), so we don't lose debug context
-  // when something actually breaks.
-  replaysSessionSampleRate: 0,
-  replaysOnErrorSampleRate: 1.0,
   sendDefaultPii: false,
 
   // Next.js App Router throws "Internal Next.js error: Router action dispatched before

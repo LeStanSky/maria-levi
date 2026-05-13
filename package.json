@@ -69,6 +69,19 @@
     "node": ">=22.0.0",
     "pnpm": "^9 || ^10"
   },
+  "browserslist": {
+    "production": [
+      "chrome >= 100",
+      "firefox >= 100",
+      "edge >= 100",
+      "safari >= 15.4"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css}": [
       "biome check --write --no-errors-on-unmatched"
