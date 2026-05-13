@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
+import { ContactForm } from '@/app/(frontend)/contact/ContactForm.client'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
@@ -8,7 +9,6 @@ import { Section } from '@/components/primitives/Section'
 import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@/lib/richtext'
 import { buildMetadata } from '@/lib/seo'
-import { ContactForm } from './ContactForm.client'
 
 export const revalidate = 60
 
