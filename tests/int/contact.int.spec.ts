@@ -1,8 +1,12 @@
+import type { NextRequest } from 'next/server'
 import { getPayload, type Payload } from 'payload'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import type { sendInquiryNotification } from '@/lib/email/resend'
 import config from '@/payload.config'
 
-const sendInquiryMock = vi.fn(async () => undefined)
+type SendInquiryArgs = Parameters<typeof sendInquiryNotification>[0]
+
+const sendInquiryMock = vi.fn<(args: SendInquiryArgs) => Promise<void>>(async () => undefined)
 vi.mock('@/lib/email/resend', () => ({
   sendInquiryNotification: sendInquiryMock,
   FROM_EMAIL: 'Maria Levi <hello@marialeviphoto.com>',
@@ -12,7 +16,7 @@ vi.mock('@/lib/email/resend', () => ({
 const routeImport = import('@/app/(frontend)/api/contact/route')
 
 let payload: Payload
-let POST: (req: Request) => Promise<Response>
+let POST: (req: NextRequest) => Promise<Response>
 
 const TEST_INBOX = 'tests-int-contact@example.test'
 
@@ -25,7 +29,7 @@ async function callRoute(body: unknown): Promise<{ status: number; json: unknown
     headers: { 'content-type': 'application/json', 'user-agent': 'vitest' },
     body: typeof body === 'string' ? body : JSON.stringify(body),
   })
-  const res = await POST(req)
+  const res = await POST(req as unknown as NextRequest)
   return { status: res.status, json: await res.json() }
 }
 
@@ -54,7 +58,7 @@ describe('POST /api/contact', () => {
       },
     })
 
-    const mod = (await routeImport) as { POST: typeof POST }
+    const mod = (await routeImport) as unknown as { POST: typeof POST }
     POST = mod.POST
   })
 
@@ -123,9 +127,9 @@ describe('POST /api/contact', () => {
     expect(lead.status).toBe('new')
 
     expect(sendInquiryMock).toHaveBeenCalledTimes(1)
-    const arg = sendInquiryMock.mock.calls[0][0] as { to: string; lead: { email: string } }
-    expect(arg.to).toBe(TEST_INBOX)
-    expect(arg.lead.email).toBe(submission.email)
+    const arg = sendInquiryMock.mock.calls[0]?.[0]
+    expect(arg?.to).toBe(TEST_INBOX)
+    expect(arg?.lead.email).toBe(submission.email)
   })
 
   it('silently drops honeypot submissions without persisting or notifying', async () => {
