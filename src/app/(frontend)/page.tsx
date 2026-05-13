@@ -1,10 +1,45 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
+import { cache } from 'react'
+import { Blocks } from '@/components/blocks/Blocks'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
+import { getPayloadClient } from '@/lib/payload'
+import { buildMetadata } from '@/lib/seo'
 
-export default function HomePage() {
+const getHomepage = cache(async () => {
+  const payload = await getPayloadClient()
+  const result = await payload.find({
+    collection: 'pages',
+    where: { isHomepage: { equals: true } },
+    limit: 1,
+    depth: 2,
+    draft: false,
+  })
+  return result.docs[0] ?? null
+})
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getHomepage()
+  return buildMetadata({
+    seo: page?.seo,
+    fallbackTitle: 'Maria Levi · Fashion & Personal Brand Photographer in NYC and New Jersey',
+    fallbackDescription:
+      'Editorial · Personal brand · Commercial photography. Based in New Jersey — serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.',
+    path: '/',
+  })
+}
+
+export default async function HomePage() {
+  const page = await getHomepage()
+
+  if (page?.pageBuilder && page.pageBuilder.length > 0) {
+    return <Blocks blocks={page.pageBuilder} />
+  }
+
+  // Fallback: until a Pages entry with isHomepage:true exists in the CMS
   return (
     <Section padding="lg">
       <Container size="narrow">

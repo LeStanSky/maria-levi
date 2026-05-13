@@ -1,5 +1,5 @@
 import type { GlobalConfig } from 'payload'
-import { isAdmin } from '../fields/access'
+import { isAdmin, publicRead } from '../fields/access'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -9,7 +9,7 @@ export const SiteSettings: GlobalConfig = {
     group: 'System',
   },
   access: {
-    read: isAdmin,
+    read: publicRead,
     update: isAdmin,
   },
   fields: [

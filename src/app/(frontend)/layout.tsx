@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 import { Footer } from '@/components/layout/Footer'
+import { MobileMenu } from '@/components/layout/MobileMenu.client'
 import { Sidebar } from '@/components/layout/Sidebar'
+import { StickyInquireCTA } from '@/components/layout/StickyInquireCTA.client'
 import { fraunces, inter } from '@/lib/fonts'
 
 import './styles.css'
@@ -20,6 +22,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
       <body className="bg-bg text-ink min-h-dvh">
+        <MobileMenu />
         <div className="lg:grid lg:grid-cols-[220px_1fr] min-h-dvh">
           <Sidebar />
           <div className="flex flex-col min-h-dvh">
@@ -27,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Footer />
           </div>
         </div>
+        <StickyInquireCTA />
       </body>
     </html>
   )
