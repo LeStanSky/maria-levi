@@ -9,6 +9,8 @@ import { Text } from '@/components/primitives/Text'
 import { getPayloadClient } from '@/lib/payload'
 import { buildMetadata } from '@/lib/seo'
 
+export const revalidate = 60
+
 const getHomepage = cache(async () => {
   const payload = await getPayloadClient()
   const result = await payload.find({

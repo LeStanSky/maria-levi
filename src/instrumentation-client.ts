@@ -17,8 +17,9 @@ Sentry.init({
 
   // Next.js App Router throws "Internal Next.js error: Router action dispatched before
   // initialization" as a normal race-condition it handles itself by re-queuing the action.
-  // Capturing it produces noise with no actionable fix.
-  ignoreErrors: [/^Internal Next\.js error:/],
+  // The "Cannot find the middleware module" is a dev-only HMR glitch when middleware.ts is
+  // added/changed — Next recovers on the next request. Both are noise with no actionable fix.
+  ignoreErrors: [/^Internal Next\.js error:/, /Cannot find the middleware module/],
 })
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart

@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { isAdminOrEditor, publicRead } from '../fields/access'
 import { seoFields } from '../fields/seo'
+import { revalidateGlobal } from '../hooks/revalidatePage'
 
 export const AboutPage: GlobalConfig = {
   slug: 'about-page',
@@ -11,6 +12,7 @@ export const AboutPage: GlobalConfig = {
     update: isAdminOrEditor,
   },
   versions: { drafts: true },
+  hooks: { afterChange: [revalidateGlobal] },
   fields: [
     {
       name: 'eyebrow',

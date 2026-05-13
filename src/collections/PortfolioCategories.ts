@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor, publicRead } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
+import { revalidateCollection } from '../hooks/revalidatePage'
 
 export const PortfolioCategories: CollectionConfig = {
   slug: 'portfolio-categories',
@@ -16,6 +17,7 @@ export const PortfolioCategories: CollectionConfig = {
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
   },
+  hooks: { afterChange: [revalidateCollection] },
   fields: [
     {
       name: 'name',
