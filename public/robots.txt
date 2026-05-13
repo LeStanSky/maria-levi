@@ -1,0 +1,3 @@
+# Pre-launch noindex. Flip Disallow:/ to Allow:/ in Phase 6 once the site is ready.
+User-agent: *
+Disallow: /
