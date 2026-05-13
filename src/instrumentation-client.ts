@@ -7,24 +7,18 @@ import * as Sentry from '@sentry/nextjs'
 Sentry.init({
   dsn: 'https://875e8eecea448d7b136feebdd92bf3f6@o4511328342310912.ingest.us.sentry.io/4511339470192640',
 
-  // Add optional integrations for additional features
   integrations: [Sentry.replayIntegration()],
 
-  // Define how likely traces are sampled. Adjust this value in production, or use tracesSampler for greater control.
   tracesSampleRate: 1,
-  // Enable logs to be sent to Sentry
   enableLogs: true,
-
-  // Define how likely Replay events are sampled.
-  // This sets the sample rate to be 10%. You may want this to be 100% while
-  // in development and sample at a lower rate in production
   replaysSessionSampleRate: 0.1,
-
-  // Define how likely Replay events are sampled when an error occurs.
   replaysOnErrorSampleRate: 1.0,
-
-  // Disabled by default — site has GDPR obligations. Flip to true temporarily for targeted debugging.
   sendDefaultPii: false,
+
+  // Next.js App Router throws "Internal Next.js error: Router action dispatched before
+  // initialization" as a normal race-condition it handles itself by re-queuing the action.
+  // Capturing it produces noise with no actionable fix.
+  ignoreErrors: [/^Internal Next\.js error:/],
 })
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart

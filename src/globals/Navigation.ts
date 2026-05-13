@@ -1,5 +1,5 @@
 import type { GlobalConfig } from 'payload'
-import { isAdmin, isAdminOrEditor } from '../fields/access'
+import { isAdmin, publicRead } from '../fields/access'
 
 export const Navigation: GlobalConfig = {
   slug: 'navigation',
@@ -9,7 +9,7 @@ export const Navigation: GlobalConfig = {
     group: 'System',
   },
   access: {
-    read: isAdminOrEditor,
+    read: publicRead,
     update: isAdmin,
   },
   versions: {
