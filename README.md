@@ -8,7 +8,9 @@ Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Live on [marialeviphoto.com](https://marialeviphoto.com).** Currently in Phase 2 (Core Pages). Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–2 complete; Phase 3 (Services & Lead Magnet) up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+
+Lighthouse on production (real device): **mobile 89 · desktop 90–94**.
 
 See [Roadmap](#roadmap) below for phase-by-phase status.
 
@@ -111,7 +113,7 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 |---|---|---|
 | **0** | Foundation — scaffold, design tokens, fonts, Biome, CI, external services | ✅ Done |
 | **1** | Content model — 12 collections, 7 globals, 28 block stubs, shared fields, hooks, seed | ✅ Done |
-| **2** | Core pages — Home, About, Portfolio (3 levels), Contact, FAQ, Testimonials, error pages | 🟡 In progress (Week 3 live, Week 4 in flight) |
+| **2** | Core pages — Home, About, Portfolio (3 levels), Contact, FAQ, Testimonials, error pages | ✅ Done |
 | **3** | Services & Lead Magnet | Planned |
 | **4** | Blog | Planned |
 | **5** | SEO & City Pages — 5 NYC-metro landings + beta checkpoint | Planned |
@@ -124,8 +126,8 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 | GitHub | ✅ | Branch protection on `master` + `dev`. |
 | Neon (Postgres) | ✅ | Two branches: `production` + `dev`. |
 | Vercel | ✅ | Production deploys from `master`. Custom domain `marialeviphoto.com` (apex primary, www → 308 → apex). |
-| Sentry | ✅ | Tunnel route `/monitoring`, source maps wired. |
-| Resend | 🟡 | Domain verified; wired into Contact form in Phase 2 Week 4. |
+| Sentry | ✅ | Tunnel route `/monitoring`, source maps wired. Production-only by default; client-side `replayIntegration` removed to keep the mobile bundle lean (server-side capture unaffected). |
+| Resend | ✅ | Domain verified (SPF / DKIM / DMARC). Contact form wired: `POST /api/contact` → `Leads.create` (Payload Local API) → notification email with `Reply-To = lead email`. Email failure is Sentry-captured but non-blocking (Lead is source of truth). |
 | Cloudflare R2 + Images | ⏳ | Deferred — current media stored via Payload's default storage; migrate before launch. |
 | Flodesk | ⏳ | Marketing list — set up in Phase 3 with the lead magnet. |
 | GA4 + Meta Pixel | ⏳ | Wired in Phase 5/6. |
