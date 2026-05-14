@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { cache } from 'react'
+import { cache, Suspense } from 'react'
 import { ContactForm } from '@/app/(frontend)/contact/ContactForm.client'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
@@ -101,7 +101,9 @@ export default async function ContactPage() {
             )}
 
             <div>
-              <ContactForm sessionTypes={sessionTypes} referralOptions={referralOptions} />
+              <Suspense fallback={null}>
+                <ContactForm sessionTypes={sessionTypes} referralOptions={referralOptions} />
+              </Suspense>
               {contactPage.responseTime && (
                 <p className="mt-8 font-body uppercase text-xs tracking-[0.18em] text-muted text-center lg:text-left">
                   {contactPage.responseTime}
