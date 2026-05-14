@@ -43,7 +43,9 @@ export function Sidebar() {
         })}
       </nav>
       <div className="mt-auto">
-        <p className="font-body text-xs uppercase tracking-[0.18em] text-muted">New Jersey · NYC</p>
+        <p className="font-body text-xs uppercase tracking-[0.18em] text-muted">
+          New York · New Jersey
+        </p>
       </div>
     </aside>
   )

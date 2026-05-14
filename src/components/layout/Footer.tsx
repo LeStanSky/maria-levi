@@ -47,8 +47,8 @@ export async function Footer() {
         <div>
           <p className="font-display text-2xl font-light tracking-tight text-ink">{brandName}</p>
           <p className="mt-4 text-sm text-soft max-w-xs">
-            Editorial · Personal brand · Commercial photography. Based in New Jersey — serving
-            Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.
+            Editorial · Personal brand · Commercial photography. Based in New York & New Jersey —
+            serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.
           </p>
           {socials.length > 0 && (
             <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 font-body uppercase text-xs tracking-[0.18em]">

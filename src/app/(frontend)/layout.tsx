@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: '%s · Maria Levi Photography',
   },
   description:
-    'Editorial · Personal brand · Commercial photography. Based in New Jersey — serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.',
+    'Editorial · Personal brand · Commercial photography. Based in New York & New Jersey — serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

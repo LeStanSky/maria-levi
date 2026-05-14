@@ -29,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
     seo: page?.seo,
     fallbackTitle: 'Maria Levi · Fashion & Personal Brand Photographer in NYC and New Jersey',
     fallbackDescription:
-      'Editorial · Personal brand · Commercial photography. Based in New Jersey — serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.',
+      'Editorial · Personal brand · Commercial photography. Based in New York & New Jersey — serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.',
     path: '/',
   })
 }
@@ -49,12 +49,11 @@ export default async function HomePage() {
           Maria Levi · Photography
         </p>
         <Heading level={1} size="display">
-          I don&apos;t just create photos.
-          <br />I care about the woman behind them.
+          Aligned. Memorable. Real.
         </Heading>
         <Text tone="soft" className="mt-8 max-w-prose text-lg">
-          Editorial · Personal brand · Commercial photography. Based in New Jersey — serving
-          Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.
+          Editorial · Personal brand · Commercial photography. Based in New York & New Jersey —
+          serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.
         </Text>
         <div className="mt-12 flex flex-wrap gap-6 font-body uppercase text-xs tracking-[0.18em]">
           <Link

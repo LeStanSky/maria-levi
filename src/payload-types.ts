@@ -2912,11 +2912,11 @@ export interface AboutPage {
     [k: string]: unknown;
   } | null;
   /**
-   * e.g. "I don't just create photos. I care about the woman behind them."
+   * e.g. "I don't just create images. I care about the people behind them."
    */
   signoff?: string | null;
   /**
-   * Credits row at the bottom — e.g. "Based in / New Jersey"
+   * Credits row at the bottom — e.g. "Based in / New York · New Jersey"
    */
   credits?:
     | {
