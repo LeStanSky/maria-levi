@@ -1,13 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useMemo, useState } from 'react'
 import { Button } from '@/components/primitives/Button'
 import { Heading } from '@/components/primitives/Heading'
 
 type Option = { value: string; label: string }
+type SessionTypeOption = Option & { nicheKey?: string | null }
 
 type Props = {
-  sessionTypes: Option[]
+  sessionTypes: SessionTypeOption[]
   referralOptions: Option[]
 }
 
@@ -31,6 +33,16 @@ export function ContactForm({ sessionTypes, referralOptions }: Props) {
   const [status, setStatus] = useState<Status>('idle')
   const [errors, setErrors] = useState<FieldErrors>({})
   const [globalError, setGlobalError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+
+  const defaultSessionType = useMemo(() => {
+    const requested = searchParams?.get('session_type')
+    if (!requested) return ''
+    const matched = sessionTypes.find(
+      (opt) => opt.nicheKey === requested || opt.value === requested,
+    )
+    return matched?.value ?? ''
+  }, [searchParams, sessionTypes])
 
   function validateClient(form: HTMLFormElement): FieldErrors {
     const next: FieldErrors = {}
@@ -182,7 +194,13 @@ export function ContactForm({ sessionTypes, referralOptions }: Props) {
           <label htmlFor="sessionType" className={labelClass}>
             Type of session
           </label>
-          <select id="sessionType" name="sessionType" className={inputClass} defaultValue="">
+          <select
+            id="sessionType"
+            name="sessionType"
+            className={inputClass}
+            defaultValue={defaultSessionType}
+            key={defaultSessionType}
+          >
             <option value="">Choose one…</option>
             {sessionTypes.map((opt) => (
               <option key={opt.value} value={opt.value}>

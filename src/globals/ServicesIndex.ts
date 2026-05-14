@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 import { isAdminOrEditor, publicRead } from '../fields/access'
 import { seoFields } from '../fields/seo'
+import { revalidateGlobal } from '../hooks/revalidatePage'
 
 export const ServicesIndex: GlobalConfig = {
   slug: 'services-index',
@@ -10,6 +11,7 @@ export const ServicesIndex: GlobalConfig = {
     read: publicRead,
     update: isAdminOrEditor,
   },
+  hooks: { afterChange: [revalidateGlobal] },
   fields: [
     { name: 'eyebrow', type: 'text' },
     { name: 'headline', type: 'text', required: true },

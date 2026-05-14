@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { cache } from 'react'
+import { cache, Suspense } from 'react'
 import { ContactForm } from '@/app/(frontend)/contact/ContactForm.client'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
@@ -26,6 +26,8 @@ const getContactData = cache(async () => {
   ])
   return { contactPage, services: services.docs }
 })
+
+type ServiceOption = { value: string; label: string; nicheKey?: string | null }
 
 export async function generateMetadata(): Promise<Metadata> {
   const { contactPage } = await getContactData()
@@ -56,7 +58,11 @@ export default async function ContactPage() {
       ? contactPage.referralOptions.map((opt) => ({ value: opt.value, label: opt.label }))
       : DEFAULT_REFERRAL_OPTIONS.map((opt) => ({ value: opt.value, label: opt.label }))
 
-  const sessionTypes = services.map((s) => ({ value: s.name, label: s.name }))
+  const sessionTypes: ServiceOption[] = services.map((s) => ({
+    value: s.name,
+    label: s.name,
+    nicheKey: s.nicheKey,
+  }))
 
   return (
     <article>
@@ -95,7 +101,9 @@ export default async function ContactPage() {
             )}
 
             <div>
-              <ContactForm sessionTypes={sessionTypes} referralOptions={referralOptions} />
+              <Suspense fallback={null}>
+                <ContactForm sessionTypes={sessionTypes} referralOptions={referralOptions} />
+              </Suspense>
               {contactPage.responseTime && (
                 <p className="mt-8 font-body uppercase text-xs tracking-[0.18em] text-muted text-center lg:text-left">
                   {contactPage.responseTime}
