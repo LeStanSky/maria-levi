@@ -8,5 +8,10 @@ type Props = {
 
 export function RichText({ data, className }: Props) {
   if (!data) return null
-  return <PayloadRichText data={data} className={className} disableContainer />
+  if (!className) return <PayloadRichText data={data} disableContainer />
+  return (
+    <div className={className}>
+      <PayloadRichText data={data} disableContainer />
+    </div>
+  )
 }
