@@ -27,6 +27,8 @@ const getContactData = cache(async () => {
   return { contactPage, services: services.docs }
 })
 
+type ServiceOption = { value: string; label: string; nicheKey?: string | null }
+
 export async function generateMetadata(): Promise<Metadata> {
   const { contactPage } = await getContactData()
   return buildMetadata({
@@ -56,7 +58,11 @@ export default async function ContactPage() {
       ? contactPage.referralOptions.map((opt) => ({ value: opt.value, label: opt.label }))
       : DEFAULT_REFERRAL_OPTIONS.map((opt) => ({ value: opt.value, label: opt.label }))
 
-  const sessionTypes = services.map((s) => ({ value: s.name, label: s.name }))
+  const sessionTypes: ServiceOption[] = services.map((s) => ({
+    value: s.name,
+    label: s.name,
+    nicheKey: s.nicheKey,
+  }))
 
   return (
     <article>

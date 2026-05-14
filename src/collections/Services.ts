@@ -2,6 +2,7 @@ import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor, publicRead } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
+import { revalidateCollection } from '../hooks/revalidatePage'
 
 export const Services: CollectionConfig = {
   slug: 'services',
@@ -15,6 +16,9 @@ export const Services: CollectionConfig = {
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
+  },
+  hooks: {
+    afterChange: [revalidateCollection],
   },
   fields: [
     {
