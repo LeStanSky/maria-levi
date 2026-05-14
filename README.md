@@ -8,7 +8,9 @@ Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–2 complete; Phase 3 (Services & Lead Magnet) up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–2 and the Phase 2.5 copy refresh complete; Phase 3 (Services & Lead Magnet) up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+
+The CMS-driven homepage entry is currently in draft (awaiting real photos); the hardcoded fallback hero serves `/` until that publishes.
 
 Lighthouse on production (real device): **mobile 89 · desktop 90–94**.
 
@@ -48,6 +50,7 @@ Open `http://localhost:3000` for the public site, `http://localhost:3000/admin` 
 | `pnpm generate:importmap` | Regenerate Payload admin import map (after adding custom components). |
 | `pnpm seed:admin` | Create the initial admin user (refuses if any user exists). |
 | `pnpm seed` | Populate demo content into whatever DB `DATABASE_URL` points to. Idempotent — skips collections that already have data. |
+| `pnpm copy-refresh` | Apply the v5 Bio + microcopy to `about-page`, `contact-page`, `lead-magnet-settings` globals via Payload Local API. Non-destructive (`updateGlobal` only) and idempotent. Set `NEXT_PUBLIC_SITE_URL` + `REVALIDATE_SECRET` to fire ISR after the writes. |
 | `pnpm db:push` | Push current Drizzle schema to the DB (use sparingly — production should run migrations once schema stabilises). |
 | `pnpm user:create` / `user:list` / `user:reset-password` / `user:disable` / `user:enable` / `user:delete` | Admin/editor user management CLIs. |
 | `pnpm test` | Vitest integration + Playwright e2e. |
