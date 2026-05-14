@@ -108,7 +108,7 @@ export function MobileMenu() {
           </nav>
           <div className="px-8 py-6 border-t border-line">
             <p className="font-body text-xs uppercase tracking-[0.18em] text-muted">
-              New Jersey · NYC
+              New York · New Jersey
             </p>
           </div>
         </div>

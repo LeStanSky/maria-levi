@@ -64,13 +64,13 @@ export const AboutPage: GlobalConfig = {
       name: 'signoff',
       type: 'text',
       admin: {
-        description: 'e.g. "I don\'t just create photos. I care about the woman behind them."',
+        description: 'e.g. "I don\'t just create images. I care about the people behind them."',
       },
     },
     {
       name: 'credits',
       type: 'array',
-      admin: { description: 'Credits row at the bottom — e.g. "Based in / New Jersey"' },
+      admin: { description: 'Credits row at the bottom — e.g. "Based in / New York · New Jersey"' },
       fields: [
         { name: 'label', type: 'text', required: true },
         { name: 'value', type: 'text', required: true },
