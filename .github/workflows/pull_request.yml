@@ -55,13 +55,16 @@ jobs:
       - name: Typecheck
         run: pnpm typecheck
 
-      - name: Push schema to CI Postgres
+      - name: Apply Payload migrations to CI Postgres
         env:
           NODE_ENV: development
-          PAYLOAD_DB_PUSH: 'true'
-        run: pnpm db:push
+        run: pnpm payload:migrate
 
       - name: Build
+        env:
+          # `prebuild` runs `tsx scripts/maybe-migrate.ts`, which only acts when
+          # VERCEL_ENV=production. CI is neither — explicit no-op for clarity.
+          VERCEL_ENV: ''
         run: pnpm build
 
       - name: Test (Vitest integration)
