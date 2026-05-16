@@ -16,7 +16,6 @@ import { PortfolioCategories } from './collections/PortfolioCategories'
 import { PortfolioSeries } from './collections/PortfolioSeries'
 import { Redirects } from './collections/Redirects'
 import { Services } from './collections/Services'
-import { Subscribers } from './collections/Subscribers'
 import { Tags } from './collections/Tags'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
@@ -66,7 +65,6 @@ export default buildConfig({
     LocalLandingPages,
     // Inbox
     Leads,
-    Subscribers,
     // System
     Media,
     Redirects,

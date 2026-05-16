@@ -78,7 +78,6 @@ export interface Config {
     testimonials: Testimonial;
     'local-landing-pages': LocalLandingPage;
     leads: Lead;
-    subscribers: Subscriber;
     media: Media;
     redirects: Redirect;
     users: User;
@@ -100,7 +99,6 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'local-landing-pages': LocalLandingPagesSelect<false> | LocalLandingPagesSelect<true>;
     leads: LeadsSelect<false> | LeadsSelect<true>;
-    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -1723,51 +1721,6 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscribers".
- */
-export interface Subscriber {
-  id: number;
-  email: string;
-  /**
-   * Where the subscriber signed up (popup, footer form, blog inline, etc.)
-   */
-  source: 'lead-magnet' | 'newsletter' | 'blog-inline' | 'footer-block';
-  /**
-   * Slug of the lead magnet at time of signup (snapshot)
-   */
-  leadMagnetSlug?: string | null;
-  /**
-   * Flodesk tag applied on subscribe (snapshot)
-   */
-  tag?: string | null;
-  status?: ('pending' | 'confirmed' | 'unsubscribed' | 'bounced') | null;
-  /**
-   * URL of the page where the form was submitted
-   */
-  pageSubmittedFrom?: string | null;
-  userAgent?: string | null;
-  confirmedAt?: string | null;
-  unsubscribedAt?: string | null;
-  /**
-   * Last time the lead magnet PDF was emailed
-   */
-  lastDeliveryAt?: string | null;
-  /**
-   * How many times the PDF email has been (re-)sent
-   */
-  deliveryCount?: number | null;
-  flodeskSyncStatus?: ('not-synced' | 'synced' | 'failed' | 'skipped') | null;
-  /**
-   * Flodesk subscriber ID after sync
-   */
-  flodeskExternalId?: string | null;
-  gdprAnonymizedAt?: string | null;
-  gdprAnonymizedBy?: (number | null) | User;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1851,10 +1804,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'leads';
         value: number | Lead;
-      } | null)
-    | ({
-        relationTo: 'subscribers';
-        value: number | Subscriber;
       } | null)
     | ({
         relationTo: 'media';
@@ -2755,29 +2704,6 @@ export interface LeadsSelect<T extends boolean = true> {
   internalNotes?: T;
   crmSyncStatus?: T;
   crmExternalId?: T;
-  gdprAnonymizedAt?: T;
-  gdprAnonymizedBy?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subscribers_select".
- */
-export interface SubscribersSelect<T extends boolean = true> {
-  email?: T;
-  source?: T;
-  leadMagnetSlug?: T;
-  tag?: T;
-  status?: T;
-  pageSubmittedFrom?: T;
-  userAgent?: T;
-  confirmedAt?: T;
-  unsubscribedAt?: T;
-  lastDeliveryAt?: T;
-  deliveryCount?: T;
-  flodeskSyncStatus?: T;
-  flodeskExternalId?: T;
   gdprAnonymizedAt?: T;
   gdprAnonymizedBy?: T;
   updatedAt?: T;
