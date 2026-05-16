@@ -51,7 +51,10 @@ Open `http://localhost:3000` for the public site, `http://localhost:3000/admin` 
 | `pnpm seed:admin` | Create the initial admin user (refuses if any user exists). |
 | `pnpm seed` | Populate demo content into whatever DB `DATABASE_URL` points to. Idempotent — skips collections that already have data. |
 | `pnpm copy-refresh` | Apply the v5 Bio + microcopy to `about-page`, `contact-page`, `lead-magnet-settings` globals via Payload Local API. Non-destructive (`updateGlobal` only) and idempotent. Set `NEXT_PUBLIC_SITE_URL` + `REVALIDATE_SECRET` to fire ISR after the writes. |
-| `pnpm db:push` | Push current Drizzle schema to the DB (use sparingly — production should run migrations once schema stabilises). |
+| `pnpm payload:migrate` | Apply pending Payload migrations against `DATABASE_URL`. CI + Vercel production deploy invoke this; you usually don't need to call it directly. |
+| `pnpm payload:migrate:create` | Generate a new migration from the diff between code-side schema and the DB. Run after touching any collection / global / block / field shape. |
+| `pnpm payload:migrate:status` | List which migrations are applied and which are pending. |
+| `pnpm db:push` | Legacy — push current Drizzle schema directly (no migration file). Useful for fast local poking, but never run against prod (silently no-ops under `NODE_ENV=production`, and skips the audit trail). |
 | `pnpm user:create` / `user:list` / `user:reset-password` / `user:disable` / `user:enable` / `user:delete` | Admin/editor user management CLIs. |
 | `pnpm test` | Vitest integration + Playwright e2e. |
 | `pnpm test:int` | Vitest only. |
@@ -65,6 +68,29 @@ Managed by Husky 9 (set up automatically by `pnpm install`'s `prepare` script).
 - **pre-push:** full `tsc --noEmit` + Vitest integration suite. Tests are skipped automatically if no `.env` file exists. Use `git push --no-verify` only as a last resort.
 
 CI runs the same checks plus the production build, against a Postgres 16 service container.
+
+## Schema changes
+
+Schema lives in `src/collections/`, `src/globals/`, `src/blocks/`, and `src/fields/`. Any change to those — new collection, added field, type/index/relation change — needs a migration committed alongside the code.
+
+```bash
+# 1. Make your schema change (collection/global/block/field).
+# 2. Regenerate types so the rest of the app compiles:
+pnpm generate:types
+
+# 3. Generate a migration from the diff against your local DB:
+pnpm payload:migrate:create my-change-name
+# → writes src/migrations/<timestamp>_my-change-name.{ts,json} and updates src/migrations/index.ts
+
+# 4. Apply it locally to verify it actually runs cleanly:
+pnpm payload:migrate
+
+# 5. Commit the migration files along with the schema change.
+```
+
+CI runs `pnpm payload:migrate` against a fresh Postgres in the same step, so a broken migration fails the PR check before merge. Vercel production deploys run the same command via the `prebuild` hook ([scripts/maybe-migrate.ts](scripts/maybe-migrate.ts)) — gated to `VERCEL_ENV=production` only so preview deploys (which currently share the prod DATABASE_URL) never touch prod schema.
+
+**`PAYLOAD_DB_PUSH=true` is a local-dev convenience only.** It's a no-op under `NODE_ENV=production` (Drizzle blocks it). Set it on prod and your schema will silently lag the code until something breaks — this killed `/api/users/login` on 2026-05-16 when the lead-magnet `Subscribers` collection shipped without its migration.
 
 ## Branching
 

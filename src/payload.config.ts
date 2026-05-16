@@ -26,6 +26,7 @@ import { LeadMagnetSettings } from './globals/LeadMagnetSettings'
 import { Navigation } from './globals/Navigation'
 import { ServicesIndex } from './globals/ServicesIndex'
 import { SiteSettings } from './globals/SiteSettings'
+import { migrations } from './migrations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -94,7 +95,16 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URL || '',
     },
+    // Push is opt-in for local-dev iteration only. CI + production deploy run
+    // explicit migrations via `pnpm payload:migrate`. Leaving PAYLOAD_DB_PUSH
+    // set in prod is a noop in Drizzle (NODE_ENV=production blocks push) but
+    // also a documented foot-gun — schema changes silently don't apply.
     push: process.env.PAYLOAD_DB_PUSH === 'true',
+    // Bundled into the production build so serverless functions can resolve
+    // migration definitions without reading `src/migrations/` from disk at
+    // runtime. `payload migrate:create` updates `src/migrations/index.ts`,
+    // which this import follows.
+    prodMigrations: migrations,
   }),
   sharp,
   plugins: [],
