@@ -8,6 +8,16 @@
  * Idempotent: if `payload_migrations` already has a row for the initial
  * migration, the script is a no-op.
  *
+ * Also unconditionally clears the `(name='dev', batch=-1)` marker that
+ * `pushDevSchema` inserts when a DB was previously synced via PAYLOAD_DB_PUSH.
+ * Payload's `migrate()` (which runs on Postgres adapter connect in
+ * NODE_ENV=production when `prodMigrations` is set) sees that row and asks
+ * "It looks like you've run Payload in dev mode... data loss will occur.
+ * Would you like to proceed?" — hanging `next build` on Vercel preview deploys
+ * that share the prod DATABASE_URL. After the baseline INSERT below the DB has
+ * "graduated" from push-managed to migration-managed, so the dev marker is
+ * stale and safe to drop.
+ *
  * Optional cleanup: pass `--drop-orphan-subscribers` to also drop the
  * `subscribers` table and `subscribers_id` column the failed PR-B deploy
  * created on the dev DB. Production push silently no-oped during that deploy,
@@ -82,6 +92,19 @@ async function main() {
       sql`INSERT INTO payload_migrations (name, batch, updated_at, created_at) VALUES (${INITIAL_MIGRATION_NAME}, 1, now(), now())`,
     )
     console.info('[baseline] inserted.')
+  }
+
+  // Drop the stale dev-push marker so Payload's migrate() doesn't prompt
+  // "It looks like you've run Payload in dev mode..." on production-mode
+  // connects (Vercel build, prod deploy). Idempotent.
+  const devMarker = (await drizzle.execute(
+    sql`DELETE FROM payload_migrations WHERE name = 'dev' AND batch = -1 RETURNING id`,
+  )) as { rows?: unknown[] }
+  const droppedDevMarker = devMarker.rows?.length ?? 0
+  if (droppedDevMarker > 0) {
+    console.info(`[baseline] removed stale dev-push marker (${droppedDevMarker} row).`)
+  } else {
+    console.info('[baseline] no dev-push marker found — nothing to remove.')
   }
 
   if (dropOrphans) {
