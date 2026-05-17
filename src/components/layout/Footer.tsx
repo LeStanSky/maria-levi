@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { cache } from 'react'
 import { getPayloadClient } from '@/lib/payload'
+import { NewsletterSignup } from './NewsletterSignup.client'
 
 const getNavigation = cache(async () => {
   const payload = await getPayloadClient()
@@ -93,30 +94,7 @@ export async function Footer() {
           <h5 className="font-body text-xs uppercase tracking-[0.18em] text-muted">
             Receive updates
           </h5>
-          <form
-            className="mt-4 flex flex-col gap-3"
-            action="#"
-            method="post"
-            aria-label="Newsletter signup (coming soon)"
-          >
-            <label className="sr-only" htmlFor="newsletter-email">
-              Email address
-            </label>
-            <input
-              id="newsletter-email"
-              type="email"
-              placeholder="your@email.com"
-              disabled
-              className="bg-transparent border-b border-line py-2 text-sm font-body placeholder:text-muted focus:outline-none focus:border-ink disabled:opacity-50"
-            />
-            <button
-              type="submit"
-              disabled
-              className="self-start font-body uppercase text-xs tracking-[0.18em] text-soft disabled:opacity-50"
-            >
-              Coming soon →
-            </button>
-          </form>
+          <NewsletterSignup />
         </div>
       </div>
 
