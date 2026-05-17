@@ -1,6 +1,5 @@
-import { cache } from 'react'
+import { getLeadMagnetSettings, slugifyLeadMagnetTitle } from '@/lib/lead-magnet/settings'
 import { isMedia, type MediaLike } from '@/lib/media'
-import { getPayloadClient } from '@/lib/payload'
 import { BlogLeadMagnetInline as InlineForm } from './BlogLeadMagnetInline.client'
 
 type BlockProps = {
@@ -9,25 +8,6 @@ type BlockProps = {
   image?: MediaLike
   pdfFile?: MediaLike
   flodeskTag?: string | null
-}
-
-const getLeadMagnetSettings = cache(async () => {
-  try {
-    const payload = await getPayloadClient()
-    return await payload.findGlobal({ slug: 'lead-magnet-settings', draft: false })
-  } catch {
-    return null
-  }
-})
-
-function slugify(value: string | null | undefined): string | null {
-  if (!value) return null
-  const slug = value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-    .slice(0, 80)
-  return slug || null
 }
 
 export async function BlogLeadMagnetInline(block: BlockProps) {
@@ -65,7 +45,7 @@ export async function BlogLeadMagnetInline(block: BlockProps) {
       consentText={settings.consentText ?? null}
       imageUrl={imageUrl}
       imageAlt={imageAlt}
-      leadMagnetSlug={slugify(title)}
+      leadMagnetSlug={slugifyLeadMagnetTitle(title)}
     />
   )
 }

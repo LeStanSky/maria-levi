@@ -1,39 +1,29 @@
 import { getLeadMagnetSettings, slugifyLeadMagnetTitle } from '@/lib/lead-magnet/settings'
-import { LeadMagnetPopup, type LeadMagnetPopupProps } from './LeadMagnetPopup.client'
+import { isMedia } from '@/lib/media'
+import { FooterLeadMagnet as Form } from './FooterLeadMagnet.client'
 
-type Trigger = LeadMagnetPopupProps['trigger']
-
-const VALID_TRIGGERS: readonly Trigger[] = ['delay-30s', 'exit-intent', 'scroll-50pct']
-
-function isTrigger(value: unknown): value is Trigger {
-  return typeof value === 'string' && (VALID_TRIGGERS as readonly string[]).includes(value)
-}
-
-export async function LeadMagnetMount() {
+export async function FooterLeadMagnet() {
   const settings = await getLeadMagnetSettings()
   if (!settings?.enabled) return null
 
   const placements = (settings.placement ?? []) as string[]
-  if (!placements.includes('popup')) return null
+  if (!placements.includes('footer-block')) return null
 
   if (!settings.title || !settings.pdfFile) return null
 
-  const trigger = isTrigger(settings.trigger) ? settings.trigger : 'delay-30s'
-
   let imageUrl: string | null = null
   let imageAlt: string | null = null
-  if (settings.image && typeof settings.image !== 'number') {
+  if (isMedia(settings.image)) {
     imageUrl = settings.image.url ?? null
     imageAlt = settings.image.alt ?? null
   }
 
   return (
-    <LeadMagnetPopup
+    <Form
       title={settings.title}
       subtitle={settings.subtitle ?? null}
       successMessage={settings.successMessage ?? null}
       consentText={settings.consentText ?? null}
-      trigger={trigger}
       imageUrl={imageUrl}
       imageAlt={imageAlt}
       leadMagnetSlug={slugifyLeadMagnetTitle(settings.title)}
