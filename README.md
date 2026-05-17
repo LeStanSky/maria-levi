@@ -8,7 +8,7 @@ Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–2 and the Phase 2.5 copy refresh complete; Phase 3 (Services & Lead Magnet) up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–3 complete (Phase 3 includes Services + Lead Magnet popup + signed PDF delivery + Payload migrations infrastructure + preview Neon branch split). Phase 4 (Blog) is up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
 
 The CMS-driven homepage entry is currently in draft (awaiting real photos); the hardcoded fallback hero serves `/` until that publishes.
 
@@ -155,9 +155,9 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 | **0** | Foundation — scaffold, design tokens, fonts, Biome, CI, external services | ✅ Done |
 | **1** | Content model — 12 collections, 7 globals, 28 block stubs, shared fields, hooks, seed | ✅ Done |
 | **2** | Core pages — Home, About, Portfolio (3 levels), Contact, FAQ, Testimonials, error pages | ✅ Done |
-| **3** | Services & Lead Magnet | Planned |
-| **4** | Blog | Planned |
-| **5** | SEO & City Pages — 5 NYC-metro landings + beta checkpoint | Planned |
+| **3** | Services pages + Lead Magnet popup + signed PDF delivery + Payload migrations + preview Neon branch | ✅ Done |
+| **4** | Blog — `/blog` index + `/blog/[slug]` post pages, wire blog blocks, attach lead-magnet `blog-inline` placement (PR-B2) | Up next |
+| **5** | SEO & City Pages — 5 NYC-metro landings + beta checkpoint + newsletter form (PR-B3) | Planned |
 | **6** | Polish & Launch — Lighthouse, copy QA, indexing, real content from Maria | Planned |
 
 ## External services
@@ -165,10 +165,10 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 | Service | Status | Notes |
 |---|---|---|
 | GitHub | ✅ | Branch protection on `master` + `dev`. |
-| Neon (Postgres) | ✅ | Two branches: `production` + `dev`. |
+| Neon (Postgres) | ✅ | Three branches: `main` (prod) + `preview` + `dev`. Each scoped to its own Vercel env via `DATABASE_URL`. Direct URLs only (pooled disabled project-wide). |
 | Vercel | ✅ | Production deploys from `master`. Custom domain `marialeviphoto.com` (apex primary, www → 308 → apex). |
 | Sentry | ✅ | Tunnel route `/monitoring`, source maps wired. Production-only by default; client-side `replayIntegration` removed to keep the mobile bundle lean (server-side capture unaffected). |
 | Resend | ✅ | Domain verified (SPF / DKIM / DMARC). Contact form wired: `POST /api/contact` → `Leads.create` (Payload Local API) → notification email with `Reply-To = lead email`. Email failure is Sentry-captured but non-blocking (Lead is source of truth). |
 | Cloudflare R2 + Images | ⏳ | Deferred — current media stored via Payload's default storage; migrate before launch. |
-| Flodesk | ⏳ | Marketing list — set up in Phase 3 with the lead magnet. |
+| Flodesk | ⏳ | Lead-magnet adapter wired (no-ops when key absent — writes `flodeskSyncStatus: 'skipped'` per subscriber). Set `FLODESK_API_KEY` in Vercel once Maria opens an account. |
 | GA4 + Meta Pixel | ⏳ | Wired in Phase 5/6. |
