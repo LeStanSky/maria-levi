@@ -88,9 +88,21 @@ pnpm payload:migrate
 # 5. Commit the migration files along with the schema change.
 ```
 
-CI runs `pnpm payload:migrate` against a fresh Postgres in the same step, so a broken migration fails the PR check before merge. Vercel production deploys run the same command via the `prebuild` hook ([scripts/maybe-migrate.ts](scripts/maybe-migrate.ts)) — gated to `VERCEL_ENV=production` only so preview deploys (which currently share the prod DATABASE_URL) never touch prod schema.
+CI runs `pnpm payload:migrate` against a fresh Postgres in the same step, so a broken migration fails the PR check before merge. Vercel production AND preview deploys run the same command via the `prebuild` hook ([scripts/maybe-migrate.ts](scripts/maybe-migrate.ts)). Preview migrates against its own Neon branch (see "Environments" below), so a broken migration breaks the preview build, not prod — making preview an honest rehearsal for the release.
 
 **`PAYLOAD_DB_PUSH=true` is a local-dev convenience only.** It's a no-op under `NODE_ENV=production` (Drizzle blocks it). Set it on prod and your schema will silently lag the code until something breaks — this killed `/api/users/login` on 2026-05-16 when the lead-magnet `Subscribers` collection shipped without its migration.
+
+## Environments
+
+Three Neon branches, each scoped to a single Vercel environment via `DATABASE_URL`:
+
+| Vercel env | Neon branch | Who writes | What for |
+|---|---|---|---|
+| Production | `main` (prod) | `master` deploys | Live site |
+| Preview | `preview` | every PR's preview deploy | Honest rehearsal of prod migrate flow + smoke test before release |
+| Development (local) | `dev` | your local `pnpm dev` | Schema iteration before generating migrations |
+
+The `DATABASE_URL` for each environment is set scoped in Vercel project settings. Use the **direct** Neon connection string (not pooled — pooled breaks Drizzle prepared statements). The preview branch is reset/refreshed periodically from prod; treat its data as throwaway.
 
 ## Branching
 
