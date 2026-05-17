@@ -113,6 +113,13 @@ async function main() {
       sql`ALTER TABLE IF EXISTS payload_locked_documents_rels DROP COLUMN IF EXISTS subscribers_id`,
     )
     await drizzle.execute(sql`DROP TABLE IF EXISTS subscribers CASCADE`)
+    // Drop the Postgres ENUM types too. DROP TABLE does NOT cascade to the
+    // ENUM definitions, so a previous run of this flag left these in place
+    // and broke re-application of the subscribers migration with
+    // 'type "enum_subscribers_source" already exists'.
+    await drizzle.execute(sql`DROP TYPE IF EXISTS "public"."enum_subscribers_source"`)
+    await drizzle.execute(sql`DROP TYPE IF EXISTS "public"."enum_subscribers_status"`)
+    await drizzle.execute(sql`DROP TYPE IF EXISTS "public"."enum_subscribers_flodesk_sync_status"`)
     console.info('[baseline] orphan cleanup complete.')
   }
 
