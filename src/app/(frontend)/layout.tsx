@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-
 import { Footer } from '@/components/layout/Footer'
 import { MobileMenu } from '@/components/layout/MobileMenu.client'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { StickyInquireCTA } from '@/components/layout/StickyInquireCTA.client'
+import { LeadMagnetMount } from '@/components/lead-magnet/LeadMagnetMount'
 import { fraunces, inter } from '@/lib/fonts'
 
 import './styles.css'
@@ -31,6 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
         </div>
         <StickyInquireCTA />
+        <LeadMagnetMount />
       </body>
     </html>
   )

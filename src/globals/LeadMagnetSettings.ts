@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { isAdminOrEditor, publicRead } from '../fields/access'
+import { revalidateGlobal } from '../hooks/revalidatePage'
 
 export const LeadMagnetSettings: GlobalConfig = {
   slug: 'lead-magnet-settings',
@@ -8,6 +9,9 @@ export const LeadMagnetSettings: GlobalConfig = {
   access: {
     read: publicRead,
     update: isAdminOrEditor,
+  },
+  hooks: {
+    afterChange: [revalidateGlobal],
   },
   fields: [
     {
