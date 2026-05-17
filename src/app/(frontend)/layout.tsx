@@ -4,6 +4,7 @@ import { Footer } from '@/components/layout/Footer'
 import { MobileMenu } from '@/components/layout/MobileMenu.client'
 import { Sidebar } from '@/components/layout/Sidebar'
 import { StickyInquireCTA } from '@/components/layout/StickyInquireCTA.client'
+import { FooterLeadMagnet } from '@/components/lead-magnet/FooterLeadMagnet'
 import { LeadMagnetMount } from '@/components/lead-magnet/LeadMagnetMount'
 import { fraunces, inter } from '@/lib/fonts'
 
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Sidebar />
           <div className="flex flex-col min-h-dvh">
             <main className="flex-1">{children}</main>
+            <FooterLeadMagnet />
             <Footer />
           </div>
         </div>
