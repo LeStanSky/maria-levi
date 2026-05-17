@@ -24,6 +24,8 @@
       "!**/blob-report",
       "!**/payload-types.ts",
       "!**/importMap.js",
+      "!**/src/migrations/2*.ts",
+      "!**/src/migrations/2*.json",
       "!**/maria_v1",
       "!**/_scaffold"
     ]
