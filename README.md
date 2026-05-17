@@ -8,7 +8,7 @@ Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–3 complete (Phase 3 includes Services + Lead Magnet popup + signed PDF delivery + Payload migrations infrastructure + preview Neon branch split). Phase 4 (Blog) is up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–4 complete + PR-B / B2 / B3 (full lead-magnet trinity + newsletter signup). Phase 5 (SEO + City Pages) is up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
 
 The CMS-driven homepage entry is currently in draft (awaiting real photos); the hardcoded fallback hero serves `/` until that publishes.
 
@@ -50,6 +50,7 @@ Open `http://localhost:3000` for the public site, `http://localhost:3000/admin` 
 | `pnpm generate:importmap` | Regenerate Payload admin import map (after adding custom components). |
 | `pnpm seed:admin` | Create the initial admin user (refuses if any user exists). |
 | `pnpm seed` | Populate demo content into whatever DB `DATABASE_URL` points to. Idempotent — skips collections that already have data. |
+| `pnpm seed:blog` | Parse `blog-seed-posts.md` into Payload BlogPosts + BlogCategories. Idempotent (matches by slug). Useful when standing up a fresh Neon branch for render testing. |
 | `pnpm copy-refresh` | Apply the v5 Bio + microcopy to `about-page`, `contact-page`, `lead-magnet-settings` globals via Payload Local API. Non-destructive (`updateGlobal` only) and idempotent. Set `NEXT_PUBLIC_SITE_URL` + `REVALIDATE_SECRET` to fire ISR after the writes. |
 | `pnpm payload:migrate` | Apply pending Payload migrations against `DATABASE_URL`. CI + Vercel production deploy invoke this; you usually don't need to call it directly. |
 | `pnpm payload:migrate:create` | Generate a new migration from the diff between code-side schema and the DB. Run after touching any collection / global / block / field shape. |
@@ -119,26 +120,32 @@ Small focused PRs preferred over large bundles — e.g. `chore/robots-noindex`, 
 ```
 src/
   app/
-    (frontend)/        — public pages (en-US): /, /about, /portfolio/*
+    (frontend)/        — public pages (en-US): /, /about, /portfolio/*, /journal/*, /services/*, ...
+      api/             — public endpoints (contact, lead-magnet, newsletter, revalidate)
     (payload)/admin/   — Payload admin UI
     (payload)/api/     — Payload REST + GraphQL routes
-    api/revalidate/    — ISR webhook (called by Payload afterChange hooks)
     global-error.tsx   — Sentry-wired root error boundary
   admin/components/    — Custom Payload admin UI extensions (logout link, etc.)
-  collections/         — Payload collection configs (Pages, Portfolio*, Blog*, Services, FAQ, Leads, etc.)
-  globals/             — Payload globals (SiteSettings, Navigation, AboutPage, ContactPage, FaqPage, …)
-  blocks/              — Reusable Payload blocks (hero, gallery, testimonial, etc.)
+  collections/         — Payload collection configs (Pages, Portfolio*, Blog*, Services, FAQ, Subscribers, Leads, ...)
+  globals/             — Payload globals (SiteSettings, Navigation, AboutPage, ContactPage, FaqPage, LeadMagnetSettings, ...)
+  blocks/              — Reusable Payload blocks
+    universal/         — Cross-collection blocks (RichText, MediaBlock, PullQuote, HeroSlider, ...)
+    blog/              — Blog-only blocks (BlogQuote, BlogImageGrid, BlogVideoEmbed, BlogTipCallout, BlogResourceLink, BlogLeadMagnetInline)
   fields/              — Shared field helpers (access, seo, slug)
   hooks/               — Payload hooks (createRedirect, revalidatePage)
+  migrations/          — Payload migration files + index (one per schema-changing PR)
   components/
-    primitives/        — Button, Heading, Text, Container, Section
-    layout/            — Sidebar, Footer, MobileMenu, StickyInquireCTA
-  lib/                 — fonts, payload client, utilities
+    primitives/        — Button, Heading, Text, Container, Section, Breadcrumbs, Image
+    layout/            — Sidebar, Footer, MobileMenu, StickyInquireCTA, NewsletterSignup.client
+    lead-magnet/       — LeadMagnetMount (popup), FooterLeadMagnet (banner above footer)
+    blocks/            — Page-builder + blog block renderers (Blocks.tsx, BlogBlocks.tsx, blog/*)
+    sections/          — Page-specific composed sections (SeriesPhotoGrid, Lightbox, ...)
+  lib/                 — fonts, payload client, seo/media helpers, email (Resend), marketing (Flodesk/analytics), lead-magnet (settings + token)
   styles/
     fonts/             — self-hosted variable woff2 (see docs/fonts.md)
   payload.config.ts    — root Payload configuration
 docs/                  — fonts.md, content-editing-guide.md (WIP), etc.
-scripts/               — seed, db-push, user management CLIs
+scripts/               — seed, seed-blog-posts, copy-refresh, db-push, maybe-migrate, baseline-migration, user management CLIs
 tests/                 — int/ (Vitest), e2e/ (Playwright)
 ```
 
@@ -155,10 +162,13 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 | **0** | Foundation — scaffold, design tokens, fonts, Biome, CI, external services | ✅ Done |
 | **1** | Content model — 12 collections, 7 globals, 28 block stubs, shared fields, hooks, seed | ✅ Done |
 | **2** | Core pages — Home, About, Portfolio (3 levels), Contact, FAQ, Testimonials, error pages | ✅ Done |
-| **3** | Services pages + Lead Magnet popup + signed PDF delivery + Payload migrations + preview Neon branch | ✅ Done |
-| **4** | Blog — `/blog` index + `/blog/[slug]` post pages, wire blog blocks, attach lead-magnet `blog-inline` placement (PR-B2) | Up next |
-| **5** | SEO & City Pages — 5 NYC-metro landings + beta checkpoint + newsletter form (PR-B3) | Planned |
+| **3** | Services pages + Lead Magnet popup (PR-B) + signed PDF delivery + Payload migrations + preview Neon branch | ✅ Done |
+| **4** | Blog at `/journal` — index + `/journal/[slug]` post pages, 9 body block renderers, related posts/series, inline lead-magnet (PR-B2) | ✅ Done |
+|  | Footer lead-magnet banner + newsletter signup form (PR-B3) | ✅ Done |
+| **5** | SEO & City Pages — 5 NYC-metro landings + beta checkpoint | Up next |
 | **6** | Polish & Launch — Lighthouse, copy QA, indexing, real content from Maria | Planned |
+
+**Lead-magnet status on prod.** All three placement surfaces (popup / blog-inline / footer banner) are wired in code and gated on `LeadMagnetSettings.enabled` + `placement[]` + `pdfFile` + `title`. They stay inert until Maria runs the activation checklist in `/admin → Marketing → Lead Magnet`. Newsletter form in the Footer accepts signups immediately and stores them in `Subscribers` with `source: 'newsletter'`; Flodesk sync no-ops until `FLODESK_API_KEY` + `FLODESK_NEWSLETTER_TAG` are set in Vercel env.
 
 ## External services
 
@@ -170,5 +180,5 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 | Sentry | ✅ | Tunnel route `/monitoring`, source maps wired. Production-only by default; client-side `replayIntegration` removed to keep the mobile bundle lean (server-side capture unaffected). |
 | Resend | ✅ | Domain verified (SPF / DKIM / DMARC). Contact form wired: `POST /api/contact` → `Leads.create` (Payload Local API) → notification email with `Reply-To = lead email`. Email failure is Sentry-captured but non-blocking (Lead is source of truth). |
 | Cloudflare R2 + Images | ⏳ | Deferred — current media stored via Payload's default storage; migrate before launch. |
-| Flodesk | ⏳ | Lead-magnet adapter wired (no-ops when key absent — writes `flodeskSyncStatus: 'skipped'` per subscriber). Set `FLODESK_API_KEY` in Vercel once Maria opens an account. |
+| Flodesk | ⏳ | Lead-magnet AND newsletter adapters both wired (no-ops when key absent — write `flodeskSyncStatus: 'skipped'` per subscriber). Set `FLODESK_API_KEY` once Maria opens an account, plus optional `FLODESK_NEWSLETTER_TAG` for segmenting newsletter signups separately from lead-magnet ones. |
 | GA4 + Meta Pixel | ⏳ | Wired in Phase 5/6. |
