@@ -35,6 +35,11 @@ const getSeriesForCategory = cache(async (categoryId: number) => {
     sort: 'displayOrder',
     limit: 100,
     draft: false,
+    // The grid only needs each series' cover + heading. Selecting these (and
+    // excluding `photos`) avoids populating every photo of every series — e.g.
+    // ~144 media for a 12-series category drops to ~12 (one cover each).
+    depth: 1,
+    select: { slug: true, title: true, eyebrow: true, tagline: true, coverImage: true },
   })
   return result.docs
 })
