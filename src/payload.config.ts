@@ -20,6 +20,7 @@ import { Subscribers } from './collections/Subscribers'
 import { Tags } from './collections/Tags'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
+import { Videos } from './collections/Videos'
 import { AboutPage } from './globals/AboutPage'
 import { ContactPage } from './globals/ContactPage'
 import { FaqPage } from './globals/FaqPage'
@@ -57,6 +58,7 @@ export default buildConfig({
     // Portfolio
     PortfolioCategories,
     PortfolioSeries,
+    Videos,
     Tags,
     // Services & Pricing
     Services,

@@ -30,6 +30,15 @@ export const AboutPage: GlobalConfig = {
       relationTo: 'media',
     },
     {
+      name: 'btsVideo',
+      type: 'relationship',
+      relationTo: 'videos',
+      admin: {
+        description:
+          'Behind-the-scenes clip (Option C scaffold — render TODO). Pick a horizontal clip flagged usage="about-bts".',
+      },
+    },
+    {
       name: 'bodyPart1',
       type: 'richText',
       required: true,
