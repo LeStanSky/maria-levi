@@ -45,6 +45,8 @@ export async function generateStaticParams() {
     collection: 'portfolio-categories',
     limit: 100,
     draft: false,
+    depth: 0,
+    select: { slug: true },
   })
   return result.docs.map((c) => ({ category: c.slug }))
 }

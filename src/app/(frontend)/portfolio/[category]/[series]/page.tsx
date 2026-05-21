@@ -39,6 +39,11 @@ export async function generateStaticParams() {
     limit: 200,
     depth: 1,
     draft: false,
+    // Only need each series' slug + its category's slug. Selecting just these
+    // (and excluding `photos`) avoids populating ~300 media docs at build time —
+    // turns a ~40s generateStaticParams into ~1s.
+    select: { slug: true, category: true },
+    populate: { 'portfolio-categories': { slug: true } },
   })
   return result.docs
     .map((s) => {
