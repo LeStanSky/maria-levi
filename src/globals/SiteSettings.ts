@@ -81,7 +81,11 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'taxNote',
       type: 'textarea',
-      defaultValue: 'Prices listed are before applicable sales tax.',
+      defaultValue: 'All prices include applicable sales tax.',
+      admin: {
+        description:
+          'Pricing fine print shown under the Services pricing (e.g. how tax is handled). Leave blank to hide.',
+      },
     },
     {
       name: 'travelNote',

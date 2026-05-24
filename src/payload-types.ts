@@ -3426,6 +3426,9 @@ export interface SiteSetting {
    * Homepage hero clip (Option C scaffold — render TODO). Use a short, silent, horizontal clip.
    */
   heroVideo?: (number | null) | Video;
+  /**
+   * Pricing fine print shown under the Services pricing (e.g. how tax is handled). Leave blank to hide.
+   */
   taxNote?: string | null;
   travelNote?: string | null;
   additionalNote?: string | null;
