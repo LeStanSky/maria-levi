@@ -26,6 +26,7 @@
     "seed:cities": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-city-pages.ts",
     "seed:legal": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-legal.ts",
     "copy-refresh": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/copy-refresh-v5.ts",
+    "favicons": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/generate-favicons.ts",
     "services-refresh": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/services-refresh.ts",
     "portfolio-upload": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/portfolio-upload.ts",
     "r2-sync": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/r2-sync-media.ts",
