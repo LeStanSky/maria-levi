@@ -661,7 +661,7 @@ async function main() {
         tagline: 'Fashion & Personal Brand Photography · NJ/NYC',
         email: 'hello@marialeviphoto.com',
         location: { city: 'New Jersey', region: 'NJ', country: 'US' },
-        taxNote: 'Prices listed are before applicable sales tax.',
+        taxNote: 'All prices include applicable sales tax.',
         travelNote: 'Travel beyond 30 miles from NJ may incur a travel fee.',
       },
     })

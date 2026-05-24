@@ -6,6 +6,25 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.1] — 2026-05-24 — admin hotfix + favicon
+
+### Fixed
+- **Admin was inaccessible** (blank page): the Cloudflare R2 `storage-s3`
+  plugin's `S3ClientUploadHandler` client component was missing from the admin
+  importMap, so Payload threw `getFromImportMap: PayloadComponent not found`.
+  Regenerated via `payload generate:importmap`.
+- Pricing **tax note** now reads "All prices include applicable sales tax."
+  (field default + seed). The live value is CMS-editable in Site Settings, so
+  existing rows still need an admin edit; a migration updates the column default.
+- **Site Settings edits now bust the page cache.** The `SiteSettings` global was
+  missing the `revalidateGlobal` afterChange hook the other content globals have,
+  so editing the tax/travel notes (or footer fields) left cached pages stale.
+
+### Added
+- **Favicon**: "ML" serif monogram — `icon.svg` (scalable), `favicon.ico`
+  (16/32/48) and `apple-icon.png` (180). `pnpm favicons` regenerates the raster
+  assets from the SVG.
+
 ## [0.9.0] — 2026-05-24 — pre-launch feature complete
 
 Phase 5 v9: client content, media pipeline, and the legal pages — the full
