@@ -14,7 +14,6 @@ import { getPayload } from 'payload'
 import config from '../src/payload.config'
 
 const EFFECTIVE = 'May 22, 2026'
-const CONTACT = 'hello@marialeviphoto.com'
 
 // ── lexical helpers ──────────────────────────────────────────────────────────
 type Node = Record<string, unknown> & { type: string; version: number }
@@ -92,15 +91,9 @@ function pm(...children: Node[]): Node {
     textStyle: '',
   }
 }
-// shared contact line with linked email + contact page
+// shared contact line — points to the contact form (no public inbox yet)
 const contactLine = () =>
-  pm(
-    text('Questions? Email us at '),
-    link(CONTACT, `mailto:${CONTACT}`),
-    text(' or use the '),
-    link('contact page', '/contact'),
-    text('.'),
-  )
+  pm(text('Questions? Reach us through our '), link('contact page', '/contact'), text('.'))
 
 // ── content ──────────────────────────────────────────────────────────────────
 const PRIVACY: Node[] = [
@@ -150,8 +143,12 @@ const PRIVACY: Node[] = [
     'We keep inquiry information for as long as needed to respond and maintain our records. Delivered client galleries and files are generally retained for approximately one year unless otherwise agreed.',
   ),
   h('Your rights'),
-  p(
-    `You may request access to, correction of, or deletion of your personal information by contacting us at ${CONTACT}.`,
+  pm(
+    text(
+      'You may request access to, correction of, or deletion of your personal information through our ',
+    ),
+    link('contact page', '/contact'),
+    text('.'),
   ),
   h('Children'),
   p('This website is not directed to children, and we do not knowingly collect their information.'),
