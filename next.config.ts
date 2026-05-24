@@ -7,12 +7,27 @@ import type { NextConfig } from 'next'
 const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 
+// Allow next/image to optimize media served from R2's public URL (and a future
+// custom media domain). Host is derived from R2_PUBLIC_URL at build time;
+// "*.r2.dev" stays as a fallback for envs that build without the var set.
+const r2Host = (() => {
+  try {
+    return process.env.R2_PUBLIC_URL ? new URL(process.env.R2_PUBLIC_URL).hostname : undefined
+  } catch {
+    return undefined
+  }
+})()
+
 const nextConfig: NextConfig = {
   images: {
     localPatterns: [
       {
         pathname: '/api/media/file/**',
       },
+    ],
+    remotePatterns: [
+      { protocol: 'https', hostname: '*.r2.dev' },
+      ...(r2Host ? [{ protocol: 'https' as const, hostname: r2Host }] : []),
     ],
   },
   webpack: (webpackConfig) => {
