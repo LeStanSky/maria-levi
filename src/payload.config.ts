@@ -2,6 +2,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
@@ -20,6 +21,7 @@ import { Subscribers } from './collections/Subscribers'
 import { Tags } from './collections/Tags'
 import { Testimonials } from './collections/Testimonials'
 import { Users } from './collections/Users'
+import { Videos } from './collections/Videos'
 import { AboutPage } from './globals/AboutPage'
 import { ContactPage } from './globals/ContactPage'
 import { FaqPage } from './globals/FaqPage'
@@ -57,6 +59,7 @@ export default buildConfig({
     // Portfolio
     PortfolioCategories,
     PortfolioSeries,
+    Videos,
     Tags,
     // Services & Pricing
     Services,
@@ -109,5 +112,37 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    // Cloudflare R2 (S3-compatible) media storage. Conditional so CI / local
+    // without R2 creds falls back to Payload's default local storage.
+    // Files are served directly from the public R2 URL (no Payload proxy).
+    ...(process.env.R2_ACCOUNT_ID
+      ? [
+          s3Storage({
+            collections: {
+              media: {
+                disablePayloadAccessControl: true,
+                generateFileURL: ({ filename, prefix }) =>
+                  `${process.env.R2_PUBLIC_URL}/${prefix ? `${prefix}/` : ''}${filename}`,
+              },
+              videos: {
+                disablePayloadAccessControl: true,
+                generateFileURL: ({ filename, prefix }) =>
+                  `${process.env.R2_PUBLIC_URL}/${prefix ? `${prefix}/` : ''}${filename}`,
+              },
+            },
+            bucket: process.env.R2_BUCKET || '',
+            config: {
+              endpoint: `https://${process.env.R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+              region: 'auto',
+              credentials: {
+                accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+                secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+              },
+              forcePathStyle: true,
+            },
+          }),
+        ]
+      : []),
+  ],
 })

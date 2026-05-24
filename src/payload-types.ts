@@ -72,6 +72,7 @@ export interface Config {
     'blog-categories': BlogCategory;
     'portfolio-categories': PortfolioCategory;
     'portfolio-series': PortfolioSery;
+    videos: Video;
     tags: Tag;
     services: Service;
     'faq-entries': FaqEntry;
@@ -94,6 +95,7 @@ export interface Config {
     'blog-categories': BlogCategoriesSelect<false> | BlogCategoriesSelect<true>;
     'portfolio-categories': PortfolioCategoriesSelect<false> | PortfolioCategoriesSelect<true>;
     'portfolio-series': PortfolioSeriesSelect<false> | PortfolioSeriesSelect<true>;
+    videos: VideosSelect<false> | VideosSelect<true>;
     tags: TagsSelect<false> | TagsSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     'faq-entries': FaqEntriesSelect<false> | FaqEntriesSelect<true>;
@@ -1209,6 +1211,58 @@ export interface BlogCategory {
   createdAt: string;
 }
 /**
+ * Short-form video clips. Render wired incrementally (Phase 7).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: number;
+  /**
+   * Internal label, e.g. "BTS — studio session"
+   */
+  title: string;
+  /**
+   * Accessibility description (required)
+   */
+  alt: string;
+  caption?: string | null;
+  /**
+   * Poster frame shown before play and on mobile (protects LCP — recommended).
+   */
+  poster?: (number | null) | Media;
+  niche?: ('personal-brand' | 'portrait' | 'model-tests' | 'commercial') | null;
+  /**
+   * Drives layout (vertical clips ≠ horizontal hero).
+   */
+  orientation?: ('vertical' | 'horizontal' | 'square') | null;
+  /**
+   * Where this clip is intended to appear (render added incrementally).
+   */
+  usage?: ('hero' | 'about-bts' | 'services-showcase' | 'portfolio')[] | null;
+  /**
+   * No meaningful audio — safe to autoplay muted.
+   */
+  silent?: boolean | null;
+  /**
+   * Photo series this clip belongs to (for mixed-media grids).
+   */
+  relatedSeries?: (number | PortfolioSery)[] | null;
+  creditPhotographer?: string | null;
+  displayOrder?: number | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "local-landing-pages".
  */
@@ -1829,6 +1883,10 @@ export interface PayloadLockedDocument {
         value: number | PortfolioSery;
       } | null)
     | ({
+        relationTo: 'videos';
+        value: number | Video;
+      } | null)
+    | ({
         relationTo: 'tags';
         value: number | Tag;
       } | null)
@@ -2349,6 +2407,34 @@ export interface PortfolioSeriesSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos_select".
+ */
+export interface VideosSelect<T extends boolean = true> {
+  title?: T;
+  alt?: T;
+  caption?: T;
+  poster?: T;
+  niche?: T;
+  orientation?: T;
+  usage?: T;
+  silent?: T;
+  relatedSeries?: T;
+  creditPhotographer?: T;
+  displayOrder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2924,6 +3010,10 @@ export interface AboutPage {
   headline: string;
   heroImage?: (number | null) | Media;
   /**
+   * Behind-the-scenes clip (Option C scaffold — render TODO). Pick a horizontal clip flagged usage="about-bts".
+   */
+  btsVideo?: (number | null) | Video;
+  /**
    * First section of text (before pull-quote)
    */
   bodyPart1: {
@@ -3332,6 +3422,10 @@ export interface SiteSetting {
    * Link to Pic-Time client portal
    */
   picTimeUrl?: string | null;
+  /**
+   * Homepage hero clip (Option C scaffold — render TODO). Use a short, silent, horizontal clip.
+   */
+  heroVideo?: (number | null) | Video;
   taxNote?: string | null;
   travelNote?: string | null;
   additionalNote?: string | null;
@@ -3368,6 +3462,7 @@ export interface AboutPageSelect<T extends boolean = true> {
   eyebrow?: T;
   headline?: T;
   heroImage?: T;
+  btsVideo?: T;
   bodyPart1?: T;
   pullQuote?: T;
   pullQuoteAttribution?: T;
@@ -3568,6 +3663,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         id?: T;
       };
   picTimeUrl?: T;
+  heroVideo?: T;
   taxNote?: T;
   travelNote?: T;
   additionalNote?: T;

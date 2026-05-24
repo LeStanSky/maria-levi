@@ -52,7 +52,8 @@ next-env.d.ts
 /media
 
 # Internal project docs — not for distribution (stay on local disk only)
-/maria_v1
+/internal_docs/maria_v1
+/internal_docs
 
 # Sentry Config File
 .env.sentry-build-plugin
