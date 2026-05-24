@@ -28,6 +28,7 @@
     "services-refresh": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/services-refresh.ts",
     "portfolio-upload": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/portfolio-upload.ts",
     "r2-sync": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/r2-sync-media.ts",
+    "apply-content": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/apply-site-content.ts",
     "db:push": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/db-push.ts",
     "seed:admin": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/seed-admin.ts",
     "user:create": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/create.ts",
