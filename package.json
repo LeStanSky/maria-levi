@@ -25,6 +25,10 @@
     "seed:blog": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-blog-posts.ts",
     "seed:cities": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-city-pages.ts",
     "copy-refresh": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/copy-refresh-v5.ts",
+    "services-refresh": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/services-refresh.ts",
+    "portfolio-upload": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/portfolio-upload.ts",
+    "r2-sync": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/r2-sync-media.ts",
+    "apply-content": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/apply-site-content.ts",
     "db:push": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/db-push.ts",
     "seed:admin": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/seed-admin.ts",
     "user:create": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/users/create.ts",
@@ -42,6 +46,7 @@
     "@payloadcms/db-postgres": "^3.84.0",
     "@payloadcms/next": "^3.84.0",
     "@payloadcms/richtext-lexical": "^3.84.0",
+    "@payloadcms/storage-s3": "^3.84.1",
     "@payloadcms/ui": "^3.84.0",
     "@sentry/nextjs": "^10.51.0",
     "cross-env": "^7.0.3",
@@ -55,6 +60,7 @@
     "sharp": "0.34.2"
   },
   "devDependencies": {
+    "@aws-sdk/client-s3": "^3.1053.0",
     "@biomejs/biome": "^2.4.0",
     "@playwright/test": "1.58.2",
     "@tailwindcss/postcss": "^4.2.0",

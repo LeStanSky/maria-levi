@@ -70,6 +70,15 @@ export const SiteSettings: GlobalConfig = {
       admin: { description: 'Link to Pic-Time client portal' },
     },
     {
+      name: 'heroVideo',
+      type: 'relationship',
+      relationTo: 'videos',
+      admin: {
+        description:
+          'Homepage hero clip (Option C scaffold — render TODO). Use a short, silent, horizontal clip.',
+      },
+    },
+    {
       name: 'taxNote',
       type: 'textarea',
       defaultValue: 'Prices listed are before applicable sales tax.',
