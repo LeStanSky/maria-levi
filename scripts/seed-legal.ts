@@ -68,6 +68,39 @@ function ul(items: string[]): Node {
 function root(children: Node[]) {
   return { root: { type: 'root', children, direction: 'ltr', format: '', indent: 0, version: 1 } }
 }
+function link(label: string, url: string): Node {
+  return {
+    type: 'link',
+    fields: { linkType: 'custom', url, newTab: false },
+    children: [text(label)],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    version: 1,
+  }
+}
+// paragraph from mixed inline nodes (text + links)
+function pm(...children: Node[]): Node {
+  return {
+    type: 'paragraph',
+    children,
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    version: 1,
+    textFormat: 0,
+    textStyle: '',
+  }
+}
+// shared contact line with linked email + contact page
+const contactLine = () =>
+  pm(
+    text('Questions? Email us at '),
+    link(CONTACT, `mailto:${CONTACT}`),
+    text(' or use the '),
+    link('contact page', '/contact'),
+    text('.'),
+  )
 
 // ── content ──────────────────────────────────────────────────────────────────
 const PRIVACY: Node[] = [
@@ -84,8 +117,16 @@ const PRIVACY: Node[] = [
   p('Information collected automatically when you visit:'),
   ul([
     'Usage and device data via analytics (e.g. pages viewed, approximate location, browser).',
-    'Cookies and similar technologies — see our Cookie Notice.',
+    'Cookies and similar technologies.',
   ]),
+  h('Cookies'),
+  pm(
+    text(
+      'We use cookies and similar technologies. For details on what we use and how to manage them, see our ',
+    ),
+    link('Cookie Notice', '/cookie-notice'),
+    text('.'),
+  ),
   h('How we use your information'),
   ul([
     'To respond to inquiries and provide photography services.',
@@ -123,13 +164,20 @@ const PRIVACY: Node[] = [
     'We may update this policy from time to time. The "last updated" date above reflects the latest version.',
   ),
   h('Contact'),
-  p(`Questions? Email us at ${CONTACT} or use the contact page.`),
+  contactLine(),
 ]
 
 const TERMS: Node[] = [
   p(`Last updated: ${EFFECTIVE}`),
   p(
     'These Terms of Service govern your use of marialeviphoto.com and any photography services provided by Maria Levi Photography. By booking a session or using the site, you agree to these terms.',
+  ),
+  pm(
+    text('Your use of the site is also governed by our '),
+    link('Privacy Policy', '/privacy-policy'),
+    text(' and '),
+    link('Cookie Notice', '/cookie-notice'),
+    text('.'),
   ),
   h('Services'),
   p(
@@ -167,13 +215,18 @@ const TERMS: Node[] = [
     'We may update these terms; continued use of the site or services constitutes acceptance of the current version.',
   ),
   h('Contact'),
-  p(`Questions? Email us at ${CONTACT} or use the contact page.`),
+  contactLine(),
 ]
 
 const COOKIES: Node[] = [
   p(`Last updated: ${EFFECTIVE}`),
   p(
     'This Cookie Notice explains how marialeviphoto.com uses cookies and similar technologies, and how you can manage them.',
+  ),
+  pm(
+    text('For how we use your personal information more generally, see our '),
+    link('Privacy Policy', '/privacy-policy'),
+    text('.'),
   ),
   h('What are cookies'),
   p(
@@ -195,7 +248,7 @@ const COOKIES: Node[] = [
   h('Changes'),
   p('We may update this notice; the "last updated" date above reflects the latest version.'),
   h('Contact'),
-  p(`Questions? Email us at ${CONTACT} or use the contact page.`),
+  contactLine(),
 ]
 
 const PAGES = [
