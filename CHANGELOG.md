@@ -16,6 +16,9 @@ Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 - Pricing **tax note** now reads "All prices include applicable sales tax."
   (field default + seed). The live value is CMS-editable in Site Settings, so
   existing rows still need an admin edit; a migration updates the column default.
+- **Site Settings edits now bust the page cache.** The `SiteSettings` global was
+  missing the `revalidateGlobal` afterChange hook the other content globals have,
+  so editing the tax/travel notes (or footer fields) left cached pages stale.
 
 ### Added
 - **Favicon**: "ML" serif monogram — `icon.svg` (scalable), `favicon.ico`

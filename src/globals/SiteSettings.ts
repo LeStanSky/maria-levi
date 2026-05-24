@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { isAdmin, publicRead } from '../fields/access'
+import { revalidateGlobal } from '../hooks/revalidatePage'
 
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -12,6 +13,9 @@ export const SiteSettings: GlobalConfig = {
     read: publicRead,
     update: isAdmin,
   },
+  // SiteSettings feeds the footer + Services notes (taxNote/travelNote/etc.),
+  // so edits must bust the cached pages like the other content globals do.
+  hooks: { afterChange: [revalidateGlobal] },
   fields: [
     {
       name: 'brandName',
