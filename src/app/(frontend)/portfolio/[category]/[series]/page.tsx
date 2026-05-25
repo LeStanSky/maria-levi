@@ -99,7 +99,7 @@ export default async function PortfolioSeriesPage({ params }: Props) {
 
   return (
     <article>
-      <Section padding="md">
+      <Section padding="md" className="pb-10">
         <Container size="content">
           <Breadcrumbs
             items={[
@@ -114,7 +114,7 @@ export default async function PortfolioSeriesPage({ params }: Props) {
                 {series.eyebrow}
               </p>
             )}
-            <Heading level={1} size="display">
+            <Heading level={1} size="xl" className="text-balance">
               {series.title}
             </Heading>
             {series.tagline && (

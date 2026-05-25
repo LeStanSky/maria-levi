@@ -85,7 +85,7 @@ export default async function ServicesIndexPage() {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="prose">
           {eyebrow && (
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
@@ -103,7 +103,7 @@ export default async function ServicesIndexPage() {
         </Container>
       </Section>
 
-      <Section padding="md">
+      <Section padding="md" className="pt-10">
         <Container size="content">
           <div className="grid gap-10 md:grid-cols-2 md:gap-12">
             {services.map((s) => (

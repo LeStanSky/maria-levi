@@ -76,7 +76,7 @@ export default async function FaqPageRoute() {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="md">
         <Container size="prose">
           {faqPage.eyebrow && (
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
@@ -87,7 +87,7 @@ export default async function FaqPageRoute() {
             {faqPage.headline}
           </Heading>
           {faqPage.intro && (
-            <div className="mt-10">
+            <div className="mt-6">
               <RichText data={faqPage.intro} className="prose text-center mx-auto" />
             </div>
           )}
@@ -105,9 +105,9 @@ export default async function FaqPageRoute() {
           const items = groups.get(category) ?? []
           const label = CATEGORY_LABELS[category] ?? 'More'
           return (
-            <Section key={category} padding="md" className="border-t border-line">
+            <Section key={category} padding="sm" className="border-t border-line">
               <Container size="content">
-                <div className="grid gap-12 lg:grid-cols-[1fr_2fr] lg:gap-20">
+                <div className="grid gap-8 lg:grid-cols-[12rem_1fr] lg:gap-12">
                   <header className="lg:sticky lg:top-12 lg:self-start">
                     <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-3">
                       {category === UNCATEGORISED

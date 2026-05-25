@@ -43,7 +43,7 @@ export default async function TestimonialsPage() {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="md">
         <Container size="prose">
           <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
             Words from the studio
@@ -51,7 +51,7 @@ export default async function TestimonialsPage() {
           <Heading level={1} size="display" className="text-center">
             In their own words.
           </Heading>
-          <p className="mt-10 font-body text-base lg:text-lg text-soft leading-relaxed text-center">
+          <p className="mt-6 font-body text-base lg:text-lg text-soft leading-relaxed text-center">
             What it’s like to work together — straight from the people who have stood in front of
             the camera.
           </p>

@@ -71,7 +71,7 @@ export default async function JournalIndexPage({ searchParams }: Props) {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="prose">
           <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
             Journal
@@ -122,7 +122,7 @@ export default async function JournalIndexPage({ searchParams }: Props) {
         </Section>
       )}
 
-      <Section padding="md">
+      <Section padding="md" className="pt-10">
         <Container size="content">
           {posts.length === 0 ? (
             <Text tone="muted" className="text-center">

@@ -66,7 +66,7 @@ export default async function ContactPage() {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="prose">
           {contactPage.eyebrow && (
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
@@ -84,7 +84,7 @@ export default async function ContactPage() {
         </Container>
       </Section>
 
-      <Section padding="md" className="border-t border-line">
+      <Section padding="md" className="border-t border-line pt-10">
         <Container size="content">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
             {contactPage.heroImage ? (

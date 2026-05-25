@@ -6,6 +6,21 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.3] — 2026-05-25 — spacing & density pass
+
+### Changed
+- **Tightened vertical rhythm site-wide** — reduced the spacing scale
+  (`--spacing-section` 144→96px, `lg` sections 192→112px) and halved the
+  hero→content gaps on home, portfolio, category, services, journal, contact,
+  about and FAQ pages.
+- **FAQ** condensed — narrower category-label column, tighter rows, smaller
+  per-category spacing, densified page heading.
+- **Home** — hero slider shortened ~15% (airier); quote→intro gap halved.
+- **Portfolio series** — title fits one line; heading→hero gap halved.
+- **About** — hero photo scaled down ~16%; photo/quote/text gaps halved.
+- **Service pages** — tightened the gap below the tagline (unused 16:9 hero
+  slot) and the description→divider gap.
+
 ## [0.9.2] — 2026-05-25 — portfolio hero crop fix
 
 ### Fixed
