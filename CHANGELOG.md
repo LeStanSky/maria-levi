@@ -6,6 +6,16 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.6] — 2026-05-25 — hero perf (CLS / LCP)
+
+### Fixed
+- **Homepage hero CLS** (mobile 0.344 → ~0.016): the filmstrip column count was
+  JS-state-driven (`visible` 3 → 1 after hydration), reflowing the strip height.
+  Column widths are now CSS-responsive (`basis-full sm:basis-1/2 lg:basis-1/3`)
+  so the first paint matches the viewport — no reflow.
+- **Hero LCP**: only the first slide is `priority` now (was the first `visible`,
+  i.e. 3 eager images competing on slow mobile connections).
+
 ## [0.9.5] — 2026-05-25 — homepage hero + services/portfolio polish
 
 ### Changed
