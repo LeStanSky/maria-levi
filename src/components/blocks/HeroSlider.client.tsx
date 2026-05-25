@@ -29,7 +29,7 @@ export function HeroSlider({ slides, autoplayInterval, tag, tagline }: Props) {
   if (usable.length === 0) return null
 
   return (
-    <section className="relative w-full aspect-[16/10] md:aspect-[16/9] lg:aspect-[5/3] overflow-hidden bg-bg-subtle">
+    <section className="relative w-full aspect-[32/17] md:aspect-[2/1] overflow-hidden bg-bg-subtle">
       {usable.map((slide, i) => {
         const img = slide.image
         if (!isMedia(img) || !img.url) return null

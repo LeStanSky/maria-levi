@@ -78,7 +78,7 @@ export default async function PortfolioCategoryPage({ params }: Props) {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="content">
           <Breadcrumbs
             items={[{ label: 'Portfolio', href: '/portfolio' }, { label: category.name }]}
@@ -133,7 +133,7 @@ export default async function PortfolioCategoryPage({ params }: Props) {
         </Container>
       </Section>
 
-      <Section padding="md">
+      <Section padding="md" className="pt-10">
         <Container size="content">
           {series.length === 0 ? (
             <Text tone="muted" className="text-center">

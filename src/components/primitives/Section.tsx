@@ -5,7 +5,7 @@ type SectionPadding = 'sm' | 'md' | 'lg'
 const PADDING_CLASS: Record<SectionPadding, string> = {
   sm: 'py-12',
   md: 'py-(--spacing-section)',
-  lg: 'py-32 lg:py-48',
+  lg: 'py-20 lg:py-28',
 }
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
