@@ -168,12 +168,12 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
 
       {/* Process steps */}
       {service.processSteps && service.processSteps.length > 0 && (
-        <Section padding="md" className="border-t border-line">
+        <Section padding="sm" className="border-t border-line">
           <Container size="content">
             <Heading level={2} size="xl" className="text-center">
               How it works
             </Heading>
-            <ol className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+            <ol className="mt-10 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
               {service.processSteps.map((step, i) => (
                 <li key={step.id ?? `step-${i}`}>
                   <p className="font-display text-5xl font-light text-muted leading-none">
@@ -195,14 +195,22 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
       )}
 
       {/* Packages OR commercialNote */}
-      <Section padding="md" className="border-t border-line">
+      <Section padding="sm" className="border-t border-line">
         <Container size="content">
           <Heading level={2} size="xl" className="text-center">
             Investment
           </Heading>
 
           {service.hasPackages && service.packages?.length ? (
-            <div className="mt-16 grid gap-10 md:grid-cols-2 lg:grid-cols-3 md:gap-8">
+            <div
+              className={`mt-10 grid justify-center gap-10 md:gap-8 ${
+                (service.packages?.length ?? 0) >= 3
+                  ? 'md:grid-cols-2 lg:grid-cols-3'
+                  : (service.packages?.length ?? 0) === 2
+                    ? 'mx-auto max-w-3xl md:grid-cols-2'
+                    : 'mx-auto max-w-sm'
+              }`}
+            >
               {service.packages.map((pkg) => (
                 <article
                   key={pkg.id ?? pkg.name}
@@ -276,7 +284,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
           )}
 
           {(taxNote || travelNote || additionalNote) && (
-            <Container size="prose" className="mt-16">
+            <Container size="prose" className="mt-10">
               <ul className="font-body text-xs text-muted text-center space-y-2">
                 {taxNote && <li>{taxNote}</li>}
                 {travelNote && <li>{travelNote}</li>}
@@ -289,7 +297,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
 
       {/* What to wear tip */}
       {service.whatToWearTip && (
-        <Section padding="md" className="border-t border-line bg-bg-subtle">
+        <Section padding="sm" className="border-t border-line bg-bg-subtle">
           <Container size="prose">
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
               Preparation
@@ -306,12 +314,12 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
 
       {/* Related portfolio series */}
       {relatedSeries.length > 0 && (
-        <Section padding="md" className="border-t border-line">
+        <Section padding="sm" className="border-t border-line">
           <Container size="content">
             <Heading level={2} size="xl" className="text-center">
               Selected work
             </Heading>
-            <div className="mt-16 grid gap-6 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-6 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
               {relatedSeries.slice(0, 6).map((s) => (
                 <Link
                   key={s.id}
@@ -340,12 +348,12 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
 
       {/* Related testimonials */}
       {relatedTestimonials.length > 0 && (
-        <Section padding="md" className="border-t border-line bg-bg-subtle">
+        <Section padding="sm" className="border-t border-line bg-bg-subtle">
           <Container size="content">
             <Heading level={2} size="xl" className="text-center">
               In their words
             </Heading>
-            <div className="mt-16 space-y-16">
+            <div className="mt-10 space-y-16">
               {relatedTestimonials.slice(0, 3).map((t) => (
                 <figure key={t.id} className="max-w-prose mx-auto text-center">
                   <blockquote className="font-display text-2xl lg:text-3xl font-light leading-snug tracking-tight text-ink italic">
@@ -363,12 +371,12 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
 
       {/* Related FAQs */}
       {relatedFaqs.length > 0 && (
-        <Section padding="md" className="border-t border-line">
+        <Section padding="sm" className="border-t border-line">
           <Container size="prose">
             <Heading level={2} size="xl" className="text-center">
               Frequently asked
             </Heading>
-            <div className="mt-16 space-y-4">
+            <div className="mt-10 space-y-4">
               {relatedFaqs.map((faq) => (
                 <details key={faq.id} className="group border-b border-line py-6">
                   <summary className="cursor-pointer list-none font-display text-xl font-light text-ink flex items-start justify-between gap-6">
@@ -391,7 +399,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
       )}
 
       {/* CTA banner */}
-      <Section padding="md" className="border-t border-line">
+      <Section padding="sm" className="border-t border-line">
         <Container size="prose">
           <div className="text-center">
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6">
