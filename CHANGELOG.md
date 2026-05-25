@@ -6,6 +6,21 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.4] — 2026-05-25 — infra: R2 key namespacing + Sentry sampling
+
+### Changed
+- **R2 object-key namespacing.** Uploads now carry a per-environment `prefix`
+  (`R2_PREFIX` = `dev`/`preview`; prod stays at the bucket root) so dev/preview
+  re-uploads can no longer clobber prod media on the shared bucket. The prefix is
+  stored per-upload, so existing root files keep resolving; a migration adds the
+  `prefix` column (default empty) to `media` and `videos`.
+- **Sentry** `tracesSampleRate` 1 → 0.1 (server / edge / client) to fit the
+  event budget at production traffic.
+
+### Ops
+- Set `R2_PREFIX=dev` on the dev environment and `R2_PREFIX=preview` on Vercel
+  Preview; leave it unset on Production.
+
 ## [0.9.3] — 2026-05-25 — spacing & density pass
 
 ### Changed

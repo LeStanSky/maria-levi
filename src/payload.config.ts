@@ -121,11 +121,17 @@ export default buildConfig({
           s3Storage({
             collections: {
               media: {
+                // Per-env key namespace so dev/preview uploads can't clobber prod's
+                // (shared bucket). Stored per-doc, so existing root files (empty
+                // prefix) keep resolving. Set R2_PREFIX=dev on dev/preview; leave
+                // unset on prod (root).
+                prefix: process.env.R2_PREFIX || '',
                 disablePayloadAccessControl: true,
                 generateFileURL: ({ filename, prefix }) =>
                   `${process.env.R2_PUBLIC_URL}/${prefix ? `${prefix}/` : ''}${filename}`,
               },
               videos: {
+                prefix: process.env.R2_PREFIX || '',
                 disablePayloadAccessControl: true,
                 generateFileURL: ({ filename, prefix }) =>
                   `${process.env.R2_PUBLIC_URL}/${prefix ? `${prefix}/` : ''}${filename}`,

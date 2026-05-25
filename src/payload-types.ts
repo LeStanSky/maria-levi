@@ -474,6 +474,7 @@ export interface Media {
    * Photo credit (defaults to "Maria Levi")
    */
   creditPhotographer?: string | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1250,6 +1251,7 @@ export interface Video {
   relatedSeries?: (number | PortfolioSery)[] | null;
   creditPhotographer?: string | null;
   displayOrder?: number | null;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -2424,6 +2426,7 @@ export interface VideosSelect<T extends boolean = true> {
   relatedSeries?: T;
   creditPhotographer?: T;
   displayOrder?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -2877,6 +2880,7 @@ export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   caption?: T;
   creditPhotographer?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
