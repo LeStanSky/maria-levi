@@ -6,6 +6,19 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.5] — 2026-05-25 — homepage hero + services/portfolio polish
+
+### Changed
+- **Homepage hero** — replaced the cropped landscape slide with a portrait
+  filmstrip (3 / 2 / 1 columns) that steps left on a timer (seamless loop,
+  hover-pause, reduced-motion aware), ~6px column separators; the tag/tagline
+  moved into a header top-aligned with the sidebar logo for top breathing room.
+- **Service pages** — package-card photos use a 4:5 portrait frame (was 4:3);
+  the package grid centers when there are fewer than 3 (no left-shift); niche
+  sections condensed (md → sm padding, tighter heading→content).
+- **Portfolio series** — dropped the lead/hero photo; the page now goes straight
+  from the title to the photo grid.
+
 ## [0.9.4] — 2026-05-25 — infra: R2 key namespacing + Sentry sampling
 
 ### Changed
