@@ -75,6 +75,13 @@ export default async function PortfolioSeriesPage({ params }: Props) {
 
   const category = series.category as PortfolioCategory
   const heroImage = series.heroImage ?? series.coverImage
+  // Portrait heroes shouldn't be cropped into the landscape 3:2 frame — render
+  // them at their natural ratio (height-capped) so nothing gets cut off.
+  const heroIsPortrait =
+    isMedia(heroImage) &&
+    typeof heroImage.width === 'number' &&
+    typeof heroImage.height === 'number' &&
+    heroImage.height > heroImage.width
 
   const photos: LightboxPhoto[] =
     series.photos
@@ -126,15 +133,26 @@ export default async function PortfolioSeriesPage({ params }: Props) {
 
       {heroImage && isMedia(heroImage) && (
         <Container size="wide">
-          <div className="relative aspect-[3/2] overflow-hidden">
-            <Image
-              media={heroImage}
-              fill
-              priority
-              sizes="(min-width: 1440px) 1440px, 100vw"
-              className="object-cover"
-            />
-          </div>
+          {heroIsPortrait ? (
+            <div className="flex justify-center">
+              <Image
+                media={heroImage}
+                priority
+                sizes="(min-width: 1024px) 600px, 100vw"
+                className="h-auto w-auto max-h-[85vh] max-w-full"
+              />
+            </div>
+          ) : (
+            <div className="relative aspect-[3/2] overflow-hidden">
+              <Image
+                media={heroImage}
+                fill
+                priority
+                sizes="(min-width: 1440px) 1440px, 100vw"
+                className="object-cover"
+              />
+            </div>
+          )}
         </Container>
       )}
 

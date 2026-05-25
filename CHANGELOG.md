@@ -6,6 +6,15 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.2] — 2026-05-25 — portfolio hero crop fix
+
+### Fixed
+- **Portfolio series hero no longer crops vertical photos.** The hero was forced
+  into a landscape `3:2` frame with `object-cover`, cutting the top/bottom off
+  portrait shots (28 of 31 series). It now detects orientation from the image
+  dimensions: portrait heroes render at their natural ratio, height-capped to
+  `85vh`; landscape heroes keep the full-bleed 3:2 banner.
+
 ## [0.9.1] — 2026-05-24 — admin hotfix + favicon
 
 ### Fixed
