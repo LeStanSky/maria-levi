@@ -23,7 +23,7 @@ Sentry.init({
   // Re-add by lazy-loading from a client error boundary if replay context becomes
   // necessary for debugging (see Sentry.lazyLoadIntegration in their docs).
 
-  tracesSampleRate: 1,
+  tracesSampleRate: 0.1,
   enableLogs: true,
   sendDefaultPii: false,
 
