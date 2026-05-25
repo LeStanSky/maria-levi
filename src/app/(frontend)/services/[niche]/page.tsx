@@ -216,7 +216,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
                     </p>
                   )}
                   {pkg.image && typeof pkg.image === 'object' && (
-                    <div className="relative aspect-[4/3] overflow-hidden bg-bg-subtle -m-8 mb-8">
+                    <div className="relative aspect-[4/5] overflow-hidden bg-bg-subtle -m-8 mb-8">
                       <Image
                         media={pkg.image}
                         fill
