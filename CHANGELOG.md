@@ -6,6 +6,15 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.7] — 2026-05-25 — instant content revalidation
+
+### Fixed
+- Editing a collection doc (portfolio category/series, blog post, testimonial)
+  now revalidates the site immediately. The hook previously sent a slug tag that
+  no page consumed (pages use time-based ISR), so e.g. reordering categories only
+  reflected on `/portfolio` after the 60s window. Now it busts the cache like the
+  globals hook.
+
 ## [0.9.6] — 2026-05-25 — hero perf (CLS / LCP)
 
 ### Fixed

@@ -7,16 +7,17 @@ export const revalidateCollection: CollectionAfterChangeHook = async ({ doc }) =
   if (!secret) return doc
 
   try {
-    const tag = doc.slug ? `/${doc.slug}` : undefined
-    const body = tag ? { tag } : { all: true }
-
+    // Pages read content through the Payload local API with time-based ISR (no
+    // fetch tags), so tag-based revalidation was a no-op — a list edit like
+    // category order never refreshed the /portfolio index. Bust everything;
+    // content edits are infrequent.
     await fetch(`${siteUrl}/api/revalidate`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'x-revalidate-secret': secret,
       },
-      body: JSON.stringify(body),
+      body: JSON.stringify({ all: true }),
     })
   } catch {
     // Non-blocking
