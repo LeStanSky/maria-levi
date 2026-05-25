@@ -117,8 +117,7 @@ export function HeroSlider({ slides, autoplayInterval, tag, tagline }: Props) {
             return (
               <div
                 key={`${img.id ?? img.url}-${isClone ? 'clone' : 'main'}`}
-                className="shrink-0 px-[3px]"
-                style={{ width: `${colPct}%` }}
+                className="shrink-0 basis-full px-[3px] sm:basis-1/2 lg:basis-1/3"
                 aria-hidden={isClone}
               >
                 <div className="relative aspect-[3/4] overflow-hidden bg-bg-subtle">
@@ -126,7 +125,7 @@ export function HeroSlider({ slides, autoplayInterval, tag, tagline }: Props) {
                     src={img.url}
                     alt={img.alt ?? ''}
                     fill
-                    priority={i < visible}
+                    priority={i === 0}
                     sizes="(min-width: 1024px) 34vw, (min-width: 640px) 50vw, 100vw"
                     className="object-cover"
                   />
