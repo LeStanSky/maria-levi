@@ -34,7 +34,7 @@ export default async function AboutPage() {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="prose">
           {data.eyebrow && (
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
@@ -47,8 +47,8 @@ export default async function AboutPage() {
         </Container>
 
         {data.heroImage && (
-          <Container size="content" className="mt-16">
-            <div className="relative aspect-[4/3] overflow-hidden">
+          <Container size="content" className="mt-8">
+            <div className="relative aspect-[4/3] overflow-hidden mx-auto max-w-[84%]">
               <Image
                 media={data.heroImage}
                 fill
@@ -61,12 +61,12 @@ export default async function AboutPage() {
         )}
       </Section>
 
-      <Section padding="md">
+      <Section padding="md" className="pt-10">
         <Container size="prose">
           <RichText data={data.bodyPart1} className="prose prose--drop-cap" />
 
           {data.pullQuote && (
-            <figure className="my-16 text-center">
+            <figure className="my-8 text-center">
               <hr className="border-line w-12 mx-auto mb-8" />
               <blockquote className="font-display text-3xl lg:text-4xl font-light leading-snug tracking-tight text-ink">
                 &ldquo;{data.pullQuote}&rdquo;
@@ -84,7 +84,7 @@ export default async function AboutPage() {
         </Container>
 
         {data.imagePair && data.imagePair.length > 0 && (
-          <Container size="content" className="mt-16">
+          <Container size="content" className="mt-8">
             <div className="grid gap-6 md:grid-cols-2">
               {data.imagePair.map((item) =>
                 item.image ? (
@@ -103,13 +103,13 @@ export default async function AboutPage() {
         )}
 
         {data.bodyPart3 && (
-          <Container size="prose" className="mt-16">
+          <Container size="prose" className="mt-8">
             <RichText data={data.bodyPart3} className="prose" />
           </Container>
         )}
 
         {data.signoff && (
-          <Container size="prose" className="mt-16">
+          <Container size="prose" className="mt-8">
             <p className="font-display text-2xl font-light italic text-center text-ink leading-snug">
               {data.signoff}
             </p>

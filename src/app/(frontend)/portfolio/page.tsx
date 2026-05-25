@@ -32,7 +32,7 @@ export default async function PortfolioIndexPage() {
 
   return (
     <article>
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="prose">
           <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
             Selected Work
@@ -47,7 +47,7 @@ export default async function PortfolioIndexPage() {
         </Container>
       </Section>
 
-      <Section padding="md">
+      <Section padding="md" className="pt-10">
         <Container size="content">
           <div className="grid gap-6 md:gap-10 md:grid-cols-2">
             {categories.map((cat) => (

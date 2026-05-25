@@ -125,7 +125,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
   return (
     <article>
       {/* Hero */}
-      <Section padding="lg">
+      <Section padding="lg" className="pb-10 lg:pb-10">
         <Container size="prose">
           {service.eyebrow && (
             <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6 text-center">
@@ -143,7 +143,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
         </Container>
 
         {service.heroImage && typeof service.heroImage === 'object' && (
-          <Container size="content" className="mt-16">
+          <Container size="content" className="mt-8">
             <div className="relative aspect-[16/9] overflow-hidden">
               <Image
                 media={service.heroImage}
@@ -159,7 +159,7 @@ export default async function NicheServicePage({ params }: { params: Promise<{ n
 
       {/* Description */}
       {service.description && (
-        <Section padding="md">
+        <Section padding="md" className="pt-10 pb-10">
           <Container size="prose">
             <RichText data={service.description} className="prose" />
           </Container>

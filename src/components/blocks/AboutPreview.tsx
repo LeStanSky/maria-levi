@@ -17,7 +17,7 @@ type Props = {
 
 export function AboutPreview({ eyebrow, headline, body, image, ctaLabel, ctaLink }: Props) {
   return (
-    <Section padding="md">
+    <Section padding="md" className="pt-6">
       <Container size="content">
         <div className="grid gap-12 lg:gap-20 lg:grid-cols-2 items-center">
           {image && (
