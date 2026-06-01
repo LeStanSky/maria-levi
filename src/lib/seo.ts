@@ -25,6 +25,21 @@ type BuildMetadataArgs = {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 
+// Layout sets `template: '%s · Maria Levi Photography'`, so any page-level
+// title that already ends with the brand has it duplicated when the template
+// applies. Strip the trailing suffix here so the template adds it exactly
+// once — handles both code-set fallbacks and Maria-set CMS `metaTitle` values.
+// Order matters: longer suffix must win.
+const BRAND_SUFFIXES = [' · Maria Levi Photography', ' · Maria Levi']
+
+function stripBrandSuffix(input: string | undefined): string | undefined {
+  if (!input) return input
+  for (const sfx of BRAND_SUFFIXES) {
+    if (input.endsWith(sfx)) return input.slice(0, -sfx.length)
+  }
+  return input
+}
+
 export function buildMetadata({
   seo,
   fallbackTitle,
@@ -32,7 +47,7 @@ export function buildMetadata({
   fallbackImage,
   path,
 }: BuildMetadataArgs): Metadata {
-  const title = seo?.metaTitle || fallbackTitle
+  const title = stripBrandSuffix(seo?.metaTitle || fallbackTitle)
   const description = seo?.metaDescription || fallbackDescription || undefined
 
   const ogImageMedia: MediaLike = isMedia(seo?.ogImage) ? seo?.ogImage : fallbackImage

@@ -31,15 +31,17 @@ const DEFAULT_COLUMNS = [
       { label: 'Testimonials', url: '/testimonials' },
     ],
   },
-  {
-    heading: 'Service area',
-    links: [
-      { label: 'NYC', url: '/nyc' },
-      { label: 'New Jersey', url: '/new-jersey' },
-      { label: 'Manhattan', url: '/photographer-in/manhattan' },
-      { label: 'Hoboken', url: '/photographer-in/hoboken' },
-    ],
-  },
+]
+
+// Service-area column is rendered separately (NOT via `nav.footerColumns`) so
+// Maria customising footer columns in /admin can never accidentally remove
+// these internal links to city + state landings — they're load-bearing for
+// local SEO and the sitemap-internal-link signal.
+const SERVICE_AREA_LINKS = [
+  { label: 'NYC', url: '/nyc' },
+  { label: 'New Jersey', url: '/new-jersey' },
+  { label: 'Manhattan', url: '/photographer-in/manhattan' },
+  { label: 'Hoboken', url: '/photographer-in/hoboken' },
 ]
 
 export async function Footer() {
@@ -53,8 +55,10 @@ export async function Footer() {
 
   return (
     <footer className="bg-bg-subtle border-t border-line mt-(--spacing-section)">
-      {/* 5 children on lg: brand + 3 link columns (Explore / Connect / Service area)
-          + newsletter. Tighter gap-x at lg keeps everything in one row. */}
+      {/* Default layout = 5 children on lg: brand + 2 CMS columns
+          (Explore / Connect) + Service area + Newsletter. If Maria adds a
+          3rd CMS column via /admin, the grid wraps to 2 rows on lg — that's
+          a deliberate trade-off to keep the default tight. */}
       <div className="max-w-(--container-content) mx-auto px-6 lg:px-12 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-5 lg:gap-x-8">
         <div>
           <p className="font-display text-2xl font-light tracking-tight text-ink">{brandName}</p>
@@ -100,6 +104,20 @@ export async function Footer() {
             )}
           </div>
         ))}
+
+        {/* Service-area column — always rendered, never overridable via CMS. */}
+        <div>
+          <h5 className="font-body text-xs uppercase tracking-[0.18em] text-muted">Service area</h5>
+          <ul className="mt-4 space-y-2 text-sm">
+            {SERVICE_AREA_LINKS.map((link) => (
+              <li key={link.url}>
+                <Link href={link.url} className="text-soft hover:text-ink transition-colors">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div>
           <h5 className="font-body text-xs uppercase tracking-[0.18em] text-muted">

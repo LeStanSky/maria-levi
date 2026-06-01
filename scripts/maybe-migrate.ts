@@ -23,17 +23,55 @@
  * fix; `scripts/baseline-migration.ts` removes the underlying marker for any
  * DB graduating from push to migrations.
  */
+import 'dotenv/config'
 import { spawn } from 'node:child_process'
+import { Client } from 'pg'
 
 const env = process.env.VERCEL_ENV
 const force = process.env.FORCE_MIGRATE === 'true'
 const runsMigrate = env === 'production' || env === 'preview' || force
 
 if (!runsMigrate) {
+  // Local `pnpm build` against a push-managed dev DB hits Payload's
+  // "It looks like you've run Payload in dev mode..." prompt during static
+  // generation — `next build` sets NODE_ENV=production which triggers
+  // migrate() inside payload init, and migrate() sees the
+  // `(name='dev', batch=-1)` marker that `pushDevSchema` left behind.
+  // Drop it here so the build proceeds without a 21-worker prompt jam.
+  await dropDevMarker()
+
   console.info(
     `[prebuild] VERCEL_ENV=${env ?? '<unset>'} — skipping payload migrate (only runs for production/preview deploys, or FORCE_MIGRATE=true).`,
   )
   process.exit(0)
+}
+
+async function dropDevMarker() {
+  const url = process.env.DATABASE_URL
+  if (!url) {
+    console.info('[prebuild] no DATABASE_URL — skipping dev-marker check.')
+    return
+  }
+  const client = new Client({ connectionString: url })
+  try {
+    await client.connect()
+    // Skip on a DB that doesn't have the table yet — first run.
+    const tbl = await client.query(
+      `SELECT 1 FROM information_schema.tables WHERE table_name = 'payload_migrations' LIMIT 1`,
+    )
+    if (tbl.rowCount === 0) return
+    const res = await client.query(
+      `DELETE FROM payload_migrations WHERE name = 'dev' AND batch = -1`,
+    )
+    if (res.rowCount && res.rowCount > 0) {
+      console.info(`[prebuild] dropped ${res.rowCount} stale dev-push marker(s).`)
+    }
+  } catch (err) {
+    // Network / auth issues shouldn't block dev builds — log and move on.
+    console.warn(`[prebuild] dev-marker cleanup skipped: ${(err as Error).message}`)
+  } finally {
+    await client.end().catch(() => {})
+  }
 }
 
 console.info(

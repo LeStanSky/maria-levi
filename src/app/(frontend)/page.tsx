@@ -25,9 +25,11 @@ const getHomepage = cache(async () => {
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomepage()
+  // No fallbackTitle — let layout's `title.default` handle the homepage so
+  // the brand-template suffix isn't appended to it (the default already
+  // includes the brand name).
   return buildMetadata({
     seo: page?.seo,
-    fallbackTitle: 'Maria Levi · Fashion & Personal Brand Photographer in NYC and New Jersey',
     fallbackDescription:
       'Editorial · Personal brand · Commercial photography. Based in New York & New Jersey — serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.',
     path: '/',
