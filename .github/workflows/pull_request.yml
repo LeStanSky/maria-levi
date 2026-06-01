@@ -38,8 +38,8 @@ jobs:
       - uses: actions/checkout@v6
 
       - uses: pnpm/action-setup@v6
-        with:
-          version: 10
+        # Version comes from `packageManager` in package.json — keeping it
+        # in one place avoids drift between CI and Vercel.
 
       - uses: actions/setup-node@v6
         with:

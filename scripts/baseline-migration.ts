@@ -18,15 +18,14 @@
  * "graduated" from push-managed to migration-managed, so the dev marker is
  * stale and safe to drop.
  *
- * Optional cleanup: pass `--drop-orphan-subscribers` to also drop the
- * `subscribers` table and `subscribers_id` column the failed PR-B deploy
- * created on the dev DB. Production push silently no-oped during that deploy,
- * so the orphans never landed in production — but they do exist on dev from
- * local PAYLOAD_DB_PUSH=true runs.
- *
  * Usage:
  *   DATABASE_URL=<target-url> tsx scripts/baseline-migration.ts
- *   DATABASE_URL=<dev-url>    tsx scripts/baseline-migration.ts --drop-orphan-subscribers
+ *
+ * Note: a `--drop-orphan-subscribers` flag lived here during the v0.9.0
+ * lead-magnet rollout to clean up a stale `subscribers` table left by a
+ * failed deploy. Subscribers is now a fully-migrated active collection
+ * (migration `20260517_122022_lead_magnet_subscribers`), so the flag was
+ * removed — running it today would drop the production subscribers table.
  */
 import 'dotenv/config'
 import { sql } from '@payloadcms/db-postgres'
@@ -51,8 +50,6 @@ async function main() {
     )
     process.exit(1)
   }
-
-  const dropOrphans = process.argv.includes('--drop-orphan-subscribers')
 
   const payload = await getPayload({ config })
   const drizzle = (
@@ -105,22 +102,6 @@ async function main() {
     console.info(`[baseline] removed stale dev-push marker (${droppedDevMarker} row).`)
   } else {
     console.info('[baseline] no dev-push marker found — nothing to remove.')
-  }
-
-  if (dropOrphans) {
-    console.info('[baseline] --drop-orphan-subscribers: cleaning up PR-B leftovers...')
-    await drizzle.execute(
-      sql`ALTER TABLE IF EXISTS payload_locked_documents_rels DROP COLUMN IF EXISTS subscribers_id`,
-    )
-    await drizzle.execute(sql`DROP TABLE IF EXISTS subscribers CASCADE`)
-    // Drop the Postgres ENUM types too. DROP TABLE does NOT cascade to the
-    // ENUM definitions, so a previous run of this flag left these in place
-    // and broke re-application of the subscribers migration with
-    // 'type "enum_subscribers_source" already exists'.
-    await drizzle.execute(sql`DROP TYPE IF EXISTS "public"."enum_subscribers_source"`)
-    await drizzle.execute(sql`DROP TYPE IF EXISTS "public"."enum_subscribers_status"`)
-    await drizzle.execute(sql`DROP TYPE IF EXISTS "public"."enum_subscribers_flodesk_sync_status"`)
-    console.info('[baseline] orphan cleanup complete.')
   }
 
   console.info('\n[baseline] done. Verify with `pnpm payload:migrate:status`.')
