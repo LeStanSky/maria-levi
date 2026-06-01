@@ -31,6 +31,15 @@ const DEFAULT_COLUMNS = [
       { label: 'Testimonials', url: '/testimonials' },
     ],
   },
+  {
+    heading: 'Service area',
+    links: [
+      { label: 'NYC', url: '/nyc' },
+      { label: 'New Jersey', url: '/new-jersey' },
+      { label: 'Manhattan', url: '/photographer-in/manhattan' },
+      { label: 'Hoboken', url: '/photographer-in/hoboken' },
+    ],
+  },
 ]
 
 export async function Footer() {
@@ -44,7 +53,9 @@ export async function Footer() {
 
   return (
     <footer className="bg-bg-subtle border-t border-line mt-(--spacing-section)">
-      <div className="max-w-(--container-content) mx-auto px-6 lg:px-12 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+      {/* 5 children on lg: brand + 3 link columns (Explore / Connect / Service area)
+          + newsletter. Tighter gap-x at lg keeps everything in one row. */}
+      <div className="max-w-(--container-content) mx-auto px-6 lg:px-12 py-16 grid gap-12 md:grid-cols-2 lg:grid-cols-5 lg:gap-x-8">
         <div>
           <p className="font-display text-2xl font-light tracking-tight text-ink">{brandName}</p>
           <p className="mt-4 text-sm text-soft max-w-xs">

@@ -8,7 +8,7 @@ Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–4 complete + PR-B / B2 / B3 (full lead-magnet trinity + newsletter signup). Phase 5 (SEO + City Pages) is up next. Pre-launch — `robots.txt` blocks indexing until Phase 6 polish & launch.
+**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–4 complete + PR-B / B2 / B3 (full lead-magnet trinity + newsletter signup). Phase 5 in progress — PR-A (city landings) live; PR-B (state pages + sitemap + robots + OG autogen) merged on `dev`; PR-C / PR-D pending. Pre-launch — `INDEX_SITE` env-flag blocks indexing until Phase 6 polish & launch.
 
 The CMS-driven homepage entry is currently in draft (awaiting real photos); the hardcoded fallback hero serves `/` until that publishes.
 
@@ -165,7 +165,8 @@ Public pages are statically generated with `revalidate = 60`. Edits in the Paylo
 | **3** | Services pages + Lead Magnet popup (PR-B) + signed PDF delivery + Payload migrations + preview Neon branch | ✅ Done |
 | **4** | Blog at `/journal` — index + `/journal/[slug]` post pages, 9 body block renderers, related posts/series, inline lead-magnet (PR-B2) | ✅ Done |
 |  | Footer lead-magnet banner + newsletter signup form (PR-B3) | ✅ Done |
-| **5** | SEO & City Pages — 5 NYC-metro landings + beta checkpoint | Up next |
+| **5** | SEO & City Pages — `/photographer-in/[city]` × 5 (PR-A) + state landings `/nyc` `/new-jersey`, dynamic `sitemap.xml`, `app/robots.ts` with `INDEX_SITE` flag, branded OG-image autogen for every dynamic route (PR-B) | 🚧 In progress |
+|  | GA4 + Meta Pixel scaffolding (PR-C) + cookie banner + Sentry FATAL filter (PR-D) + beta checkpoint | Up next |
 | **6** | Polish & Launch — Lighthouse, copy QA, indexing, real content from Maria | Planned |
 
 **Lead-magnet status on prod.** All three placement surfaces (popup / blog-inline / footer banner) are wired in code and gated on `LeadMagnetSettings.enabled` + `placement[]` + `pdfFile` + `title`. They stay inert until Maria runs the activation checklist in `/admin → Marketing → Lead Magnet`. Newsletter form in the Footer accepts signups immediately and stores them in `Subscribers` with `source: 'newsletter'`; Flodesk sync no-ops until `FLODESK_API_KEY` + `FLODESK_NEWSLETTER_TAG` are set in Vercel env.
