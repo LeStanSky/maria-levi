@@ -1,6 +1,6 @@
 {
   "name": "maria-levi",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "description": "marialeviphoto.com — fashion & personal brand photography portfolio",
   "license": "UNLICENSED",
   "private": true,
@@ -24,6 +24,7 @@
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed.ts",
     "seed:blog": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-blog-posts.ts",
     "seed:cities": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-city-pages.ts",
+    "seed:city-heroes": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-city-hero-images.ts",
     "seed:legal": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/seed-legal.ts",
     "copy-refresh": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/copy-refresh-v5.ts",
     "favicons": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/generate-favicons.ts",
