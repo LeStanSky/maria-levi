@@ -6,6 +6,52 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.8] — 2026-06-01 — Phase 5 PR-B (state pages, sitemap, robots, OG autogen)
+
+### Added
+- **State landing pages** `/nyc` (Manhattan + Long Island City) and
+  `/new-jersey` (Hoboken + Jersey City + Princeton). Shared
+  `StateLandingPage` component, `BreadcrumbList` JSON-LD, ISR 60 s.
+  City-card grid centers on `lg` when there are fewer than 3 cities.
+- **Dynamic sitemap** at `/sitemap.xml` (`app/sitemap.ts`) — 60 URLs across
+  pages / portfolio categories / series / services / journal / city
+  landings + new state routes, regenerates hourly.
+- **`app/robots.ts`** with `INDEX_SITE` env flag for one-click launch flip
+  (default = noindex, set `INDEX_SITE=true` to allow crawlers). 10
+  scraper bots (SemrushBot, AhrefsBot, MJ12bot, …) blocked
+  unconditionally. `public/robots.txt` removed — a static file there
+  would override `app/robots.ts`.
+- **Auto OG images** — file-based `opengraph-image.tsx` on every dynamic
+  route + homepage + state pages + legal slug. Shared `renderOgCard` in
+  `src/lib/og/`. Cards render with Satori's default sans (our site fonts
+  are WOFF2 which `@vercel/og` rejects — TTF copies left for Phase 6
+  polish).
+- **`metadataBase`** set on the root layout so file-based OG URLs resolve
+  to absolute on Vercel.
+- **Footer Service-area column** (NYC / NJ / Manhattan / Hoboken). Footer
+  grid expanded to `lg:grid-cols-5` so the newsletter column stays in row.
+- **`pnpm seed:city-heroes`** — idempotent script assigning a 2:3 portrait
+  to each `LocalLandingPage.heroImage`, matched by filename.
+
+### Changed
+- **Density pass** across the new + adjacent SEO pages:
+  - `/nyc` `/new-jersey` — hero+intro merged into one section, padding
+    `md → sm`, `mt-N` tightened across the page.
+  - `/photographer-in/[city]` — hero section padding `lg → md` with a 0.6×
+    `pb` override (smaller gap under the photo), all `mt-16 → mt-10`, hero
+    photo capped at 90 % width on `lg+`, city-card aspect `[4/5] → [2/3]`
+    (matches the 1600×2400 portraits → no visible crop).
+- **README** roadmap line updated — Phase 5 in progress (PR-A live,
+  PR-B merged on `dev`, PR-C/D up next).
+
+### Known follow-ups (not blocking)
+- `<title>` double-suffix (`X · Maria Levi Photography · Maria Levi
+  Photography`) — the layout's `template: "%s · Maria Levi Photography"`
+  is being appended to titles that already include the suffix.
+  Pre-existing pattern from PR-A; fix as a small chore alongside PR-C.
+- TTF copies of Fraunces / Inter for OG cards if brand-typography fidelity
+  on shares becomes important (Phase 6).
+
 ## [0.9.7] — 2026-05-25 — instant content revalidation
 
 ### Fixed
