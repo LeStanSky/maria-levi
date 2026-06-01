@@ -94,48 +94,51 @@ export default async function CityLandingPage({ params }: Props) {
 
   return (
     <article>
-      {/* Hero */}
-      <Section padding="lg">
+      {/* Hero + intro merged — single `py-(--spacing-section)` instead of
+          double-padding between two adjacent Sections (v0.9.3 density pass).
+          `pb-[calc(...*0.6)]` overrides bottom padding to 60% of the section
+          rhythm — the gap from intro copy to the next section's divider was
+          reading as too generous. */}
+      <Section padding="md" className="pb-[calc(var(--spacing-section)*0.6)]">
         <Container size="prose">
           <Breadcrumbs items={[{ label: 'Home', href: '/' }, { label: page.cityName }]} />
           {page.cityState && (
-            <p className="mt-10 font-body uppercase text-xs tracking-[0.18em] text-muted text-center">
+            <p className="mt-8 font-body uppercase text-xs tracking-[0.18em] text-muted text-center">
               {page.cityState}
             </p>
           )}
-          <Heading level={1} size="display" className="mt-4 text-center">
+          <Heading level={1} size="display" className="mt-3 text-center">
             {page.headline}
           </Heading>
           {page.subhead && (
-            <Text tone="soft" className="mt-8 text-center max-w-prose mx-auto text-lg">
+            <Text tone="soft" className="mt-6 text-center max-w-prose mx-auto text-lg">
               {page.subhead}
             </Text>
           )}
         </Container>
 
         {page.heroImage && typeof page.heroImage === 'object' && (
-          <Container size="content" className="mt-16">
-            <div className="relative aspect-[16/9] overflow-hidden">
+          <Container size="content" className="mt-10">
+            {/* Inner cap at 90% on lg+ pulls the hero photo in from the
+                content container width — felt too dominant at full width. */}
+            <div className="relative aspect-[16/9] overflow-hidden lg:mx-auto lg:max-w-[90%]">
               <Image
                 media={page.heroImage}
                 fill
                 priority
-                sizes="(min-width: 1280px) 1280px, 100vw"
+                sizes="(min-width: 1280px) 1152px, 100vw"
                 className="object-cover"
               />
             </div>
           </Container>
         )}
-      </Section>
 
-      {/* Intro */}
-      {page.intro && (
-        <Section padding="md">
-          <Container size="prose">
+        {page.intro && (
+          <Container size="prose" className="mt-12">
             <RichText data={page.intro} className="prose" />
           </Container>
-        </Section>
-      )}
+        )}
+      </Section>
 
       {/* Custom pageBuilder blocks (CityHighlight, ServiceForCity, etc.) */}
       <LocalBlocks blocks={page.pageBuilder} />
@@ -147,7 +150,7 @@ export default async function CityLandingPage({ params }: Props) {
             <Heading level={2} size="xl" className="text-center">
               Where we shoot in {page.cityName}
             </Heading>
-            <ul className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-10 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
               {page.popularLocations.map((loc, i) => (
                 <li key={loc.id ?? `${loc.name}-${i}`} className="border-l border-line pl-6">
                   <Heading level={3} size="md">
@@ -177,7 +180,7 @@ export default async function CityLandingPage({ params }: Props) {
             <Heading level={2} size="xl" className="text-center">
               Sessions available in {page.cityName}
             </Heading>
-            <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <div className="mt-10 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
               {localServices.map((s) => (
                 <Link
                   key={s.id}
@@ -211,7 +214,7 @@ export default async function CityLandingPage({ params }: Props) {
             <Heading level={2} size="xl" className="text-center">
               Selected work in {page.cityName}
             </Heading>
-            <div className="mt-16 grid gap-6 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-10 grid gap-6 md:gap-10 md:grid-cols-2 lg:grid-cols-3">
               {featuredSeries.map((s) => {
                 const category = isPopulated(s.category) ? s.category : null
                 const href = category
@@ -251,7 +254,7 @@ export default async function CityLandingPage({ params }: Props) {
             <Heading level={2} size="xl" className="text-center">
               From clients in {page.cityName}
             </Heading>
-            <div className="mt-16 space-y-16">
+            <div className="mt-10 space-y-12">
               {localTestimonials.slice(0, 3).map((t) => (
                 <figure key={t.id} className="max-w-prose mx-auto text-center">
                   <blockquote className="font-display text-2xl lg:text-3xl font-light leading-snug tracking-tight text-ink italic">
@@ -274,7 +277,7 @@ export default async function CityLandingPage({ params }: Props) {
             <Heading level={2} size="xl" className="text-center">
               From the journal · {page.cityName}
             </Heading>
-            <div className="mt-16 grid gap-8 md:grid-cols-3">
+            <div className="mt-10 grid gap-8 md:grid-cols-3">
               {journalForCity.map((p) => (
                 <Link key={p.id} href={`/journal/${p.slug}`} className="group block">
                   <div className="relative aspect-[4/3] overflow-hidden bg-bg-subtle">
@@ -313,7 +316,7 @@ export default async function CityLandingPage({ params }: Props) {
             <Heading level={2} size="xl" className="text-center">
               Also serving nearby
             </Heading>
-            <ul className="mt-16 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 font-body uppercase text-xs tracking-[0.18em]">
+            <ul className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 font-body uppercase text-xs tracking-[0.18em]">
               {page.nearbyAreas.map((area, i) =>
                 area.link ? (
                   <li key={area.id ?? `${area.name}-${i}`}>
@@ -350,7 +353,7 @@ export default async function CityLandingPage({ params }: Props) {
             </Heading>
             <Link
               href={inquireHref}
-              className="mt-10 inline-flex items-center justify-center px-11 py-4.5 bg-ink text-bg font-body uppercase text-xs font-medium tracking-[0.18em] rounded-[2px] transition-all duration-300 hover:tracking-[0.28em]"
+              className="mt-8 inline-flex items-center justify-center px-11 py-4.5 bg-ink text-bg font-body uppercase text-xs font-medium tracking-[0.18em] rounded-[2px] transition-all duration-300 hover:tracking-[0.28em]"
             >
               Send an inquiry
             </Link>

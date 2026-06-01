@@ -11,6 +11,10 @@ import { fraunces, inter } from '@/lib/fonts'
 import './styles.css'
 
 export const metadata: Metadata = {
+  // Needed so file-based opengraph-image.tsx routes resolve to absolute URLs
+  // when crawlers fetch the metadata. Falls back to localhost only at build
+  // time when no env is set (e.g. fresh dev), Vercel envs always set this.
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: {
     default: 'Maria Levi · Fashion & Personal Brand Photographer in NYC and New Jersey',
     template: '%s · Maria Levi Photography',
