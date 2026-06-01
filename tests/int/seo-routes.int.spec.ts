@@ -1,6 +1,8 @@
-import { describe, expect, it } from 'vitest'
+import { getPayload, type Payload } from 'payload'
+import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import robots from '@/app/robots'
 import sitemap from '@/app/sitemap'
+import config from '@/payload.config'
 
 describe('robots.ts', () => {
   it('emits a sitemap URL pointing at SITE_URL', () => {
@@ -56,6 +58,34 @@ describe('robots.ts', () => {
 
 // Sitemap hits Payload (Postgres dev branch) — generous timeout for cold starts.
 describe('sitemap.ts', { timeout: 60_000 }, () => {
+  // CI runs against a freshly-pushed schema with no LocalLandingPages, so we
+  // seed one before the suite to assert sitemap picks city routes up. The
+  // unique slug avoids colliding with `seed:cities` on a dev DB.
+  const testCitySlug = `sitemap-test-${Date.now()}`
+  let payload: Payload
+  let testCityId: number | string | null = null
+
+  beforeAll(async () => {
+    payload = await getPayload({ config: await config })
+    const created = await payload.create({
+      collection: 'local-landing-pages',
+      data: {
+        cityName: 'Sitemap Test City',
+        slug: testCitySlug,
+        cityState: 'NY',
+        headline: 'Sitemap test',
+      },
+      draft: false,
+    })
+    testCityId = created.id
+  })
+
+  afterAll(async () => {
+    if (testCityId != null) {
+      await payload.delete({ collection: 'local-landing-pages', id: testCityId })
+    }
+  })
+
   it('includes the homepage and core static routes', async () => {
     const entries = await sitemap()
     const urls = entries.map((e) => e.url)
@@ -70,14 +100,11 @@ describe('sitemap.ts', { timeout: 60_000 }, () => {
     )
   })
 
-  it('includes city pages for every seeded LocalLandingPage', async () => {
+  it('includes a city URL for every LocalLandingPage', async () => {
     const entries = await sitemap()
-    const cityPaths = entries
-      .map((e) => new URL(e.url).pathname)
-      .filter((p) => p.startsWith('/photographer-in/'))
-    // The seed:cities script provisions Manhattan, LIC, Hoboken, JC, Princeton.
-    // We don't hard-code 5 because the dev DB can have extras, but ≥1 must exist.
-    expect(cityPaths.length).toBeGreaterThan(0)
+    const paths = entries.map((e) => new URL(e.url).pathname)
+    // The city we seeded in beforeAll must surface — that's the contract.
+    expect(paths).toContain(`/photographer-in/${testCitySlug}`)
   })
 
   it('sets priority and changeFrequency on every entry', async () => {
