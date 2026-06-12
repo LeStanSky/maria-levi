@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
+import { CookieBanner } from '@/components/cookie-consent/CookieBanner.client'
 import { Footer } from '@/components/layout/Footer'
 import { MobileMenu } from '@/components/layout/MobileMenu.client'
 import { Sidebar } from '@/components/layout/Sidebar'
@@ -38,6 +39,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         </div>
         <StickyInquireCTA />
         <LeadMagnetMount />
+        <CookieBanner />
       </body>
     </html>
   )
