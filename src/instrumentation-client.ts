@@ -32,6 +32,30 @@ Sentry.init({
   // The "Cannot find the middleware module" is a dev-only HMR glitch when middleware.ts is
   // added/changed — Next recovers on the next request. Both are noise with no actionable fix.
   ignoreErrors: [/^Internal Next\.js error:/, /Cannot find the middleware module/],
+
+  // Drop exceptions whose stack trace contains no frame from our own bundle.
+  //
+  // Browser extensions (crypto wallets, ad-blockers, password managers, in-page
+  // assistants) inject content scripts whose errors bubble up to Sentry's global
+  // addEventListener instrumentation. Their stack frames are either `<anonymous>:N`
+  // or `chrome-extension://…`, neither of which the SDK marks as `in_app`. Our
+  // bundle frames are rewritten to `app:///…` by `@sentry/nextjs` and flagged
+  // `in_app: true`. So if NO frame is in-app, the event isn't actionable for us.
+  //
+  // First trigger that motivated this: a wallet extension throwing
+  // "Error invoking post: Method not found" on / (Sentry ID e4d92df6, 2026-06-10).
+  // This filter supersedes the targeted `Error invoking …` regex that PR #79
+  // shipped as a fast-ship hotfix — that regex is removed here as redundant.
+  //
+  // Server-side events have no stack frames at all from a `beforeSend` perspective
+  // (this runs on the client). Anything reaching this function has a client stack
+  // or is a manually captured message — letting messages through is intentional.
+  beforeSend(event) {
+    const frames = event.exception?.values?.[0]?.stacktrace?.frames
+    if (!frames || frames.length === 0) return event
+    const hasAppFrame = frames.some((frame) => frame.in_app === true)
+    return hasAppFrame ? event : null
+  },
 })
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart
