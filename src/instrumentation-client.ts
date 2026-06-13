@@ -31,7 +31,18 @@ Sentry.init({
   // initialization" as a normal race-condition it handles itself by re-queuing the action.
   // The "Cannot find the middleware module" is a dev-only HMR glitch when middleware.ts is
   // added/changed — Next recovers on the next request. Both are noise with no actionable fix.
-  ignoreErrors: [/^Internal Next\.js error:/, /Cannot find the middleware module/],
+  //
+  // Browser wallet extensions (Phantom, MetaMask, Solflare, Brave Wallet, …) inject a
+  // content script that pings the page with a JSON-RPC `post` (or similar) method to
+  // sniff for a web3 provider. Our site has none — the bridge throws "Method not found"
+  // (JSON-RPC -32601) and Sentry's global addEventListener instrumentation captures it.
+  // Stack frames are always `<anonymous>:N` (extension-injected, no source map) with no
+  // app frames. First seen in prod 2026-06-10 13:26 UTC on `/` (Sentry ID e4d92df6).
+  ignoreErrors: [
+    /^Internal Next\.js error:/,
+    /Cannot find the middleware module/,
+    /Error invoking \w+: Method not found/,
+  ],
 })
 
 export const onRouterTransitionStart = Sentry.captureRouterTransitionStart

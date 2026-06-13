@@ -6,6 +6,49 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.9] — 2026-06-02 — tech-debt pass (title dedupe, packageManager, build DX, footer SEO-lock)
+
+### Fixed
+- **`<title>` double-suffix**. Layout's
+  `template: '%s · Maria Levi Photography'` was being appended to titles
+  that already included the brand, producing
+  `"X · Maria Levi Photography · Maria Levi Photography"` in SERP across
+  city + state pages and a handful of others. `buildMetadata` now strips
+  the trailing brand suffix from any `seo.metaTitle` / `fallbackTitle`
+  before returning so the template adds it exactly once. Homepage's
+  `fallbackTitle` is dropped entirely — layout's `title.default` handles
+  it without triggering the template.
+- **Local `pnpm build` hung on Payload's dev-push prompt** under
+  `PAYLOAD_DB_PUSH=true`. The `(name='dev', batch=-1)` marker that
+  `pushDevSchema` inserts trips `migrate()` under `NODE_ENV=production`.
+  `scripts/maybe-migrate.ts` now drops that marker via raw `pg` in
+  prebuild, before `next build` ever starts. Added `pg` + `@types/pg`
+  as direct devDeps for the import.
+- **Footer Service-area column** was inside `DEFAULT_COLUMNS`, which is
+  overridden completely when Maria sets her own `footerColumns` via
+  `/admin → Navigation`. That would silently delete the NYC / NJ /
+  Manhattan / Hoboken internal links — load-bearing for local SEO. Now
+  rendered as a hardcoded JSX block so any nav customisation leaves
+  them intact.
+
+### Changed
+- `"packageManager": "pnpm@10.0.0"` added to `package.json` — Vercel
+  uses this to pick the pnpm version. The GitHub Actions workflow's
+  duplicate `version: 10` on `pnpm/action-setup` removed (action
+  errored on the dupe).
+- `engines.node` kept at `">=22.0.0"` rather than pinned to `"22.x"` —
+  pinning produced a pnpm warning on every local command (local dev
+  runs Node 25 per `.nvmrc`) without changing Vercel's runtime, which
+  is Node 22 LTS regardless. The `packageManager` hint is what was
+  actually missing.
+
+### Removed
+- `--drop-orphan-subscribers` flag from `scripts/baseline-migration.ts`.
+  It dropped the `subscribers` table — a v0.9.0-era leftover of a
+  failed lead-magnet deploy. Subscribers is now an active collection
+  (migration `20260517_122022_lead_magnet_subscribers`), so the flag
+  was a footgun pointed at production data.
+
 ## [0.9.8] — 2026-06-01 — Phase 5 PR-B (state pages, sitemap, robots, OG autogen)
 
 ### Added
