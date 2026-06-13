@@ -29,6 +29,14 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '*.r2.dev' },
       ...(r2Host ? [{ protocol: 'https' as const, hostname: r2Host }] : []),
     ],
+    // Cache every optimized variant for a year. Default is 60 s — the variant
+    // expires constantly, and the next request re-runs the transformation,
+    // burning Vercel's Image Optimization quota on a portfolio whose photos
+    // never change. Triggered after free-tier alert hit 75 % (3 750 / 5 000)
+    // pre-launch on 2026-06-12. Each photo's content is immutable once
+    // uploaded (R2 URL = id-based), so a long TTL is safe — if Maria ever
+    // replaces a photo in CMS, the URL changes and we get a fresh cache key.
+    minimumCacheTTL: 31_536_000,
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

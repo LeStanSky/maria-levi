@@ -6,6 +6,85 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.10] — 2026-06-13 — Phase 5 PR-D, Image Optimization quota, admin upload fix, coverage tooling
+
+### Added
+- **Phase 5 PR-D — cookie consent banner**
+  ([#81](https://github.com/LeStanSky/maria-levi/pull/81)). First-visit
+  bottom-left card, US-market two-choice model (**Accept all** /
+  **Reject non-essential**) + link to the existing `/cookie-notice`.
+  Stores the answer in an `ml-cookie-consent` cookie (365 d, SameSite=Lax)
+  and dispatches `window.dispatchEvent('ml-cookie-consent-changed', …)`
+  so the PR-C analytics init (GA4 + Meta Pixel, pending Maria's tracking
+  IDs) can load only on `'accepted'`. `useCookieConsent()` hook exposes
+  the same state to React consumers. Anchored bottom-left so it stays
+  out of the StickyInquireCTA's bottom-right slot.
+- **Sentry `beforeSend` smart filter** ([#81](https://github.com/LeStanSky/maria-levi/pull/81)).
+  Client exceptions whose stacktrace contains no `in_app: true` frame
+  are dropped. Browser extensions (crypto wallets, ad-blockers, password
+  managers, in-page assistants) inject content scripts whose errors all
+  surface via Sentry's global `addEventListener` instrumentation with
+  `<anonymous>:N` or `chrome-extension://…` frames — none of them
+  flagged `in_app` by the SDK. With this filter we catch the entire
+  class, not just the specific wallet probe that motivated it. Subsumes
+  the targeted `Error invoking … Method not found` regex from
+  [#79](https://github.com/LeStanSky/maria-levi/pull/79) (regex removed
+  during rebase as redundant).
+- **v8 test coverage reporting + 72 pure-function unit tests** (PR-T1,
+  [#82](https://github.com/LeStanSky/maria-levi/pull/82)). New
+  `tests/unit/` tier covers `lib/seo` / `lib/jsonld` / `lib/media` /
+  `lib/local/series-by-city` / `fields/slug` — `src/lib` group now at
+  **85 %** statements. Whole-`src/` baseline went 15.4 % → 18.0 %.
+  `vitest.config.mts` gains a `coverage` block; new `pnpm test:coverage`
+  script; no CI threshold gate yet (lands in PR-T4 once we hit the 65 %
+  target the user set on 2026-05-17).
+
+### Changed
+- **`next/image minimumCacheTTL: 60 s → 1 year`**
+  ([#80](https://github.com/LeStanSky/maria-levi/pull/80)). Vercel
+  free-tier Image Optimization alert hit 75 % (3 750 / 5 000) pre-launch
+  with `INDEX_SITE=false`. The 60-second default re-runs the
+  transformation every time the variant cache expires, even though the
+  underlying photos are immutable (Payload media URLs are id-based;
+  replacing a photo in CMS yields a fresh URL → fresh cache key, so
+  long TTL is safe). Buys time before the proper Cloudflare Images
+  migration.
+
+### Fixed
+- **Sentry wallet-extension noise — fast-ship hotfix**
+  ([#79](https://github.com/LeStanSky/maria-levi/pull/79)). First
+  instance landed in prod on 2026-06-10 13:26 UTC on `/` (Sentry ID
+  `e4d92df6`): `Error invoking post: Method not found` from a crypto
+  wallet content script probing the page for a web3 provider. Shipped
+  as a targeted regex inside `ignoreErrors`, then superseded by the
+  broader `beforeSend` filter from
+  [#81](https://github.com/LeStanSky/maria-levi/pull/81) in this same
+  release.
+- **Admin: shared-photo bug on duplicated Services**
+  ([#83](https://github.com/LeStanSky/maria-levi/pull/83)). Maria
+  reported (2026-06-12): "I duplicate a Service, set a new photo on
+  the duplicate, save — and the photo appears on the original too."
+  Root cause: the pencil-edit icon on a `type: 'upload'` field opens
+  the related Media doc in a drawer; dropping a new file inside that
+  drawer REPLACES the file in the shared Media record, and every doc
+  that references it (including the source of a duplicate) starts
+  rendering the new file. `admin: { allowEdit: false }` is ignored by
+  Payload v3 on upload fields (only the relationship field type
+  honours it — verified in `HasOne/index.js:53` and
+  `config/types.d.ts:933`). Fixed with one CSS rule in
+  `src/app/(payload)/custom.scss`:
+  `.upload-field-card .relationship-content__edit { display: none !important; }`.
+  Trade-off accepted: to edit alt text on a Media doc, users now
+  navigate to `/admin/collections/media/<id>` directly rather than
+  via the pencil drawer.
+
+### Tooling
+- `@vitest/coverage-v8@4.0.18` added as a devDependency (pinned to
+  vitest 4.0.18).
+- `tests/unit/**/*.unit.spec.ts` glob added to `vitest.config.mts`
+  `include`; coverage excludes `payload-types.ts`, `migrations/**`,
+  `(payload)/**` generated routes.
+
 ## [0.9.9] — 2026-06-02 — tech-debt pass (title dedupe, packageManager, build DX, footer SEO-lock)
 
 ### Fixed
