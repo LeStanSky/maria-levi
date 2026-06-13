@@ -28,7 +28,14 @@
  *
  * Scoped to `.upload-field-card` — relationship fields (which legitimately
  * use `allowEdit` and want the pencil) are not affected.
+ *
+ * NB: 0.9.10 shipped `.relationship-content__edit` here, which was a guess
+ * based on the file path `fields/Upload/RelationshipContent/index.js`. The
+ * actual `baseClass` declared inside that file is `upload-relationship-details`
+ * (see `node_modules/@payloadcms/ui/dist/fields/Upload/RelationshipContent/
+ * index.js:15`), so the BEM child class for the edit button is
+ * `upload-relationship-details__edit`. 0.9.11 fixes the selector.
  */
-.upload-field-card .relationship-content__edit {
+.upload-field-card .upload-relationship-details__edit {
   display: none !important;
 }
