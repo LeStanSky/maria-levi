@@ -2,6 +2,13 @@ import { describe, expect, it } from 'vitest'
 import { breadcrumbListJsonLd, localBusinessJsonLd } from '@/lib/jsonld'
 import type { LocalLandingPage, Media, SiteSetting } from '@/payload-types'
 
+// Mirror lib/jsonld.ts:4 — same fallback chain. The src module reads this at
+// module-load time, so the test reads it the same way (stubbing later would
+// have no effect on the captured constant). CI sets this to
+// `https://example.com` via .github/workflows/pull_request.yml; local .env
+// sets it to `http://localhost:3000` via dotenv/config in vitest.setup.ts.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+
 const baseImg = { id: 1, url: 'https://cdn.example.com/hero.jpg' } as Media
 
 type PageArg = Parameters<typeof localBusinessJsonLd>[0]['page']
@@ -34,9 +41,7 @@ describe('breadcrumbListJsonLd', () => {
   })
   it('absolutises path under NEXT_PUBLIC_SITE_URL', () => {
     const ld = breadcrumbListJsonLd([{ name: 'About', path: '/about' }])
-    expect((ld.itemListElement as Array<Record<string, unknown>>)[0].item).toBe(
-      'http://localhost:3000/about',
-    )
+    expect((ld.itemListElement as Array<Record<string, unknown>>)[0].item).toBe(`${SITE_URL}/about`)
   })
   it('omits item URL when crumb has no path (current page)', () => {
     const ld = breadcrumbListJsonLd([{ name: 'Active page' }])
@@ -59,8 +64,8 @@ describe('localBusinessJsonLd', () => {
   })
   it('builds URL + @id from slug', () => {
     const ld = localBusinessJsonLd({ page: basePage })
-    expect(ld.url).toBe('http://localhost:3000/photographer-in/manhattan')
-    expect(ld['@id']).toBe('http://localhost:3000/photographer-in/manhattan#business')
+    expect(ld.url).toBe(`${SITE_URL}/photographer-in/manhattan`)
+    expect(ld['@id']).toBe(`${SITE_URL}/photographer-in/manhattan#business`)
   })
   it('falls back to siteSettings.defaultOgImage when page.heroImage is empty', () => {
     const ld = localBusinessJsonLd({

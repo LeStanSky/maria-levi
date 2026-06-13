@@ -2,8 +2,12 @@ import { describe, expect, it } from 'vitest'
 import { buildMetadata } from '@/lib/seo'
 import type { Media } from '@/payload-types'
 
-// vitest.setup.ts loads .env via dotenv/config, so NEXT_PUBLIC_SITE_URL is
-// already set to http://localhost:3000 before this file is imported.
+// Mirror lib/seo.ts:26 — same fallback chain. The src module reads this at
+// module-load time, so the test reads it the same way (stubbing later would
+// have no effect on the captured constant). CI sets this to
+// `https://example.com` via .github/workflows/pull_request.yml; local .env
+// sets it to `http://localhost:3000` via dotenv/config in vitest.setup.ts.
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
 
 const baseImg = { id: 1, url: 'https://cdn.example.com/og.jpg' } as Media
 
@@ -61,9 +65,7 @@ describe('buildMetadata', () => {
 
   describe('canonical / alternates', () => {
     it('builds canonical from path when seo.canonical is absent', () => {
-      expect(buildMetadata({ path: '/about' }).alternates?.canonical).toBe(
-        'http://localhost:3000/about',
-      )
+      expect(buildMetadata({ path: '/about' }).alternates?.canonical).toBe(`${SITE_URL}/about`)
     })
     it('uses seo.canonical verbatim when present', () => {
       expect(
