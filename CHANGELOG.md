@@ -6,6 +6,26 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.11] — 2026-06-13 — hotfix: admin pencil CSS selector
+
+### Fixed
+- **Admin pencil-edit icon is finally actually hidden.** 0.9.10 shipped
+  the CSS rule with the wrong selector — I guessed the
+  `RelationshipContent` component's BEM `baseClass` from its file path
+  (`fields/Upload/RelationshipContent/index.js`) and wrote
+  `.relationship-content__edit`. The actual `baseClass` declared at
+  line 15 of that file is `'upload-relationship-details'`, so the real
+  class on the edit button is `.upload-relationship-details__edit`.
+  Rule confirmed: not present in the prod CSS bundle for 0.9.10 in any
+  matching form, present in 0.9.11. Cross-verified by reading Payload's
+  own emitted styles — `.upload-relationship-details__imageAndDetails`
+  / `__thumbnail` etc. ship in the prod admin bundle, proving the
+  baseClass is real on every upload-field DOM node.
+  - User-visible: pencil now actually disappears from upload field
+    cards in `/admin`. The safe workflow (Remove × → drop new file in
+    the empty dropzone) was already working in 0.9.10 because the data
+    layer is clean; the bug fix from 0.9.10 just wasn't taking effect.
+
 ## [0.9.10] — 2026-06-13 — Phase 5 PR-D, Image Optimization quota, admin upload fix, coverage tooling
 
 ### Added
