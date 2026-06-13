@@ -1,6 +1,9 @@
 import type { Field } from 'payload'
 
-function slugify(str: string): string {
+// Exported so tests/unit can exercise the URL-slug rules directly.
+// The shape (lower / trim / strip-punct / collapse-whitespace / trim-dashes /
+// 60-char cap) is documented in tests/unit/fields/slug.unit.spec.ts.
+export function slugify(str: string): string {
   return str
     .toLowerCase()
     .trim()
