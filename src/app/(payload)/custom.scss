@@ -1,0 +1,34 @@
+/* =========================================================================
+ * Maria Levi Photography — Payload admin overrides
+ * ========================================================================= */
+
+/*
+ * Hide the pencil / edit icon on `type: 'upload'` field cards.
+ *
+ * The pencil opens the related Media doc in a drawer. Inside that drawer,
+ * the Media's own file-upload UI lets the user drop a new file — which
+ * REPLACES the file in the shared Media record. Every other doc that
+ * references this Media doc then renders the new file.
+ *
+ * Maria first hit this on 2026-06-12 when editing a duplicated Service:
+ * the original and the duplicate shared `packages[].image` references, so
+ * her "I just uploaded a new photo from my computer" (which she did inside
+ * the pencil drawer) rewrote the file under both cards.
+ *
+ * `admin: { allowEdit: false }` won't help — Payload v3 only honours that
+ * for `relationship` fields. For `upload` fields, the HasOne component
+ * hardcodes `allowEdit: !readonly` (see node_modules/@payloadcms/ui/dist/
+ * fields/Upload/HasOne/index.js:53). CSS is the cleanest way to hide the
+ * pencil site-wide without forking the upload field component.
+ *
+ * Trade-off accepted (user decision, 2026-06-12): to edit alt text or
+ * caption on a Media doc, the user now navigates to
+ * /admin/collections/media/<id> directly rather than via the pencil drawer.
+ * The bug class is too dangerous to keep the affordance.
+ *
+ * Scoped to `.upload-field-card` — relationship fields (which legitimately
+ * use `allowEdit` and want the pencil) are not affected.
+ */
+.upload-field-card .relationship-content__edit {
+  display: none !important;
+}
