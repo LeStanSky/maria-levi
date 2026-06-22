@@ -139,7 +139,7 @@ async function main() {
       headline: 'Personal Branding Photography for Women Entrepreneurs in NYC & New Jersey',
       subheadline:
         'Professional photo & video content that builds trust and helps you attract clients.',
-      // priceText intentionally blank — Maria sets the entry-offer wording.
+      priceText: 'Sessions from $350',
       ...(heroImageId ? { image: heroImageId } : {}),
       ctaLabel: 'Book a Session',
       ctaLink: CTA_LINK,
