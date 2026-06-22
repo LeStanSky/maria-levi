@@ -177,6 +177,10 @@ export interface Page {
    */
   isHomepage?: boolean | null;
   /**
+   * Tighten the vertical gaps between blocks. Use for conversion landing pages so sections read as one flow (editorial breathing room is the default).
+   */
+  compactSpacing?: boolean | null;
+  /**
    * Page content — add and reorder blocks
    */
   pageBuilder?:
@@ -198,6 +202,24 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero-slider';
+          }
+        | {
+            eyebrow?: string | null;
+            headline: string;
+            /**
+             * Supporting line under the H1 (1–2 sentences).
+             */
+            subheadline?: string | null;
+            /**
+             * Entry-price line, e.g. "Sessions from $350". You set this — leave blank to hide.
+             */
+            priceText?: string | null;
+            image?: (number | null) | Media;
+            ctaLabel: string;
+            ctaLink: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'campaign-hero';
           }
         | {
             eyebrow?: string | null;
@@ -346,6 +368,21 @@ export interface Page {
             id?: string | null;
             blockName?: string | null;
             blockType: 'process-steps';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            /**
+             * Which Service to pull packages + prices from. Edit prices in that Service.
+             */
+            service: number | Service;
+            /**
+             * Optional small print under the cards (e.g. tax / travel note).
+             */
+            note?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pricing-cards';
           }
         | {
             headline: string;
@@ -1331,6 +1368,24 @@ export interface LocalLandingPage {
           }
         | {
             eyebrow?: string | null;
+            headline: string;
+            /**
+             * Supporting line under the H1 (1–2 sentences).
+             */
+            subheadline?: string | null;
+            /**
+             * Entry-price line, e.g. "Sessions from $350". You set this — leave blank to hide.
+             */
+            priceText?: string | null;
+            image?: (number | null) | Media;
+            ctaLabel: string;
+            ctaLink: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'campaign-hero';
+          }
+        | {
+            eyebrow?: string | null;
             headline?: string | null;
             body?: {
               root: {
@@ -1476,6 +1531,21 @@ export interface LocalLandingPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'process-steps';
+          }
+        | {
+            eyebrow?: string | null;
+            headline?: string | null;
+            /**
+             * Which Service to pull packages + prices from. Edit prices in that Service.
+             */
+            service: number | Service;
+            /**
+             * Optional small print under the cards (e.g. tax / travel note).
+             */
+            note?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'pricing-cards';
           }
         | {
             headline: string;
@@ -1978,6 +2048,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   isHomepage?: T;
+  compactSpacing?: T;
   pageBuilder?:
     | T
     | {
@@ -1993,6 +2064,19 @@ export interface PagesSelect<T extends boolean = true> {
               autoplayInterval?: T;
               tagline?: T;
               tag?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'campaign-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              subheadline?: T;
+              priceText?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
               id?: T;
               blockName?: T;
             };
@@ -2112,6 +2196,16 @@ export interface PagesSelect<T extends boolean = true> {
                     description?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        'pricing-cards'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              service?: T;
+              note?: T;
               id?: T;
               blockName?: T;
             };
@@ -2571,6 +2665,19 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        'campaign-hero'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              subheadline?: T;
+              priceText?: T;
+              image?: T;
+              ctaLabel?: T;
+              ctaLink?: T;
+              id?: T;
+              blockName?: T;
+            };
         'intro-block'?:
           | T
           | {
@@ -2687,6 +2794,16 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
                     description?: T;
                     id?: T;
                   };
+              id?: T;
+              blockName?: T;
+            };
+        'pricing-cards'?:
+          | T
+          | {
+              eyebrow?: T;
+              headline?: T;
+              service?: T;
+              note?: T;
               id?: T;
               blockName?: T;
             };

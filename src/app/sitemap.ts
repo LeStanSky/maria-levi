@@ -57,7 +57,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ] = await Promise.all([
     payload.find({
       collection: 'pages',
-      where: { isHomepage: { not_equals: true } },
+      // Exclude the homepage (its own static entry) and any noindex page
+      // (e.g. the /personal-branding paid-traffic landing — kept out of the
+      // sitemap so it can't compete with the organic personal-brand pages).
+      where: {
+        and: [{ isHomepage: { not_equals: true } }, { 'seo.noIndex': { not_equals: true } }],
+      },
       limit: 500,
       draft: false,
       depth: 0,

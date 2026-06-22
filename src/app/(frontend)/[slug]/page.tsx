@@ -51,5 +51,14 @@ export default async function GenericPage({ params }: Props) {
   const { slug } = await params
   const page = await getPage(slug)
   if (!page?.pageBuilder || page.pageBuilder.length === 0) notFound()
+  // `compactSpacing` tightens the inter-block vertical rhythm (see .page-compact
+  // in styles.css) — used by conversion landings like /personal-branding.
+  if (page.compactSpacing) {
+    return (
+      <div className="page-compact">
+        <Blocks blocks={page.pageBuilder} />
+      </div>
+    )
+  }
   return <Blocks blocks={page.pageBuilder} />
 }

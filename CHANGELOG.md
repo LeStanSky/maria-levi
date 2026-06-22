@@ -6,6 +6,37 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [0.9.12] — 2026-06-13 — /personal-branding conversion landing
+
+### Added
+- **`/personal-branding` landing page** — a long-form, conversion-oriented
+  landing for paid traffic, built on the Pages block-builder in the
+  editorial light skin, `noindex` (kept out of `sitemap.xml` so it doesn't
+  compete with the organic `/services/personal-brand` + city pages).
+  Sections: campaign hero → "why it matters" → "what I create" → curated
+  portfolio → how it works → pricing → testimonial → about → final CTA.
+  CTAs point to `/contact?session_type=personal-brand&source=personal-branding`
+  (the `source` lands in the Lead's `pageSubmittedFrom` for ad attribution).
+- **`CampaignHero` block** — headline + subhead + price line + single CTA.
+  Desktop: headline spans the top (tight, balanced wrapping) with the photo
+  and supporting details below; mobile stacks.
+- **`PricingCards` block** — references a Service and renders its `packages[]`
+  from the CMS, so prices stay single-sourced (Maria edits them in Services).
+- **`process-steps` block renderer** — the block existed in the schema but had
+  no Pages renderer (only the niche page rendered it bespoke); now available
+  to any page.
+- **`Pages.compactSpacing` toggle** — tightens inter-block vertical rhythm via
+  a `.page-compact` wrapper + unlayered CSS (collapses the editorial section
+  padding to ~90px gaps). Reusable on any landing.
+- **`pnpm seed:personal-branding`** — idempotent seed for the landing page
+  (marketer's draft copy; Maria refines copy / curates series in `/admin`).
+
+### Migration
+- `20260622_212529_personal_branding_blocks` — adds the `campaign-hero` +
+  `pricing-cards` block tables (on `pages`, `_pages_v`, `local_landing_pages`
+  and its version table) and the `compact_spacing` / `version_compact_spacing`
+  columns on `pages` / `_pages_v`.
+
 ## [0.9.11] — 2026-06-13 — hotfix: admin pencil CSS selector
 
 ### Fixed

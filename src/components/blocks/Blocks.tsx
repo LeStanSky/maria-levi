@@ -1,10 +1,13 @@
 import type { Page } from '@/payload-types'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
+import { CampaignHero } from './CampaignHero'
 import { CTABanner } from './CTABanner'
 import { HeroSlider } from './HeroSlider.client'
 import { IntroBlock } from './IntroBlock'
 import { PortfolioTeaser } from './PortfolioTeaser'
+import { PricingCards } from './PricingCards'
+import { ProcessSteps } from './ProcessSteps'
 import { ServicesTeaser } from './ServicesTeaser'
 import { ImagePair, MediaBlock, PullQuote, RichTextBlock, Spacer } from './SimpleBlocks'
 import { TestimonialSpread } from './TestimonialSpread'
@@ -21,6 +24,8 @@ export function Blocks({ blocks }: { blocks?: Block[] | null }) {
         switch (block.blockType) {
           case 'hero-slider':
             return <HeroSlider key={key} {...block} />
+          case 'campaign-hero':
+            return <CampaignHero key={key} {...block} />
           case 'intro-block':
             return <IntroBlock key={key} {...block} />
           case 'about-preview':
@@ -35,6 +40,10 @@ export function Blocks({ blocks }: { blocks?: Block[] | null }) {
             return <BlogTeaser key={key} {...block} />
           case 'cta-banner':
             return <CTABanner key={key} {...block} />
+          case 'process-steps':
+            return <ProcessSteps key={key} {...block} />
+          case 'pricing-cards':
+            return <PricingCards key={key} {...block} />
           case 'rich-text-block':
             return <RichTextBlock key={key} {...block} />
           case 'media-block':
@@ -47,7 +56,7 @@ export function Blocks({ blocks }: { blocks?: Block[] | null }) {
             return <Spacer key={key} {...block} />
           default:
             // Block type registered in schema but no renderer yet (e.g. contact-split,
-            // newsletter-form, faq-accordion, testimonials-grid, process-steps) — skip silently.
+            // newsletter-form, faq-accordion, testimonials-grid) — skip silently.
             return null
         }
       })}
