@@ -48,6 +48,16 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'compactSpacing',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description:
+          'Tighten the vertical gaps between blocks. Use for conversion landing pages so sections read as one flow (editorial breathing room is the default).',
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'pageBuilder',
       type: 'blocks',
       blocks: universalBlocks,
