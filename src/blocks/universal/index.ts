@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
+import { CampaignHero } from './CampaignHero'
 import { ContactSplit } from './ContactSplit'
 import { CTABanner } from './CTABanner'
 import { FaqAccordion } from './FaqAccordion'
@@ -10,6 +11,7 @@ import { IntroBlock } from './IntroBlock'
 import { MediaBlock } from './MediaBlock'
 import { NewsletterForm } from './NewsletterForm'
 import { PortfolioTeaser } from './PortfolioTeaser'
+import { PricingCards } from './PricingCards'
 import { ProcessSteps } from './ProcessSteps'
 import { PullQuote } from './PullQuote'
 import { RichTextBlock } from './RichTextBlock'
@@ -20,6 +22,7 @@ import { TestimonialsGrid } from './TestimonialsGrid'
 
 export const universalBlocks: Block[] = [
   HeroSlider,
+  CampaignHero,
   IntroBlock,
   PortfolioTeaser,
   ServicesTeaser,
@@ -31,6 +34,7 @@ export const universalBlocks: Block[] = [
   ImagePair,
   PullQuote,
   ProcessSteps,
+  PricingCards,
   CTABanner,
   NewsletterForm,
   FaqAccordion,
