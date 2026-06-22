@@ -136,7 +136,7 @@ async function main() {
     {
       blockType: 'campaign-hero',
       eyebrow: 'Personal Branding',
-      headline: 'Personal Branding Photography for Women Entrepreneurs in NYC & New Jersey',
+      headline: 'Personal Branding Photography for Entrepreneurs in NYC & New Jersey',
       subheadline:
         'Professional photo & video content that builds trust and helps you attract clients.',
       priceText: 'Sessions from $350',
