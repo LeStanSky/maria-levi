@@ -100,10 +100,29 @@ async function main() {
       ? service.heroImage.id
       : (service.heroImage ?? undefined)
 
-  const relatedSeriesIds = (service.relatedSeries ?? [])
+  let relatedSeriesIds = (service.relatedSeries ?? [])
     .map((s) => (typeof s === 'object' && s ? s.id : s))
     .filter((id): id is number => typeof id === 'number')
     .slice(0, 3)
+
+  // Fill the portfolio teaser + About image with on-brand photos when the
+  // service has no curated relatedSeries yet. We pull portfolio series and
+  // drop Model Test ones (the brief explicitly excludes them). Maria
+  // re-curates in /admin; this just keeps the page from looking half-empty.
+  const seriesRes = await payload.find({
+    collection: 'portfolio-series',
+    limit: 50,
+    depth: 0,
+    select: { title: true, coverImage: true },
+  })
+  const onBrandSeries = seriesRes.docs.filter((s) => !/model test/i.test(s.title ?? ''))
+  if (relatedSeriesIds.length === 0) {
+    relatedSeriesIds = onBrandSeries.slice(0, 3).map((s) => s.id)
+  }
+  const firstCover = onBrandSeries
+    .map((s) => (typeof s.coverImage === 'object' && s.coverImage ? s.coverImage.id : s.coverImage))
+    .find((id): id is number => typeof id === 'number')
+  const aboutImageId = firstCover ?? heroImageId
 
   // One testimonial for the social-proof block (optional — skip block if none).
   const testimonialRes = await payload.find({
@@ -179,6 +198,7 @@ async function main() {
           'I am a photographer specializing in personal branding and portrait photography. My focus is helping women present themselves with confidence and authenticity in their business and personal brand.',
         ),
       ]),
+      ...(aboutImageId ? { image: aboutImageId } : {}),
       ctaLabel: 'Read my story',
       ctaLink: '/about',
     },
