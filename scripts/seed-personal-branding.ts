@@ -214,6 +214,7 @@ async function main() {
     title: 'Personal Branding Photography',
     slug: SLUG,
     isHomepage: false,
+    compactSpacing: true,
     _status: 'published',
     seo: {
       // ≤ 60 chars (layout template appends " · Maria Levi Photography").

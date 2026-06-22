@@ -177,6 +177,10 @@ export interface Page {
    */
   isHomepage?: boolean | null;
   /**
+   * Tighten the vertical gaps between blocks. Use for conversion landing pages so sections read as one flow (editorial breathing room is the default).
+   */
+  compactSpacing?: boolean | null;
+  /**
    * Page content — add and reorder blocks
    */
   pageBuilder?:
@@ -2044,6 +2048,7 @@ export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   isHomepage?: T;
+  compactSpacing?: T;
   pageBuilder?:
     | T
     | {

@@ -3,6 +3,7 @@ import * as migration_20260517_122022_lead_magnet_subscribers from './20260517_1
 import * as migration_20260524_083023_videos_and_video_globals from './20260524_083023_videos_and_video_globals'
 import * as migration_20260524_213731_tax_note_default from './20260524_213731_tax_note_default'
 import * as migration_20260525_095838_r2_prefix from './20260525_095838_r2_prefix'
+import * as migration_20260622_212529_personal_branding_blocks from './20260622_212529_personal_branding_blocks'
 
 export const migrations = [
   {
@@ -29,5 +30,10 @@ export const migrations = [
     up: migration_20260525_095838_r2_prefix.up,
     down: migration_20260525_095838_r2_prefix.down,
     name: '20260525_095838_r2_prefix',
+  },
+  {
+    up: migration_20260622_212529_personal_branding_blocks.up,
+    down: migration_20260622_212529_personal_branding_blocks.down,
+    name: '20260622_212529_personal_branding_blocks',
   },
 ]

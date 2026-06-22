@@ -173,3 +173,21 @@
     color: var(--color-ink);
   }
 }
+
+/*
+ * Compact vertical rhythm for conversion landing pages (Pages.compactSpacing →
+ * .page-compact wrapper in the [slug] route). Each block renders its own
+ * <section> with generous editorial padding (sm/md/lg); on a landing those
+ * stack into 150–210px gaps. This collapses every section's block padding so
+ * the page reads as one continuous flow (~64px mobile → ~96px desktop between
+ * sections). Deliberately UNLAYERED so it wins over Tailwind's py-* utilities
+ * (layered styles lose to unlayered ones) without !important. The first
+ * section keeps a little more top room so the hero doesn't feel cramped.
+ */
+.page-compact section {
+  padding-top: clamp(2rem, 4vw, 3rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+.page-compact > section:first-child {
+  padding-top: clamp(3rem, 5vw, 4rem);
+}
