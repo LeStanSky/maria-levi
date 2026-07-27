@@ -31,6 +31,13 @@ const env = process.env.VERCEL_ENV
 const force = process.env.FORCE_MIGRATE === 'true'
 const runsMigrate = env === 'production' || env === 'preview' || force
 
+// Migrations must run over a DIRECT (unpooled) connection — PgBouncer
+// transaction pooling (Neon's `-pooler` endpoint, used by the app at runtime)
+// doesn't support the session-level advisory locks / DDL patterns the migrator
+// relies on. `DATABASE_URL_UNPOOLED` is Neon's standard name for the direct URL;
+// falls back to `DATABASE_URL` when unset (envs where both are the same).
+const migrateUrl = process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL
+
 if (!runsMigrate) {
   // Local `pnpm build` against a push-managed dev DB hits Payload's
   // "It looks like you've run Payload in dev mode..." prompt during static
@@ -47,7 +54,7 @@ if (!runsMigrate) {
 }
 
 async function dropDevMarker() {
-  const url = process.env.DATABASE_URL
+  const url = migrateUrl
   if (!url) {
     console.info('[prebuild] no DATABASE_URL — skipping dev-marker check.')
     return
@@ -81,7 +88,8 @@ console.info(
 const child = spawn('pnpm', ['payload:migrate'], {
   stdio: ['pipe', 'inherit', 'inherit'],
   shell: true,
-  env: { ...process.env, PAYLOAD_DB_PUSH: 'false' },
+  // Force the direct (unpooled) URL for the migration run — see `migrateUrl`.
+  env: { ...process.env, PAYLOAD_DB_PUSH: 'false', DATABASE_URL: migrateUrl || '' },
 })
 
 child.stdin?.write('y\n')

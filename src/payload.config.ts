@@ -98,7 +98,15 @@ export default buildConfig({
   },
   db: postgresAdapter({
     pool: {
+      // Runtime uses DATABASE_URL — set this to Neon's POOLED (`-pooler`)
+      // endpoint in Vercel so serverless cold-start bursts hit PgBouncer, not
+      // Postgres directly (fixes Neon "too many connection attempts"). Migrations
+      // use the direct URL via scripts/maybe-migrate.ts.
       connectionString: process.env.DATABASE_URL || '',
+      // Serverless hardening: release idle connections promptly and fail a
+      // connect attempt fast rather than letting attempts pile up.
+      idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 15_000,
     },
     // Push is opt-in for local-dev iteration only. CI + production deploy run
     // explicit migrations via `pnpm payload:migrate`. Leaving PAYLOAD_DB_PUSH
