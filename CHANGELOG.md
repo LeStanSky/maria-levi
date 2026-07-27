@@ -6,6 +6,41 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.0.0] — 2026-06-13 — 🚀 Public launch
+
+The site is content-complete on its core pages (home, about, portfolio,
+services index) and goes public. Indexing is enabled by setting
+`INDEX_SITE=true` in Vercel Production env (ops step).
+
+### Added
+- **Direct contact methods** on `/contact` — an icon row for Call
+  (`tel:`), Text (`sms:`), Email (`mailto:`) and social profiles, all read
+  from `SiteSettings` (renders only the methods Maria has filled). Footer
+  socials upgraded from text to brand-glyph icons. New inline icon set
+  (`src/components/primitives/icons.tsx`) — no icon dependency.
+
+### Changed
+- **`noindex` on the pages still showing placeholder photos** so they stay
+  out of the index at launch (a photographer's placeholder photos must not
+  be what Google caches first):
+  - `/testimonials` — `<meta noindex>` (temporary; remove when real
+    testimonial photos land) + dropped from `sitemap.xml`.
+  - `/services/personal-brand-photography`, `/services/portrait-photography`,
+    `/services/model-tests` — data-driven via each Service's
+    `seo.noIndex` (set by `scripts/noindex-placeholder-services.ts`); Maria
+    unchecks each in `/admin → Services → <niche>` once real photos are up.
+    `sitemap.xml` now excludes `noindex` services.
+  - `/services/commercial-photography` and the rest of the site index
+    normally (real content).
+
+### Launch ops (outside this repo)
+1. Set `INDEX_SITE=true` in Vercel → Production env + redeploy.
+2. Run `scripts/noindex-placeholder-services.ts` against prod.
+3. Maria fills phone + Instagram (and other socials) in
+   `/admin → Site Settings`, and replaces the placeholder photos — then
+   un-noindexes those four pages.
+4. Submit `sitemap.xml` to Google Search Console.
+
 ## [0.9.12] — 2026-06-13 — /personal-branding conversion landing
 
 ### Added

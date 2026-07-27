@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { cache } from 'react'
+import { SocialIcon } from '@/components/primitives/icons'
 import { getPayloadClient } from '@/lib/payload'
 import { NewsletterSignup } from './NewsletterSignup.client'
 
@@ -67,16 +68,17 @@ export async function Footer() {
             serving Manhattan, Long Island City, Hoboken, Jersey City, Princeton and beyond.
           </p>
           {socials.length > 0 && (
-            <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 font-body uppercase text-xs tracking-[0.18em]">
+            <ul className="mt-6 flex flex-wrap items-center gap-4">
               {socials.map((s) => (
                 <li key={s.id ?? s.url}>
                   <a
                     href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-soft hover:text-ink transition-colors"
+                    aria-label={s.label ?? s.platform}
+                    className="block text-soft transition-colors hover:text-ink"
                   >
-                    {s.label ?? s.platform}
+                    <SocialIcon platform={s.platform} className="h-5 w-5" />
                   </a>
                 </li>
               ))}

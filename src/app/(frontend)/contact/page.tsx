@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { cache, Suspense } from 'react'
 import { ContactForm } from '@/app/(frontend)/contact/ContactForm.client'
+import { ContactMethods } from '@/components/layout/ContactMethods'
 import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
@@ -81,6 +82,9 @@ export default async function ContactPage() {
               <RichText data={contactPage.intro} className="prose text-center mx-auto" />
             </div>
           )}
+          {/* Direct-contact icons (call / text / email / socials) for visitors
+              who'd rather reach out directly than fill the form. */}
+          <ContactMethods className="mt-12" />
         </Container>
       </Section>
 
