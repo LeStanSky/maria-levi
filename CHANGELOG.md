@@ -6,6 +6,20 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.0.1] — 2026-06-13 — fix: Neon connection pooling
+
+### Fixed
+- **Neon "too many connection attempts"** under serverless cold-start bursts
+  (surfaced on a preview deploy; Sentry MARIA-LEVI-15). The app connected to
+  Neon's DIRECT endpoint with no pooling. Runtime `DATABASE_URL` is now
+  expected to point at Neon's POOLED (`-pooler`) endpoint so bursts hit
+  PgBouncer, not Postgres. Migrations keep using a direct connection
+  (`DATABASE_URL_UNPOOLED`) via `scripts/maybe-migrate.ts` — PgBouncer
+  transaction pooling can't do the migrator's session-level advisory locks.
+  Falls back to `DATABASE_URL` when the unpooled var is unset (no-op until the
+  pooled endpoint is configured in Vercel env). Added pg pool idle /
+  connection timeouts for serverless.
+
 ## [1.0.0] — 2026-06-13 — 🚀 Public launch
 
 The site is content-complete on its core pages (home, about, portfolio,
