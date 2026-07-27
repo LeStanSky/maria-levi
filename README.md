@@ -8,9 +8,9 @@ Single-language (en-US), inquiry-driven (no e-commerce, no online booking).
 
 ## Status
 
-**Live on [marialeviphoto.com](https://marialeviphoto.com).** Phases 0–4 complete + PR-B / B2 / B3 (full lead-magnet trinity + newsletter signup). Phase 5 in progress — PR-A (city landings) live; PR-B (state pages + sitemap + robots + OG autogen) merged on `dev`; PR-C / PR-D pending. Pre-launch — `INDEX_SITE` env-flag blocks indexing until Phase 6 polish & launch.
+**🚀 Launched — live on [marialeviphoto.com](https://marialeviphoto.com) (`1.0.0`).** Phases 0–5 complete (core pages, services, lead-magnet trinity + newsletter, blog, SEO city/state pages + sitemap/robots/OG, cookie consent, `/personal-branding` conversion landing). Public indexing enabled via `INDEX_SITE=true` in Vercel Production.
 
-The CMS-driven homepage entry is currently in draft (awaiting real photos); the hardcoded fallback hero serves `/` until that publishes.
+Four pages are held at `noindex` until Maria replaces their placeholder photos: `/testimonials` and the `personal-brand` / `portrait` / `model-tests` service niches. Un-noindex each as real photos land (see CHANGELOG 1.0.0).
 
 Lighthouse on production (real device): **mobile 89 · desktop 90–94**.
 
