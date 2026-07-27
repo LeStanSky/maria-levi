@@ -42,7 +42,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry('/journal', now, 0.7, 'daily'),
     entry('/contact', now, 0.7, 'monthly'),
     entry('/faq', now, 0.6, 'monthly'),
-    entry('/testimonials', now, 0.6, 'monthly'),
+    // /testimonials is noindex at 1.0.0 launch (placeholder photos) — re-add
+    // when the testimonials page is un-noindexed (see testimonials/page.tsx).
     entry('/nyc', now, 0.8, 'weekly'),
     entry('/new-jersey', now, 0.8, 'weekly'),
   ]
@@ -84,6 +85,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
     payload.find({
       collection: 'services',
+      // Skip noindex services (e.g. niches still on placeholder photos at
+      // launch) — they carry a `<meta noindex>` so keep them out of the sitemap.
+      where: { 'seo.noIndex': { not_equals: true } },
       limit: 100,
       draft: false,
       depth: 0,

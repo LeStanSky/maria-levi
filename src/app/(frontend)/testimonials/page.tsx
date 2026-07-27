@@ -28,6 +28,10 @@ export async function generateMetadata(): Promise<Metadata> {
     fallbackDescription:
       'In their own words — clients on what it’s like to be photographed by Maria.',
     path: '/testimonials',
+    // TEMPORARY (1.0.0 launch): testimonial photos are still placeholders on
+    // prod. Keep this page out of the index until Maria adds real photos, then
+    // remove this line (and re-add /testimonials to app/sitemap.ts).
+    seo: { noIndex: true },
   })
 }
 
