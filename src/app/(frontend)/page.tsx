@@ -6,20 +6,22 @@ import { Container } from '@/components/primitives/Container'
 import { Heading } from '@/components/primitives/Heading'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
-import { getPayloadClient } from '@/lib/payload'
+import { getPayloadClient, withDbRetry } from '@/lib/payload'
 import { buildMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
 const getHomepage = cache(async () => {
   const payload = await getPayloadClient()
-  const result = await payload.find({
-    collection: 'pages',
-    where: { isHomepage: { equals: true } },
-    limit: 1,
-    depth: 2,
-    draft: false,
-  })
+  const result = await withDbRetry(() =>
+    payload.find({
+      collection: 'pages',
+      where: { isHomepage: { equals: true } },
+      limit: 1,
+      depth: 2,
+      draft: false,
+    }),
+  )
   return result.docs[0] ?? null
 })
 
