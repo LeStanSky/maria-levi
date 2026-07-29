@@ -6,6 +6,38 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.0.2] — 2026-07-29 — fix: Neon connection resilience + Sentry noise + Node 24
+
+### Fixed
+- **Fatal crash on a dropped idle Postgres connection** (Sentry MARIA-LEVI-16).
+  Neon closes idle pooled connections from its side; `@payloadcms/db-postgres`
+  never attaches a Pool-level `error` listener, so node-postgres re-emitted the
+  drop as an unhandled `error` event → `uncaughtException` killed the serverless
+  function. `onInit` now attaches `pool.on('error')` — the drop logs a warning
+  and the next query transparently reconnects.
+- **Sentry noise filtered:**
+  - Instagram / Facebook in-app WebView `window.webkit.messageHandlers` errors
+    (MARIA-LEVI-12) — not our code; the injected native-bridge script runs in
+    the document context so its frames are flagged `in_app`, which slipped past
+    the existing "no app frame" filter. Added an explicit `ignoreErrors` match.
+    Expect volume here as the `/personal-branding` ad drives Instagram traffic.
+  - Empty `Error: undefined` unhandled rejections that trail a failed Payload
+    connect (MARIA-LEVI-14); the real connect error (MARIA-LEVI-15) still
+    reports.
+
+### Changed
+- **Node aligned to 24** (prod runtime is 24.18). `engines.node` `>=22.0.0` →
+  `>=24.0.0` — drops the deprecated Node 22 from the allowed range (removes the
+  Vercel deploy deprecation warning); local Node 25 still satisfies it. `.nvmrc`
+  `25` → `24` so CI (`node-version-file`) tests on the prod runtime instead of
+  non-LTS Node 25.
+
+### Known / deferred
+- The **cold-start connect timeout** (MARIA-LEVI-15) root cause is Neon
+  Free-tier scale-to-zero (5-min autosuspend, locked on Free). This release
+  makes the failure non-fatal but doesn't eliminate it — fixing at the source
+  needs a Neon Launch upgrade to disable/extend autosuspend, deferred by choice.
+
 ## [1.0.1] — 2026-06-13 — fix: Neon connection pooling
 
 ### Fixed
