@@ -22,4 +22,18 @@ Sentry.init({
 
   // Disabled by default — site has GDPR obligations. Flip to true temporarily for targeted debugging.
   sendDefaultPii: false,
+
+  // Drop empty unhandled-rejection events. When a Payload init connect attempt fails
+  // (Neon cold-start), the rejection propagates with a null/undefined reason, so Sentry's
+  // onunhandledrejection integration captures a contentless "Error: undefined" with a stack
+  // that lives entirely inside @sentry/node-core (Sentry MARIA-LEVI-14). It carries no
+  // information the real, separately-captured connect error (MARIA-LEVI-15) doesn't already
+  // have, so it's pure noise. Everything with an actual type/value passes through untouched.
+  beforeSend(event) {
+    const ex = event.exception?.values?.[0]
+    if (ex && ex.type === 'Error' && (ex.value === undefined || ex.value === 'undefined')) {
+      return null
+    }
+    return event
+  },
 })

@@ -1,6 +1,6 @@
 {
   "name": "maria-levi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "marialeviphoto.com — fashion & personal brand photography portfolio",
   "license": "UNLICENSED",
   "private": true,
@@ -87,7 +87,7 @@
     "vitest": "4.0.18"
   },
   "engines": {
-    "node": ">=22.0.0",
+    "node": ">=24.0.0",
     "pnpm": "^9 || ^10"
   },
   "packageManager": "pnpm@10.0.0",

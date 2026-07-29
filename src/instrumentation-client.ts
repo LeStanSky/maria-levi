@@ -31,7 +31,18 @@ Sentry.init({
   // initialization" as a normal race-condition it handles itself by re-queuing the action.
   // The "Cannot find the middleware module" is a dev-only HMR glitch when middleware.ts is
   // added/changed — Next recovers on the next request. Both are noise with no actionable fix.
-  ignoreErrors: [/^Internal Next\.js error:/, /Cannot find the middleware module/],
+  //
+  // `webkit.messageHandlers` is thrown by the script the Instagram / Facebook in-app
+  // browser injects into the page (its native bridge, absent when Meta's WebView isn't
+  // hosting us). Because that script runs in the document context its frames resolve to
+  // `app:///…` and are flagged `in_app: true`, so the beforeSend "no app frame" filter
+  // below does NOT catch it — hence the explicit message match. Expect a steady stream
+  // as the /personal-branding ad drives Instagram traffic (Sentry MARIA-LEVI-12).
+  ignoreErrors: [
+    /^Internal Next\.js error:/,
+    /Cannot find the middleware module/,
+    /webkit\.messageHandlers/,
+  ],
 
   // Drop exceptions whose stack trace contains no frame from our own bundle.
   //
