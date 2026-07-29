@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import { cache } from 'react'
 import { SocialIcon } from '@/components/primitives/icons'
-import { getPayloadClient } from '@/lib/payload'
+import { getPayloadClient, withDbRetry } from '@/lib/payload'
 import { NewsletterSignup } from './NewsletterSignup.client'
 
 const getNavigation = cache(async () => {
   const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'navigation' })
+  return withDbRetry(() => payload.findGlobal({ slug: 'navigation' }))
 })
 
 const getSiteSettings = cache(async () => {
   const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'site-settings' })
+  return withDbRetry(() => payload.findGlobal({ slug: 'site-settings' }))
 })
 
 const DEFAULT_COLUMNS = [
