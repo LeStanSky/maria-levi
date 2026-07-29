@@ -6,6 +6,36 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.0.3] — 2026-07-29 — fix: retry reads through Neon cold-start failures
+
+### Fixed
+- **Cold-start read failures on `GET /`** (Sentry MARIA-LEVI-17 homepage count,
+  MARIA-LEVI-18 footer navigation). v1.0.2 killed the *fatal* idle-drop crash,
+  but Neon Free scale-to-zero still failed the *in-flight* query on the first
+  request after a suspend — the connect timed out or the socket dropped
+  mid-query, surfacing as handled `Failed query` errors. New `withDbRetry`
+  (`src/lib/db-retry.ts`) retries an idempotent read up to 2× with short
+  backoff, but **only** on transient transport errors (`Connection terminated` /
+  `connection timeout` / `ECONNRESET`), walking the `DrizzleQueryError.cause`
+  chain. The failed first attempt is what wakes the Neon compute, so the retry
+  lands on the now-awake pool — a cold-start error becomes a slightly slower
+  success. Wrapped the every-request hot reads: homepage lookup + footer
+  `navigation` / `site-settings` globals. `connectionTimeoutMillis` stays 15s on
+  purpose — with up to 3 attempts a longer per-attempt timeout could push a
+  truly-dead-DB request past Vercel's function limit.
+
+### Notes
+- **MARIA-LEVI-B ("N+1 Query")** is the same scale-to-zero root, not a code
+  N+1: the trace shows ~6s `pg-pool.connect` spans (Neon compute waking) fanned
+  out across concurrent RSC fetchers, while the actual SELECTs run in 19–90 ms.
+  It resolves once the compute is warm; no separate fix.
+- The cold-start **root** (Neon Free scale-to-zero) still needs a Neon Launch
+  upgrade to eliminate — deferred. This release makes the failures self-heal.
+
+### Tests
+- `tests/unit/lib/db-retry.unit.spec.ts` — transient/non-transient split,
+  cause-chain detection, success-without-retry, retry exhaustion.
+
 ## [1.0.2] — 2026-07-29 — fix: Neon connection resilience + Sentry noise + Node 24
 
 ### Fixed
