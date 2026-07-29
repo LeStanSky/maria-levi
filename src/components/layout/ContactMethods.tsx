@@ -1,10 +1,10 @@
 import { cache } from 'react'
 import { MailIcon, MessageIcon, PhoneIcon, SocialIcon } from '@/components/primitives/icons'
-import { getPayloadClient } from '@/lib/payload'
+import { getPayloadClient, withDbRetry } from '@/lib/payload'
 
 const getSiteSettings = cache(async () => {
   const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'site-settings' })
+  return withDbRetry(() => payload.findGlobal({ slug: 'site-settings' }))
 })
 
 // Strip everything but digits and a leading + so tel:/sms: hrefs are valid.
