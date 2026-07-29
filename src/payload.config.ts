@@ -119,6 +119,22 @@ export default buildConfig({
     // which this import follows.
     prodMigrations: migrations,
   }),
+  // Neon (serverless Postgres) closes idle pooled connections from its side. The
+  // node-postgres Pool that @payloadcms/db-postgres creates surfaces that as an
+  // 'error' event which the Pool re-emits — and the adapter never attaches a
+  // Pool-level 'error' listener (see its connect.ts), so an unhandled 'error'
+  // event crashes the serverless function via uncaughtException (Sentry
+  // MARIA-LEVI-16, level: fatal). Attach one here: log and move on — the next
+  // query transparently checks out a fresh connection.
+  onInit: async (payload) => {
+    const pool = (payload.db as { pool?: import('pg').Pool }).pool
+    pool?.on('error', (err) => {
+      payload.logger.warn(
+        { err },
+        'Idle Postgres pool connection dropped by Neon; recovered on next query',
+      )
+    })
+  },
   sharp,
   plugins: [
     // Cloudflare R2 (S3-compatible) media storage. Conditional so CI / local
