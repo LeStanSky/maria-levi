@@ -8,6 +8,7 @@ import { Heading } from '@/components/primitives/Heading'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
 import type { LightboxPhoto } from '@/components/sections/Lightbox.client'
+import { SeriesFeatures } from '@/components/sections/SeriesFeatures'
 import { SeriesPhotoGrid } from '@/components/sections/SeriesPhotoGrid.client'
 import { isMedia } from '@/lib/media'
 import { getPayloadClient } from '@/lib/payload'
@@ -88,6 +89,9 @@ export default async function PortfolioSeriesPage({ params }: Props) {
         }
       }) ?? []
 
+  const features = series.features ?? []
+  const hasFeatures = features.length > 0
+
   return (
     <article>
       <Section padding="md" className="pb-10">
@@ -99,25 +103,34 @@ export default async function PortfolioSeriesPage({ params }: Props) {
               { label: series.title },
             ]}
           />
-          <div className="mt-10 max-w-(--container-prose)">
-            {series.eyebrow && (
-              <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6">
-                {series.eyebrow}
-              </p>
-            )}
-            <Heading level={1} size="xl" className="text-balance">
-              {series.title}
-            </Heading>
-            {series.tagline && (
-              <Text tone="soft" className="mt-6 text-lg">
-                {series.tagline}
-              </Text>
-            )}
-            {series.description && (
-              <div className="mt-10 prose max-w-(--container-prose)">
-                <RichText data={series.description} />
-              </div>
-            )}
+          <div
+            className={
+              hasFeatures
+                ? 'mt-10 grid gap-12 lg:grid-cols-2 lg:gap-20 items-start'
+                : 'mt-10 max-w-(--container-prose)'
+            }
+          >
+            <div>
+              {series.eyebrow && (
+                <p className="font-body uppercase text-xs tracking-[0.18em] text-muted mb-6">
+                  {series.eyebrow}
+                </p>
+              )}
+              <Heading level={1} size="xl" className="text-balance">
+                {series.title}
+              </Heading>
+              {series.tagline && (
+                <Text tone="soft" className="mt-6 text-lg">
+                  {series.tagline}
+                </Text>
+              )}
+              {series.description && (
+                <div className="mt-10 prose max-w-(--container-prose)">
+                  <RichText data={series.description} />
+                </div>
+              )}
+            </div>
+            {hasFeatures && <SeriesFeatures features={features} />}
           </div>
         </Container>
       </Section>
