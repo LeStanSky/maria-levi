@@ -3,6 +3,7 @@ import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
 import { CampaignHero } from './CampaignHero'
 import { CTABanner } from './CTABanner'
+import { HeroMediaPair } from './HeroMediaPair'
 import { HeroSlider } from './HeroSlider.client'
 import { IntroBlock } from './IntroBlock'
 import { PortfolioTeaser } from './PortfolioTeaser'
@@ -22,6 +23,8 @@ export function Blocks({ blocks }: { blocks?: Block[] | null }) {
       {blocks.map((block) => {
         const key = block.id ?? `${block.blockType}-${Math.random()}`
         switch (block.blockType) {
+          case 'hero-media-pair':
+            return <HeroMediaPair key={key} {...block} />
           case 'hero-slider':
             return <HeroSlider key={key} {...block} />
           case 'campaign-hero':
