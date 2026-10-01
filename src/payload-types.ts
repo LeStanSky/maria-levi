@@ -204,6 +204,25 @@ export interface Page {
             blockType: 'hero-slider';
           }
         | {
+            /**
+             * Portrait photo (shown full-height, cropped to fill)
+             */
+            image: number | Media;
+            /**
+             * Short silent loop (MP4/H.264, ideally ≤ 5 MB). Set a poster on the video — it shows while loading and for visitors with reduced motion.
+             */
+            video: number | Video;
+            videoPosition?: ('right' | 'left') | null;
+            tagline?: string | null;
+            /**
+             * Small label above tagline
+             */
+            tag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero-media-pair';
+          }
+        | {
             eyebrow?: string | null;
             headline: string;
             /**
@@ -549,6 +568,59 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * Short-form video clips. Render wired incrementally (Phase 7).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "videos".
+ */
+export interface Video {
+  id: number;
+  /**
+   * Internal label, e.g. "BTS — studio session"
+   */
+  title: string;
+  /**
+   * Accessibility description (required)
+   */
+  alt: string;
+  caption?: string | null;
+  /**
+   * Poster frame shown before play and on mobile (protects LCP — recommended).
+   */
+  poster?: (number | null) | Media;
+  niche?: ('personal-brand' | 'portrait' | 'model-tests' | 'commercial') | null;
+  /**
+   * Drives layout (vertical clips ≠ horizontal hero).
+   */
+  orientation?: ('vertical' | 'horizontal' | 'square') | null;
+  /**
+   * Where this clip is intended to appear (render added incrementally).
+   */
+  usage?: ('hero' | 'about-bts' | 'services-showcase' | 'portfolio')[] | null;
+  /**
+   * No meaningful audio — safe to autoplay muted.
+   */
+  silent?: boolean | null;
+  /**
+   * Photo series this clip belongs to (for mixed-media grids).
+   */
+  relatedSeries?: (number | PortfolioSery)[] | null;
+  creditPhotographer?: string | null;
+  displayOrder?: number | null;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1259,59 +1331,6 @@ export interface BlogCategory {
   createdAt: string;
 }
 /**
- * Short-form video clips. Render wired incrementally (Phase 7).
- *
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "videos".
- */
-export interface Video {
-  id: number;
-  /**
-   * Internal label, e.g. "BTS — studio session"
-   */
-  title: string;
-  /**
-   * Accessibility description (required)
-   */
-  alt: string;
-  caption?: string | null;
-  /**
-   * Poster frame shown before play and on mobile (protects LCP — recommended).
-   */
-  poster?: (number | null) | Media;
-  niche?: ('personal-brand' | 'portrait' | 'model-tests' | 'commercial') | null;
-  /**
-   * Drives layout (vertical clips ≠ horizontal hero).
-   */
-  orientation?: ('vertical' | 'horizontal' | 'square') | null;
-  /**
-   * Where this clip is intended to appear (render added incrementally).
-   */
-  usage?: ('hero' | 'about-bts' | 'services-showcase' | 'portfolio')[] | null;
-  /**
-   * No meaningful audio — safe to autoplay muted.
-   */
-  silent?: boolean | null;
-  /**
-   * Photo series this clip belongs to (for mixed-media grids).
-   */
-  relatedSeries?: (number | PortfolioSery)[] | null;
-  creditPhotographer?: string | null;
-  displayOrder?: number | null;
-  prefix?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-}
-/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "local-landing-pages".
  */
@@ -1375,6 +1394,25 @@ export interface LocalLandingPage {
             id?: string | null;
             blockName?: string | null;
             blockType: 'hero-slider';
+          }
+        | {
+            /**
+             * Portrait photo (shown full-height, cropped to fill)
+             */
+            image: number | Media;
+            /**
+             * Short silent loop (MP4/H.264, ideally ≤ 5 MB). Set a poster on the video — it shows while loading and for visitors with reduced motion.
+             */
+            video: number | Video;
+            videoPosition?: ('right' | 'left') | null;
+            tagline?: string | null;
+            /**
+             * Small label above tagline
+             */
+            tag?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'hero-media-pair';
           }
         | {
             eyebrow?: string | null;
@@ -2077,6 +2115,17 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        'hero-media-pair'?:
+          | T
+          | {
+              image?: T;
+              video?: T;
+              videoPosition?: T;
+              tagline?: T;
+              tag?: T;
+              id?: T;
+              blockName?: T;
+            };
         'campaign-hero'?:
           | T
           | {
@@ -2677,6 +2726,17 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
                     id?: T;
                   };
               autoplayInterval?: T;
+              tagline?: T;
+              tag?: T;
+              id?: T;
+              blockName?: T;
+            };
+        'hero-media-pair'?:
+          | T
+          | {
+              image?: T;
+              video?: T;
+              videoPosition?: T;
               tagline?: T;
               tag?: T;
               id?: T;

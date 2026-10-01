@@ -2,6 +2,7 @@ import type { LocalLandingPage } from '@/payload-types'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
 import { CTABanner } from './CTABanner'
+import { HeroMediaPair } from './HeroMediaPair'
 import { HeroSlider } from './HeroSlider.client'
 import { IntroBlock } from './IntroBlock'
 import { CityHighlight } from './local/CityHighlight'
@@ -51,6 +52,8 @@ export function LocalBlocks({ blocks }: { blocks?: PageBuilder | null }) {
             return <NearbyAreasGrid key={key} headline={block.headline} areas={block.areas} />
 
           // Universal — same dispatch as Blocks.tsx
+          case 'hero-media-pair':
+            return <HeroMediaPair key={key} {...block} />
           case 'hero-slider':
             return <HeroSlider key={key} {...block} />
           case 'intro-block':
