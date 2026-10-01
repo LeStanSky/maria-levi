@@ -77,6 +77,27 @@ export const PortfolioSeries: CollectionConfig = {
       },
     },
     {
+      name: 'features',
+      type: 'array',
+      labels: { singular: 'Feature', plural: 'Features' },
+      admin: {
+        description:
+          'Project highlights shown as an accordion beside the description (e.g. "Photography & Lighting", "Styling"). The first one is open by default. Leave empty to keep the single-column layout.',
+        initCollapsed: true,
+      },
+      fields: [
+        {
+          name: 'heading',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'body',
+          type: 'textarea',
+        },
+      ],
+    },
+    {
       name: 'coverImage',
       type: 'upload',
       relationTo: 'media',

@@ -596,6 +596,16 @@ export interface PortfolioSery {
     [k: string]: unknown;
   } | null;
   /**
+   * Project highlights shown as an accordion beside the description (e.g. "Photography & Lighting", "Styling"). The first one is open by default. Leave empty to keep the single-column layout.
+   */
+  features?:
+    | {
+        heading: string;
+        body?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
    * Thumbnail shown in the category grid
    */
   coverImage?: (number | null) | Media;
@@ -2471,6 +2481,13 @@ export interface PortfolioSeriesSelect<T extends boolean = true> {
   eyebrow?: T;
   tagline?: T;
   description?: T;
+  features?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+        id?: T;
+      };
   coverImage?: T;
   heroImage?: T;
   photos?:
