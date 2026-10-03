@@ -42,10 +42,8 @@ export const ContactPage: GlobalConfig = {
       name: 'inquiriesEmail',
       type: 'email',
       required: true,
-      defaultValue: 'stalevs@gmail.com',
       admin: {
-        description:
-          'Where new inquiries are delivered. Change to Maria’s inbox once she has one set up.',
+        description: 'Private — where contact-form notifications are sent. Not shown on the site.',
       },
     },
     {

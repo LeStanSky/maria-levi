@@ -6,6 +6,7 @@ import * as migration_20260525_095838_r2_prefix from './20260525_095838_r2_prefi
 import * as migration_20260622_212529_personal_branding_blocks from './20260622_212529_personal_branding_blocks'
 import * as migration_20261001_011628_series_features from './20261001_011628_series_features'
 import * as migration_20261001_012631_hero_media_pair from './20261001_012631_hero_media_pair'
+import * as migration_20261003_014850_email_field_labels from './20261003_014850_email_field_labels'
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20261001_012631_hero_media_pair.up,
     down: migration_20261001_012631_hero_media_pair.down,
     name: '20261001_012631_hero_media_pair',
+  },
+  {
+    up: migration_20261003_014850_email_field_labels.up,
+    down: migration_20261003_014850_email_field_labels.down,
+    name: '20261003_014850_email_field_labels',
   },
 ]
