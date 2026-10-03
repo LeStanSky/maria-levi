@@ -11,6 +11,16 @@ type Props = {
 }
 
 /**
+ * Only advertise types every browser recognises. Phone exports are often
+ * QuickTime-branded (`video/quicktime`) even when the stream is plain H.264 —
+ * Chrome rejects that type up front without trying, so we omit it and let the
+ * browser sniff the file instead.
+ */
+function sourceType(type?: string | null) {
+  return type === 'video/mp4' || type === 'video/webm' ? type : undefined
+}
+
+/**
  * Self-hosted background loop (muted, inline, no controls). Autoplays unless
  * the visitor prefers reduced motion — then it stays on the poster frame.
  * `preload="metadata"` keeps the initial page weight down; the browser starts
@@ -39,7 +49,7 @@ export function HeroVideo({ src, type, poster, label, className = '' }: Props) {
       preload="metadata"
       aria-label={label}
     >
-      <source src={src} type={type ?? undefined} />
+      <source src={src} type={sourceType(type)} />
     </video>
   )
 }
