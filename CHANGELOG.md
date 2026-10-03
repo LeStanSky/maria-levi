@@ -6,6 +6,17 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.1.2] — 2026-10-02 — chore: clarify public vs inquiry email fields
+
+### Changed
+- **Admin field descriptions.** Site Settings → Email said inquiry emails go
+  there; they don't. It is the public address (Email icon on /contact,
+  LocalBusiness JSON-LD). Contact Page → Inquiries Email is now labelled as the
+  private contact-form notification recipient.
+- Removed the developer's personal address as the default for
+  `inquiriesEmail` (migration `20261003_014850_email_field_labels`, DROP
+  DEFAULT only — the live value is untouched).
+
 ## [1.1.1] — 2026-10-02 — fix: hero video didn't play QuickTime-branded clips
 
 ### Fixed
