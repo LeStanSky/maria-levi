@@ -6,6 +6,15 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.1.1] — 2026-10-02 — fix: hero video didn't play QuickTime-branded clips
+
+### Fixed
+- **Hero video stuck on the poster in Chrome.** Phone exports are often stored
+  as `video/quicktime` even when the stream is plain H.264. `HeroVideo`
+  advertised that MIME on `<source type>`, so Chrome's `canPlayType`
+  returned "" and the file was never loaded. Now `type` is only passed for
+  `video/mp4` / `video/webm`; anything else is left for the browser to sniff.
+
 ## [1.1.0] — 2026-10-02 — feat: series features accordion + photo/video hero block
 
 ### Added
