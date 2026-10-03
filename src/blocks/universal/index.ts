@@ -5,6 +5,7 @@ import { CampaignHero } from './CampaignHero'
 import { ContactSplit } from './ContactSplit'
 import { CTABanner } from './CTABanner'
 import { FaqAccordion } from './FaqAccordion'
+import { HeroMediaPair } from './HeroMediaPair'
 import { HeroSlider } from './HeroSlider'
 import { ImagePair } from './ImagePair'
 import { IntroBlock } from './IntroBlock'
@@ -22,6 +23,7 @@ import { TestimonialsGrid } from './TestimonialsGrid'
 
 export const universalBlocks: Block[] = [
   HeroSlider,
+  HeroMediaPair,
   CampaignHero,
   IntroBlock,
   PortfolioTeaser,

@@ -6,6 +6,31 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.1.0] — 2026-10-02 — feat: series features accordion + photo/video hero block
+
+### Added
+- **Per-series "features" on Portfolio Series** — optional array (heading +
+  plain-text body, any length) Maria fills per series in /admin. When present,
+  the series intro switches to two columns: title / tagline / description on
+  the left, a native `<details>` accordion on the right (first item open,
+  +/— toggle, no client JS — text stays in the HTML). Series without features
+  keep the single-column layout. Migration `20261001_011628_series_features`.
+- **"Hero Photo + Video" page-builder block** (`hero-media-pair`, Pages + local
+  landing pages) — one portrait photo + one muted/looping/inline video from the
+  Videos collection (R2), side by side on md+ (`min(88svh, 960px)`), stacked
+  4:5 on mobile; video side selectable. Photo is the `priority` LCP image; the
+  video shows its poster, `preload="metadata"`, and stays on the poster under
+  `prefers-reduced-motion`. First self-hosted video render in the codebase.
+  HeroSlider is unchanged; the homepage swap is a content change in /admin.
+  Migration `20261001_012631_hero_media_pair` (enum named
+  `hero_pair_video_pos` to stay under Postgres' 63-char identifier limit).
+
+### Notes
+- Video uploads through /admin on Vercel are capped by the ~4.5 MB request
+  body limit — verify with the first real clip before relying on it.
+- Upload MP4 (H.264); `.mov` is accepted by the collection but won't play in
+  Chrome.
+
 ## [1.0.3] — 2026-07-29 — fix: retry reads through Neon cold-start failures
 
 ### Fixed
