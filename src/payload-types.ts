@@ -3346,7 +3346,7 @@ export interface ContactPage {
   heroImage?: (number | null) | Media;
   responseTime?: string | null;
   /**
-   * Where new inquiries are delivered. Change to Maria’s inbox once she has one set up.
+   * Private — where contact-form notifications are sent. Not shown on the site.
    */
   inquiriesEmail: string;
   /**
@@ -3599,7 +3599,7 @@ export interface SiteSetting {
    */
   tagline?: string | null;
   /**
-   * Inquiry emails are sent to this address
+   * Public contact email — shown on /contact (Email icon) and in Google business data. Inquiry notifications go to Contact Page → Inquiries Email.
    */
   email: string;
   phone?: string | null;

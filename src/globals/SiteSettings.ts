@@ -32,7 +32,10 @@ export const SiteSettings: GlobalConfig = {
       name: 'email',
       type: 'email',
       required: true,
-      admin: { description: 'Inquiry emails are sent to this address' },
+      admin: {
+        description:
+          'Public contact email — shown on /contact (Email icon) and in Google business data. Inquiry notifications go to Contact Page → Inquiries Email.',
+      },
     },
     {
       name: 'phone',
