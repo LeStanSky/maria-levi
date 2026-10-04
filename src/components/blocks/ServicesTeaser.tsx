@@ -4,6 +4,7 @@ import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
+import { visibleOnSite } from '@/fields/hideOnSite'
 import type { Service } from '@/payload-types'
 
 type Props = {
@@ -15,7 +16,7 @@ type Props = {
 
 function lowestPrice(svc: Service): number | null {
   if (!svc.hasPackages || !svc.packages) return null
-  const prices = svc.packages
+  const prices = visibleOnSite(svc.packages)
     .map((p) => p.priceFrom)
     .filter((p): p is number => typeof p === 'number')
   return prices.length > 0 ? Math.min(...prices) : null

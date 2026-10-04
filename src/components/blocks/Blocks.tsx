@@ -1,4 +1,4 @@
-import { visibleBlocks } from '@/fields/hideOnSite'
+import { visibleOnSite } from '@/fields/hideOnSite'
 import type { Page } from '@/payload-types'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
@@ -17,7 +17,7 @@ import { TestimonialSpread } from './TestimonialSpread'
 type Block = NonNullable<Page['pageBuilder']>[number]
 
 export function Blocks({ blocks }: { blocks?: Block[] | null }) {
-  const shown = visibleBlocks(blocks)
+  const shown = visibleOnSite(blocks)
   if (shown.length === 0) return null
 
   return (

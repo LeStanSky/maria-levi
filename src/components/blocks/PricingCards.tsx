@@ -4,6 +4,7 @@ import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
+import { visibleOnSite } from '@/fields/hideOnSite'
 import type { Service } from '@/payload-types'
 
 type Props = {
@@ -21,7 +22,7 @@ export function PricingCards({ eyebrow, headline, service, note }: Props) {
   // Relationship is populated at the page query depth; bail if not.
   if (typeof service !== 'object' || service === null) return null
 
-  const packages = service.packages ?? []
+  const packages = visibleOnSite(service.packages)
   if (packages.length === 0) return null
 
   const gridClass =

@@ -1,4 +1,4 @@
-import { visibleBlocks } from '@/fields/hideOnSite'
+import { visibleOnSite } from '@/fields/hideOnSite'
 import type { LocalLandingPage } from '@/payload-types'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
@@ -19,7 +19,7 @@ type PageBuilder = NonNullable<LocalLandingPage['pageBuilder']>
 type Block = PageBuilder[number]
 
 export function LocalBlocks({ blocks }: { blocks?: PageBuilder | null }) {
-  const shown = visibleBlocks(blocks)
+  const shown = visibleOnSite(blocks)
   if (shown.length === 0) return null
 
   return (

@@ -1,13 +1,13 @@
 import type { Block, Field } from 'payload'
 
-const hideOnSiteField: Field = {
+export const hideOnSiteField: Field = {
   name: 'hideOnSite',
   type: 'checkbox',
   defaultValue: false,
   label: 'Hide on site',
   admin: {
     description:
-      'Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.',
+      'Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.',
   },
 }
 
@@ -25,9 +25,16 @@ export function withHideOnSite(blocks: Block[]): Block[] {
   )
 }
 
-/** Front-end filter for page-builder arrays. */
-export function visibleBlocks<T extends { hideOnSite?: boolean | null }>(
-  blocks: T[] | null | undefined,
+/** Front-end filter for anything carrying the toggle (blocks, packages). */
+export function visibleOnSite<T extends { hideOnSite?: boolean | null }>(
+  items: T[] | null | undefined,
 ): T[] {
-  return (blocks ?? []).filter((b) => !b.hideOnSite)
+  return (items ?? []).filter((item) => !item.hideOnSite)
+}
+
+/** Service with hidden packages removed — use before rendering prices/cards. */
+export function withVisiblePackages<
+  S extends { packages?: { hideOnSite?: boolean | null }[] | null },
+>(service: S): S {
+  return { ...service, packages: visibleOnSite(service.packages) }
 }

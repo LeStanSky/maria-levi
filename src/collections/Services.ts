@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { isAdminOrEditor, publishedOrSignedIn } from '../fields/access'
+import { hideOnSiteField } from '../fields/hideOnSite'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { revalidateCollection } from '../hooks/revalidatePage'
@@ -94,6 +95,7 @@ export const Services: CollectionConfig = {
         description: 'Pricing tiers for this niche',
       },
       fields: [
+        hideOnSiteField,
         {
           name: 'name',
           type: 'text',

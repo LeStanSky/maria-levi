@@ -1,7 +1,7 @@
 import type { Block, PayloadRequest } from 'payload'
 import { describe, expect, it } from 'vitest'
 import { publishedOrSignedIn } from '@/fields/access'
-import { visibleBlocks, withHideOnSite } from '@/fields/hideOnSite'
+import { visibleOnSite, withHideOnSite, withVisiblePackages } from '@/fields/hideOnSite'
 
 const block = (slug: string): Block => ({ slug, fields: [{ name: 'title', type: 'text' }] })
 const fieldNames = (b: Block) => b.fields.map((f) => ('name' in f ? f.name : null))
@@ -26,7 +26,7 @@ describe('withHideOnSite', () => {
   })
 })
 
-describe('visibleBlocks', () => {
+describe('visibleOnSite', () => {
   it('drops hidden blocks and keeps the rest in order', () => {
     const blocks = [
       { id: '1', hideOnSite: true },
@@ -34,12 +34,28 @@ describe('visibleBlocks', () => {
       { id: '3', hideOnSite: null },
       { id: '4' },
     ]
-    expect(visibleBlocks(blocks).map((b) => b.id)).toEqual(['2', '3', '4'])
+    expect(visibleOnSite(blocks).map((b) => b.id)).toEqual(['2', '3', '4'])
   })
 
   it('handles empty input', () => {
-    expect(visibleBlocks(null)).toEqual([])
-    expect(visibleBlocks(undefined)).toEqual([])
+    expect(visibleOnSite(null)).toEqual([])
+    expect(visibleOnSite(undefined)).toEqual([])
+  })
+})
+
+describe('withVisiblePackages', () => {
+  it('removes hidden packages and keeps the rest of the service', () => {
+    const service = {
+      slug: 'personal-brand',
+      packages: [
+        { name: 'Essential', hideOnSite: true },
+        { name: 'Professional', hideOnSite: false },
+      ],
+    }
+    const out = withVisiblePackages(service)
+    expect(out.slug).toBe('personal-brand')
+    expect(out.packages.map((p) => p.name)).toEqual(['Professional'])
+    expect(service.packages).toHaveLength(2)
   })
 })
 

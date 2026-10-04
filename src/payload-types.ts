@@ -187,7 +187,7 @@ export interface Page {
     | (
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             slides: {
@@ -209,7 +209,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             /**
@@ -232,7 +232,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -254,7 +254,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -284,7 +284,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -298,7 +298,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -311,7 +311,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             testimonial?: (number | null) | Testimonial;
@@ -321,7 +321,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             testimonials?: (number | Testimonial)[] | null;
@@ -332,7 +332,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -361,7 +361,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -374,7 +374,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -402,7 +402,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             images?:
@@ -418,7 +418,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             quote: string;
@@ -430,7 +430,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -446,7 +446,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -465,7 +465,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline: string;
@@ -493,7 +493,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline?: string | null;
@@ -509,7 +509,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline?: string | null;
@@ -520,7 +520,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             content: {
@@ -544,7 +544,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             image: number | Media;
@@ -556,7 +556,7 @@ export interface Page {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             size?: ('small' | 'medium' | 'large' | 'xl') | null;
@@ -996,6 +996,10 @@ export interface Service {
    */
   packages?:
     | {
+        /**
+         * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
+         */
+        hideOnSite?: boolean | null;
         /**
          * e.g. "Essential", "Professional", "Premium Branding"
          */
@@ -1467,7 +1471,7 @@ export interface LocalLandingPage {
     | (
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             slides: {
@@ -1489,7 +1493,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             /**
@@ -1512,7 +1516,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1534,7 +1538,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1564,7 +1568,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1578,7 +1582,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1591,7 +1595,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             testimonial?: (number | null) | Testimonial;
@@ -1601,7 +1605,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             testimonials?: (number | Testimonial)[] | null;
@@ -1612,7 +1616,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1641,7 +1645,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1654,7 +1658,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1682,7 +1686,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             images?:
@@ -1698,7 +1702,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             quote: string;
@@ -1710,7 +1714,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1726,7 +1730,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             eyebrow?: string | null;
@@ -1745,7 +1749,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline: string;
@@ -1773,7 +1777,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline?: string | null;
@@ -1789,7 +1793,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline?: string | null;
@@ -1800,7 +1804,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             content: {
@@ -1824,7 +1828,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             image: number | Media;
@@ -1836,7 +1840,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             size?: ('small' | 'medium' | 'large' | 'xl') | null;
@@ -1846,7 +1850,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             /**
@@ -1875,7 +1879,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             service?: (number | null) | Service;
@@ -1904,7 +1908,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline?: string | null;
@@ -1922,7 +1926,7 @@ export interface LocalLandingPage {
           }
         | {
             /**
-             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             * Keeps this item and its settings here but stops showing it on the site. Untick to bring it back.
              */
             hideOnSite?: boolean | null;
             headline?: string | null;
@@ -2838,6 +2842,7 @@ export interface ServicesSelect<T extends boolean = true> {
   packages?:
     | T
     | {
+        hideOnSite?: T;
         name?: T;
         tier?: T;
         priceFrom?: T;
