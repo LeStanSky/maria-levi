@@ -74,6 +74,8 @@ describe('sitemap.ts', { timeout: 60_000 }, () => {
         slug: testCitySlug,
         cityState: 'NY',
         headline: 'Sitemap test',
+        // Drafts are hidden from visitors (and the sitemap) — publish explicitly.
+        _status: 'published',
       },
       draft: false,
     })

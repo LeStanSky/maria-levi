@@ -11,6 +11,7 @@ type Props = { params: Promise<{ category: string }> }
 const getCategoryForOg = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-categories',
     where: { slug: { equals: slug } },
     limit: 1,

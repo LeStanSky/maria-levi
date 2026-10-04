@@ -10,6 +10,7 @@ export const getSeriesByCity = cache(
   async (citySlug: string, limit = 6): Promise<PortfolioSery[]> => {
     const payload = await getPayloadClient()
     const result = await payload.find({
+      overrideAccess: false,
       collection: 'portfolio-series',
       where: { 'cityTags.city': { equals: citySlug } },
       sort: '-publishedAt',
@@ -24,6 +25,7 @@ export const getSeriesByCity = cache(
 export const getJournalByCity = cache(async (citySlug: string, limit = 3): Promise<BlogPost[]> => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'blog-posts',
     where: { 'cityTags.city': { equals: citySlug } },
     sort: '-publishDate',

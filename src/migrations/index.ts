@@ -7,6 +7,8 @@ import * as migration_20260622_212529_personal_branding_blocks from './20260622_
 import * as migration_20261001_011628_series_features from './20261001_011628_series_features'
 import * as migration_20261001_012631_hero_media_pair from './20261001_012631_hero_media_pair'
 import * as migration_20261003_014850_email_field_labels from './20261003_014850_email_field_labels'
+import * as migration_20261004_134804_unpublish_hide_trash from './20261004_134804_unpublish_hide_trash'
+import * as migration_20261004_140118_package_hide_on_site from './20261004_140118_package_hide_on_site'
 
 export const migrations = [
   {
@@ -53,5 +55,15 @@ export const migrations = [
     up: migration_20261003_014850_email_field_labels.up,
     down: migration_20261003_014850_email_field_labels.down,
     name: '20261003_014850_email_field_labels',
+  },
+  {
+    up: migration_20261004_134804_unpublish_hide_trash.up,
+    down: migration_20261004_134804_unpublish_hide_trash.down,
+    name: '20261004_134804_unpublish_hide_trash',
+  },
+  {
+    up: migration_20261004_140118_package_hide_on_site.up,
+    down: migration_20261004_140118_package_hide_on_site.down,
+    name: '20261004_140118_package_hide_on_site',
   },
 ]

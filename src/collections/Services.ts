@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import { isAdminOrEditor, publicRead } from '../fields/access'
+import { isAdminOrEditor, publishedOrSignedIn } from '../fields/access'
+import { hideOnSiteField } from '../fields/hideOnSite'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { revalidateCollection } from '../hooks/revalidatePage'
@@ -8,15 +9,21 @@ export const Services: CollectionConfig = {
   slug: 'services',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'nicheKey', 'displayOrder'],
+    defaultColumns: ['name', 'nicheKey', 'displayOrder', '_status'],
     group: 'Services & Pricing',
   },
   access: {
-    read: publicRead,
+    read: publishedOrSignedIn,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
   },
+  // Unpublish hides a service from the site without losing its content.
+  versions: {
+    drafts: true,
+  },
+  // Deleting moves the service to Trash (restorable from the list view).
+  trash: true,
   hooks: {
     afterChange: [revalidateCollection],
   },
@@ -88,6 +95,7 @@ export const Services: CollectionConfig = {
         description: 'Pricing tiers for this niche',
       },
       fields: [
+        hideOnSiteField,
         {
           name: 'name',
           type: 'text',

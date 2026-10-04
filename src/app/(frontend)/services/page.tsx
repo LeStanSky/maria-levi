@@ -6,6 +6,7 @@ import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
+import { withVisiblePackages } from '@/fields/hideOnSite'
 import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@/lib/richtext'
 import { buildMetadata } from '@/lib/seo'
@@ -16,9 +17,10 @@ export const revalidate = 60
 const getServicesIndex = cache(async () => {
   const payload = await getPayloadClient()
   const [page, siteSettings, allServices] = await Promise.all([
-    payload.findGlobal({ slug: 'services-index', depth: 2 }),
-    payload.findGlobal({ slug: 'site-settings' }),
+    payload.findGlobal({ overrideAccess: false, slug: 'services-index', depth: 2 }),
+    payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }),
     payload.find({
+      overrideAccess: false,
       collection: 'services',
       sort: 'displayOrder',
       limit: 50,
@@ -32,7 +34,9 @@ const getServicesIndex = cache(async () => {
       ?.map((n) => (typeof n === 'object' ? n : null))
       .filter((n): n is Service => n !== null) ?? []
 
-  const services = orderedFromGlobal.length > 0 ? orderedFromGlobal : allServices.docs
+  const services = (orderedFromGlobal.length > 0 ? orderedFromGlobal : allServices.docs).map(
+    withVisiblePackages,
+  )
 
   return { page, siteSettings, services }
 })

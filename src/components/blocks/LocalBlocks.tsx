@@ -1,3 +1,4 @@
+import { visibleOnSite } from '@/fields/hideOnSite'
 import type { LocalLandingPage } from '@/payload-types'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
@@ -18,11 +19,12 @@ type PageBuilder = NonNullable<LocalLandingPage['pageBuilder']>
 type Block = PageBuilder[number]
 
 export function LocalBlocks({ blocks }: { blocks?: PageBuilder | null }) {
-  if (!blocks || blocks.length === 0) return null
+  const shown = visibleOnSite(blocks)
+  if (shown.length === 0) return null
 
   return (
     <>
-      {blocks.map((block: Block) => {
+      {shown.map((block: Block) => {
         const key = block.id ?? `${block.blockType}-${Math.random()}`
         switch (block.blockType) {
           // Local-specific

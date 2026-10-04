@@ -23,6 +23,7 @@ export const revalidate = 60
 const getSeries = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-series',
     where: { slug: { equals: slug } },
     limit: 1,
@@ -35,6 +36,7 @@ const getSeries = cache(async (slug: string) => {
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-series',
     limit: 200,
     depth: 1,

@@ -57,6 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     cityPagesRes,
   ] = await Promise.all([
     payload.find({
+      overrideAccess: false,
       collection: 'pages',
       // Exclude the homepage (its own static entry) and any noindex page
       // (e.g. the /personal-branding paid-traffic landing — kept out of the
@@ -70,6 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
     }),
     payload.find({
+      overrideAccess: false,
       collection: 'portfolio-categories',
       limit: 100,
       draft: false,
@@ -77,6 +79,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
     }),
     payload.find({
+      overrideAccess: false,
       collection: 'portfolio-series',
       limit: 1000,
       draft: false,
@@ -84,6 +87,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, category: true, updatedAt: true },
     }),
     payload.find({
+      overrideAccess: false,
       collection: 'services',
       // Skip noindex services (e.g. niches still on placeholder photos at
       // launch) — they carry a `<meta noindex>` so keep them out of the sitemap.
@@ -94,6 +98,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
     }),
     payload.find({
+      overrideAccess: false,
       collection: 'blog-posts',
       limit: 1000,
       draft: false,
@@ -101,6 +106,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       select: { slug: true, updatedAt: true },
     }),
     payload.find({
+      overrideAccess: false,
       collection: 'local-landing-pages',
       limit: 100,
       draft: false,

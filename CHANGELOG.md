@@ -6,6 +6,33 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.2.0] — 2026-10-04 — feat: Unpublish that hides, Hide on site, Trash
+
+### Added
+- **Publish / Unpublish on Services and Portfolio Categories** (drafts enabled).
+  Unpublishing a category also hides all of its series. Lets Maria switch a
+  whole niche (e.g. Personal Brand) off and back on without retyping it.
+- **"Hide on site" checkbox** on every page-builder block (Pages + City pages)
+  and on every Service package. Hidden items keep their content in the admin
+  but are skipped when rendering (blocks, service page, Pricing Cards,
+  Services Teaser, /services from-price + Offer JSON-LD).
+- **Trash on Services and Portfolio Series** — deleting is restorable.
+
+### Fixed
+- **Unpublish didn't hide anything.** Pages, Series, City pages and Journal had
+  drafts, but the site showed docs regardless of status (Local API bypasses
+  access control). New `publishedOrSignedIn` read access + `overrideAccess:
+  false` on every front-end query: unpublished docs 404, leave the sitemap and
+  drop out of blocks/listings.
+- Seeds (`seed.ts`, `services-refresh.ts`) created draftable docs without a
+  status (= draft). Now they publish explicitly.
+
+### Notes
+- Migration `20261004_134804_unpublish_hide_trash` keeps current visibility:
+  existing services + portfolio categories → published; the 5 city landing
+  pages, stored as drafts but live, → published.
+- Migration `20261004_140118_package_hide_on_site` adds the package toggle.
+
 ## [1.1.2] — 2026-10-02 — chore: clarify public vs inquiry email fields
 
 ### Changed

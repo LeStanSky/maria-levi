@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { isAdminOrEditor, publicRead } from '../fields/access'
+import { isAdminOrEditor, publishedOrSignedIn } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { revalidateCollection } from '../hooks/revalidatePage'
@@ -8,14 +8,18 @@ export const PortfolioCategories: CollectionConfig = {
   slug: 'portfolio-categories',
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'slug', 'displayOrder'],
+    defaultColumns: ['name', 'slug', 'displayOrder', '_status'],
     group: 'Portfolio',
   },
   access: {
-    read: publicRead,
+    read: publishedOrSignedIn,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
+  },
+  // Unpublish hides the category page and all of its series from the site.
+  versions: {
+    drafts: true,
   },
   hooks: { afterChange: [revalidateCollection] },
   fields: [
