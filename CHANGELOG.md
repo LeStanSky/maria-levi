@@ -6,6 +6,21 @@ All notable changes to this project are documented here. Format loosely follows
 Pre-launch the project stays on `0.x`. **`1.0.0` marks the public launch**
 (indexing enabled + announcement). After that: features → minor, fixes → patch.
 
+## [1.2.1] — 2026-10-04 — fix: empty Services / Portfolio Categories lists in admin
+
+### Fixed
+- **Admin lists of Services and Portfolio Categories showed "No Results".**
+  v1.2.0 enabled drafts on both, but existing docs had no rows in the versions
+  tables, and the admin list of a draft-enabled collection reads latest
+  versions. The site was unaffected. Data migration
+  `20261004_160000_seed_initial_versions` re-saves each doc without a latest
+  version through the Local API so Payload writes a full version snapshot.
+  Content and status unchanged; idempotent.
+
+### Notes
+- Lesson: enabling drafts on a collection with existing docs needs initial
+  version rows, not just a `_status` backfill.
+
 ## [1.2.0] — 2026-10-04 — feat: Unpublish that hides, Hide on site, Trash
 
 ### Added
