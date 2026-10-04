@@ -14,6 +14,7 @@ export const revalidate = 60
 const getTestimonials = cache(async () => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'testimonials',
     limit: 100,
     sort: ['displayOrder', '-dateReceived'],

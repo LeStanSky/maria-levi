@@ -11,6 +11,7 @@ type Props = { params: Promise<{ niche: string }> }
 const getServiceForOg = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'services',
     where: { slug: { equals: slug } },
     limit: 1,

@@ -14,7 +14,7 @@ export const revalidate = 60
 
 const getAboutPage = cache(async () => {
   const payload = await getPayloadClient()
-  return payload.findGlobal({ slug: 'about-page', draft: false })
+  return payload.findGlobal({ overrideAccess: false, slug: 'about-page', draft: false })
 })
 
 export async function generateMetadata(): Promise<Metadata> {

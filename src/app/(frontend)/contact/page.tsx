@@ -16,8 +16,9 @@ export const revalidate = 60
 const getContactData = cache(async () => {
   const payload = await getPayloadClient()
   const [contactPage, services] = await Promise.all([
-    payload.findGlobal({ slug: 'contact-page', draft: false }),
+    payload.findGlobal({ overrideAccess: false, slug: 'contact-page', draft: false }),
     payload.find({
+      overrideAccess: false,
       collection: 'services',
       limit: 50,
       sort: 'displayOrder',

@@ -4,7 +4,7 @@ import { getPayloadClient, withDbRetry } from '@/lib/payload'
 
 const getSiteSettings = cache(async () => {
   const payload = await getPayloadClient()
-  return withDbRetry(() => payload.findGlobal({ slug: 'site-settings' }))
+  return withDbRetry(() => payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }))
 })
 
 // Strip everything but digits and a leading + so tel:/sms: hrefs are valid.

@@ -12,6 +12,7 @@ type Props = { params: Promise<{ slug: string }> }
 const getPage = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'pages',
     where: { slug: { equals: slug }, isHomepage: { not_equals: true } },
     limit: 1,
@@ -24,6 +25,7 @@ const getPage = cache(async (slug: string) => {
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'pages',
     where: { isHomepage: { not_equals: true } },
     limit: 100,

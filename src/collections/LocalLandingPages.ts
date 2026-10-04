@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { localBlocks } from '../blocks/local'
-import { isAdminOrEditor, publicRead } from '../fields/access'
+import { isAdminOrEditor, publishedOrSignedIn } from '../fields/access'
+import { withHideOnSite } from '../fields/hideOnSite'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 
@@ -15,7 +16,7 @@ export const LocalLandingPages: CollectionConfig = {
     },
   },
   access: {
-    read: publicRead,
+    read: publishedOrSignedIn,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
@@ -68,7 +69,7 @@ export const LocalLandingPages: CollectionConfig = {
     {
       name: 'pageBuilder',
       type: 'blocks',
-      blocks: localBlocks,
+      blocks: withHideOnSite(localBlocks),
       admin: {
         description: 'Additional blocks for this city page',
       },

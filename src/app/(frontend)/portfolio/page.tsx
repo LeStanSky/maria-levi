@@ -13,6 +13,7 @@ export const revalidate = 60
 async function getCategories() {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-categories',
     sort: 'displayOrder',
     limit: 100,

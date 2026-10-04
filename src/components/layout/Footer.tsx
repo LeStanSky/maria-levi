@@ -6,12 +6,12 @@ import { NewsletterSignup } from './NewsletterSignup.client'
 
 const getNavigation = cache(async () => {
   const payload = await getPayloadClient()
-  return withDbRetry(() => payload.findGlobal({ slug: 'navigation' }))
+  return withDbRetry(() => payload.findGlobal({ overrideAccess: false, slug: 'navigation' }))
 })
 
 const getSiteSettings = cache(async () => {
   const payload = await getPayloadClient()
-  return withDbRetry(() => payload.findGlobal({ slug: 'site-settings' }))
+  return withDbRetry(() => payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }))
 })
 
 const DEFAULT_COLUMNS = [

@@ -25,8 +25,9 @@ const UNCATEGORISED = 'other'
 const getFaqData = cache(async () => {
   const payload = await getPayloadClient()
   const [faqPage, entries] = await Promise.all([
-    payload.findGlobal({ slug: 'faq-page', draft: false }),
+    payload.findGlobal({ overrideAccess: false, slug: 'faq-page', draft: false }),
     payload.find({
+      overrideAccess: false,
       collection: 'faq-entries',
       limit: 200,
       sort: 'displayOrder',

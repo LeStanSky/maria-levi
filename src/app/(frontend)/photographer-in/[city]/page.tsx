@@ -24,13 +24,14 @@ const getCityPage = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const [pageResult, siteSettings] = await Promise.all([
     payload.find({
+      overrideAccess: false,
       collection: 'local-landing-pages',
       where: { slug: { equals: slug } },
       limit: 1,
       depth: 2,
       draft: false,
     }),
-    payload.findGlobal({ slug: 'site-settings' }),
+    payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }),
   ])
   return { page: pageResult.docs[0] ?? null, siteSettings }
 })
@@ -38,6 +39,7 @@ const getCityPage = cache(async (slug: string) => {
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'local-landing-pages',
     limit: 50,
     draft: false,

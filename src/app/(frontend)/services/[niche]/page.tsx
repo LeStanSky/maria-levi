@@ -7,6 +7,7 @@ import { Heading } from '@/components/primitives/Heading'
 import { Image } from '@/components/primitives/Image'
 import { Section } from '@/components/primitives/Section'
 import { Text } from '@/components/primitives/Text'
+import { withVisiblePackages } from '@/fields/hideOnSite'
 import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@/lib/richtext'
 import { buildMetadata } from '@/lib/seo'
@@ -25,20 +26,23 @@ const getService = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const [serviceResult, siteSettings] = await Promise.all([
     payload.find({
+      overrideAccess: false,
       collection: 'services',
       where: { slug: { equals: slug } },
       limit: 1,
       depth: 2,
       draft: false,
     }),
-    payload.findGlobal({ slug: 'site-settings' }),
+    payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }),
   ])
-  return { service: serviceResult.docs[0] ?? null, siteSettings }
+  const service = serviceResult.docs[0]
+  return { service: service ? withVisiblePackages(service) : null, siteSettings }
 })
 
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const services = await payload.find({
+    overrideAccess: false,
     collection: 'services',
     limit: 50,
     select: { slug: true },

@@ -423,7 +423,7 @@ async function main() {
     } else {
       await payload.create({
         collection: 'services',
-        data: { ...data, slug: niche.slug } as never,
+        data: { ...data, slug: niche.slug, _status: 'published' } as never,
       })
       console.info(`  + Created "${niche.name}".`)
     }

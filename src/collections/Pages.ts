@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { universalBlocks } from '../blocks/universal'
-import { isAdminOrEditor, publicRead } from '../fields/access'
+import { isAdminOrEditor, publishedOrSignedIn } from '../fields/access'
+import { withHideOnSite } from '../fields/hideOnSite'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { createRedirectHook } from '../hooks/createRedirect'
@@ -20,7 +21,7 @@ export const Pages: CollectionConfig = {
     },
   },
   access: {
-    read: publicRead,
+    read: publishedOrSignedIn,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
@@ -60,7 +61,7 @@ export const Pages: CollectionConfig = {
     {
       name: 'pageBuilder',
       type: 'blocks',
-      blocks: universalBlocks,
+      blocks: withHideOnSite(universalBlocks),
       admin: {
         description: 'Page content — add and reorder blocks',
       },

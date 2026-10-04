@@ -19,6 +19,7 @@ export const revalidate = 60
 const getCategory = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-categories',
     where: { slug: { equals: slug } },
     limit: 1,
@@ -30,6 +31,7 @@ const getCategory = cache(async (slug: string) => {
 const getSeriesForCategory = cache(async (categoryId: number) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-series',
     where: { category: { equals: categoryId } },
     sort: 'displayOrder',
@@ -47,6 +49,7 @@ const getSeriesForCategory = cache(async (categoryId: number) => {
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'portfolio-categories',
     limit: 100,
     draft: false,

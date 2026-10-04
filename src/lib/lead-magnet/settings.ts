@@ -12,7 +12,11 @@ import { getPayloadClient } from '@/lib/payload'
 export const getLeadMagnetSettings = cache(async () => {
   try {
     const payload = await getPayloadClient()
-    return await payload.findGlobal({ slug: 'lead-magnet-settings', draft: false })
+    return await payload.findGlobal({
+      overrideAccess: false,
+      slug: 'lead-magnet-settings',
+      draft: false,
+    })
   } catch {
     return null
   }
