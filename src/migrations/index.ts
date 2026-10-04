@@ -9,6 +9,7 @@ import * as migration_20261001_012631_hero_media_pair from './20261001_012631_he
 import * as migration_20261003_014850_email_field_labels from './20261003_014850_email_field_labels'
 import * as migration_20261004_134804_unpublish_hide_trash from './20261004_134804_unpublish_hide_trash'
 import * as migration_20261004_140118_package_hide_on_site from './20261004_140118_package_hide_on_site'
+import * as migration_20261004_160000_seed_initial_versions from './20261004_160000_seed_initial_versions'
 
 export const migrations = [
   {
@@ -65,5 +66,10 @@ export const migrations = [
     up: migration_20261004_140118_package_hide_on_site.up,
     down: migration_20261004_140118_package_hide_on_site.down,
     name: '20261004_140118_package_hide_on_site',
+  },
+  {
+    up: migration_20261004_160000_seed_initial_versions.up,
+    down: migration_20261004_160000_seed_initial_versions.down,
+    name: '20261004_160000_seed_initial_versions',
   },
 ]
