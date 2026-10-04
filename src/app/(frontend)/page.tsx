@@ -15,6 +15,7 @@ const getHomepage = cache(async () => {
   const payload = await getPayloadClient()
   const result = await withDbRetry(() =>
     payload.find({
+      overrideAccess: false,
       collection: 'pages',
       where: { isHomepage: { equals: true } },
       limit: 1,

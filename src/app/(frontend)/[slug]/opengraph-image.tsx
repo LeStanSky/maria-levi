@@ -11,6 +11,7 @@ type Props = { params: Promise<{ slug: string }> }
 const getPageForOg = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'pages',
     where: { slug: { equals: slug } },
     limit: 1,

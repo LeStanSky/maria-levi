@@ -17,6 +17,7 @@ type Props = { searchParams: Promise<{ category?: string }> }
 const getCategories = cache(async () => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'blog-categories',
     sort: 'name',
     limit: 100,
@@ -31,6 +32,7 @@ const getPosts = cache(async (categorySlug?: string) => {
   let categoryId: number | undefined
   if (categorySlug) {
     const catResult = await payload.find({
+      overrideAccess: false,
       collection: 'blog-categories',
       where: { slug: { equals: categorySlug } },
       limit: 1,
@@ -41,6 +43,7 @@ const getPosts = cache(async (categorySlug?: string) => {
   }
 
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'blog-posts',
     where: categoryId ? { categories: { in: [categoryId] } } : undefined,
     sort: '-publishDate',

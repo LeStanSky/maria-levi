@@ -25,13 +25,14 @@ const getService = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const [serviceResult, siteSettings] = await Promise.all([
     payload.find({
+      overrideAccess: false,
       collection: 'services',
       where: { slug: { equals: slug } },
       limit: 1,
       depth: 2,
       draft: false,
     }),
-    payload.findGlobal({ slug: 'site-settings' }),
+    payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }),
   ])
   return { service: serviceResult.docs[0] ?? null, siteSettings }
 })
@@ -39,6 +40,7 @@ const getService = cache(async (slug: string) => {
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const services = await payload.find({
+    overrideAccess: false,
     collection: 'services',
     limit: 50,
     select: { slug: true },

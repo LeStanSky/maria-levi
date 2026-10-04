@@ -60,6 +60,7 @@ export const NJ_CONFIG: StateConfig = {
 async function getCitiesInState(stateCode: string): Promise<LocalLandingPage[]> {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'local-landing-pages',
     where: { cityState: { equals: stateCode } },
     limit: 50,

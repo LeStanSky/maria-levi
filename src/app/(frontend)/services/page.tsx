@@ -16,9 +16,10 @@ export const revalidate = 60
 const getServicesIndex = cache(async () => {
   const payload = await getPayloadClient()
   const [page, siteSettings, allServices] = await Promise.all([
-    payload.findGlobal({ slug: 'services-index', depth: 2 }),
-    payload.findGlobal({ slug: 'site-settings' }),
+    payload.findGlobal({ overrideAccess: false, slug: 'services-index', depth: 2 }),
+    payload.findGlobal({ overrideAccess: false, slug: 'site-settings' }),
     payload.find({
+      overrideAccess: false,
       collection: 'services',
       sort: 'displayOrder',
       limit: 50,

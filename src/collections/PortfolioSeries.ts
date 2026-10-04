@@ -1,9 +1,16 @@
-import type { CollectionConfig } from 'payload'
-import { isAdminOrEditor, publicRead } from '../fields/access'
+import type { Access, CollectionConfig, Where } from 'payload'
+import { isAdminOrEditor } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { createRedirectHook } from '../hooks/createRedirect'
 import { revalidateCollection } from '../hooks/revalidatePage'
+
+// Visitors see a series only when it AND its category are published, so
+// unpublishing a category hides all of its series too.
+const publishedSeries: Where = {
+  and: [{ _status: { equals: 'published' } }, { 'category._status': { equals: 'published' } }],
+}
+const readPublishedSeries: Access = ({ req: { user } }) => (user ? true : publishedSeries)
 
 export const PortfolioSeries: CollectionConfig = {
   slug: 'portfolio-series',
@@ -16,7 +23,7 @@ export const PortfolioSeries: CollectionConfig = {
     },
   },
   access: {
-    read: publicRead,
+    read: readPublishedSeries,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
@@ -24,6 +31,8 @@ export const PortfolioSeries: CollectionConfig = {
   versions: {
     drafts: true,
   },
+  // Deleting moves the series to Trash (restorable from the list view).
+  trash: true,
   hooks: {
     afterChange: [createRedirectHook('portfolio-series', '/portfolio'), revalidateCollection],
   },

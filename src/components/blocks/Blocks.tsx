@@ -1,3 +1,4 @@
+import { visibleBlocks } from '@/fields/hideOnSite'
 import type { Page } from '@/payload-types'
 import { AboutPreview } from './AboutPreview'
 import { BlogTeaser } from './BlogTeaser'
@@ -16,11 +17,12 @@ import { TestimonialSpread } from './TestimonialSpread'
 type Block = NonNullable<Page['pageBuilder']>[number]
 
 export function Blocks({ blocks }: { blocks?: Block[] | null }) {
-  if (!blocks || blocks.length === 0) return null
+  const shown = visibleBlocks(blocks)
+  if (shown.length === 0) return null
 
   return (
     <>
-      {blocks.map((block) => {
+      {shown.map((block) => {
         const key = block.id ?? `${block.blockType}-${Math.random()}`
         switch (block.blockType) {
           case 'hero-media-pair':

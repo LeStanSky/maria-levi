@@ -11,6 +11,7 @@ type Props = { params: Promise<{ city: string }> }
 const getCityForOg = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'local-landing-pages',
     where: { slug: { equals: slug } },
     limit: 1,

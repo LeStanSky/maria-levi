@@ -20,6 +20,7 @@ export const revalidate = 60
 const getPost = cache(async (slug: string) => {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'blog-posts',
     where: { slug: { equals: slug } },
     limit: 1,
@@ -32,6 +33,7 @@ const getPost = cache(async (slug: string) => {
 export async function generateStaticParams() {
   const payload = await getPayloadClient()
   const result = await payload.find({
+    overrideAccess: false,
     collection: 'blog-posts',
     limit: 200,
     draft: false,

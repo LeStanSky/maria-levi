@@ -186,6 +186,10 @@ export interface Page {
   pageBuilder?:
     | (
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             slides: {
               image: number | Media;
               id?: string | null;
@@ -205,6 +209,10 @@ export interface Page {
           }
         | {
             /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
+            /**
              * Portrait photo (shown full-height, cropped to fill)
              */
             image: number | Media;
@@ -223,6 +231,10 @@ export interface Page {
             blockType: 'hero-media-pair';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline: string;
             /**
@@ -241,6 +253,10 @@ export interface Page {
             blockType: 'campaign-hero';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             body?: {
@@ -267,6 +283,10 @@ export interface Page {
             blockType: 'intro-block';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             subtitle?: string | null;
@@ -277,6 +297,10 @@ export interface Page {
             blockType: 'portfolio-teaser';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             services?: (number | Service)[] | null;
@@ -286,12 +310,20 @@ export interface Page {
             blockType: 'services-teaser';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             testimonial?: (number | null) | Testimonial;
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonial-spread';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             testimonials?: (number | Testimonial)[] | null;
             columns?: ('2' | '3') | null;
             id?: string | null;
@@ -299,6 +331,10 @@ export interface Page {
             blockType: 'testimonials-grid';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             body?: {
@@ -324,6 +360,10 @@ export interface Page {
             blockType: 'about-preview';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             posts?: (number | BlogPost)[] | null;
@@ -333,6 +373,10 @@ export interface Page {
             blockType: 'blog-teaser';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             body?: {
@@ -357,6 +401,10 @@ export interface Page {
             blockType: 'contact-split';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             images?:
               | {
                   image: number | Media;
@@ -369,6 +417,10 @@ export interface Page {
             blockType: 'image-pair';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             quote: string;
             attribution?: string | null;
             style?: ('bordered' | 'plain') | null;
@@ -377,6 +429,10 @@ export interface Page {
             blockType: 'pull-quote';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             steps: {
@@ -389,6 +445,10 @@ export interface Page {
             blockType: 'process-steps';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             /**
@@ -404,6 +464,10 @@ export interface Page {
             blockType: 'pricing-cards';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline: string;
             body?: {
               root: {
@@ -428,6 +492,10 @@ export interface Page {
             blockType: 'cta-banner';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline?: string | null;
             body?: string | null;
             placeholder?: string | null;
@@ -440,6 +508,10 @@ export interface Page {
             blockType: 'newsletter-form';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline?: string | null;
             entries?: (number | FaqEntry)[] | null;
             id?: string | null;
@@ -447,6 +519,10 @@ export interface Page {
             blockType: 'faq-accordion';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             content: {
               root: {
                 type: string;
@@ -467,6 +543,10 @@ export interface Page {
             blockType: 'rich-text-block';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             image: number | Media;
             caption?: string | null;
             width?: ('narrow' | 'wide' | 'full') | null;
@@ -475,6 +555,10 @@ export interface Page {
             blockType: 'media-block';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             size?: ('small' | 'medium' | 'large' | 'xl') | null;
             id?: string | null;
             blockName?: string | null;
@@ -751,6 +835,7 @@ export interface PortfolioSery {
   };
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
   _status?: ('draft' | 'published') | null;
 }
 /**
@@ -842,6 +927,7 @@ export interface PortfolioCategory {
   };
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1026,6 +1112,8 @@ export interface Service {
   };
   updatedAt: string;
   createdAt: string;
+  deletedAt?: string | null;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1378,6 +1466,10 @@ export interface LocalLandingPage {
   pageBuilder?:
     | (
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             slides: {
               image: number | Media;
               id?: string | null;
@@ -1397,6 +1489,10 @@ export interface LocalLandingPage {
           }
         | {
             /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
+            /**
              * Portrait photo (shown full-height, cropped to fill)
              */
             image: number | Media;
@@ -1415,6 +1511,10 @@ export interface LocalLandingPage {
             blockType: 'hero-media-pair';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline: string;
             /**
@@ -1433,6 +1533,10 @@ export interface LocalLandingPage {
             blockType: 'campaign-hero';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             body?: {
@@ -1459,6 +1563,10 @@ export interface LocalLandingPage {
             blockType: 'intro-block';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             subtitle?: string | null;
@@ -1469,6 +1577,10 @@ export interface LocalLandingPage {
             blockType: 'portfolio-teaser';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             services?: (number | Service)[] | null;
@@ -1478,12 +1590,20 @@ export interface LocalLandingPage {
             blockType: 'services-teaser';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             testimonial?: (number | null) | Testimonial;
             id?: string | null;
             blockName?: string | null;
             blockType: 'testimonial-spread';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             testimonials?: (number | Testimonial)[] | null;
             columns?: ('2' | '3') | null;
             id?: string | null;
@@ -1491,6 +1611,10 @@ export interface LocalLandingPage {
             blockType: 'testimonials-grid';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             body?: {
@@ -1516,6 +1640,10 @@ export interface LocalLandingPage {
             blockType: 'about-preview';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             posts?: (number | BlogPost)[] | null;
@@ -1525,6 +1653,10 @@ export interface LocalLandingPage {
             blockType: 'blog-teaser';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             body?: {
@@ -1549,6 +1681,10 @@ export interface LocalLandingPage {
             blockType: 'contact-split';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             images?:
               | {
                   image: number | Media;
@@ -1561,6 +1697,10 @@ export interface LocalLandingPage {
             blockType: 'image-pair';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             quote: string;
             attribution?: string | null;
             style?: ('bordered' | 'plain') | null;
@@ -1569,6 +1709,10 @@ export interface LocalLandingPage {
             blockType: 'pull-quote';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             steps: {
@@ -1581,6 +1725,10 @@ export interface LocalLandingPage {
             blockType: 'process-steps';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             eyebrow?: string | null;
             headline?: string | null;
             /**
@@ -1596,6 +1744,10 @@ export interface LocalLandingPage {
             blockType: 'pricing-cards';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline: string;
             body?: {
               root: {
@@ -1620,6 +1772,10 @@ export interface LocalLandingPage {
             blockType: 'cta-banner';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline?: string | null;
             body?: string | null;
             placeholder?: string | null;
@@ -1632,6 +1788,10 @@ export interface LocalLandingPage {
             blockType: 'newsletter-form';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline?: string | null;
             entries?: (number | FaqEntry)[] | null;
             id?: string | null;
@@ -1639,6 +1799,10 @@ export interface LocalLandingPage {
             blockType: 'faq-accordion';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             content: {
               root: {
                 type: string;
@@ -1659,6 +1823,10 @@ export interface LocalLandingPage {
             blockType: 'rich-text-block';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             image: number | Media;
             caption?: string | null;
             width?: ('narrow' | 'wide' | 'full') | null;
@@ -1667,12 +1835,20 @@ export interface LocalLandingPage {
             blockType: 'media-block';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             size?: ('small' | 'medium' | 'large' | 'xl') | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'spacer';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             /**
              * Neighbourhood or area name
              */
@@ -1698,6 +1874,10 @@ export interface LocalLandingPage {
             blockType: 'city-highlight';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             service?: (number | null) | Service;
             /**
              * Override service headline with a city-specific version
@@ -1723,6 +1903,10 @@ export interface LocalLandingPage {
             blockType: 'service-for-city';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline?: string | null;
             locations?:
               | {
@@ -1737,6 +1921,10 @@ export interface LocalLandingPage {
             blockType: 'local-locations-list';
           }
         | {
+            /**
+             * Keeps this block and its settings here but stops showing it on the site. Untick to bring it back.
+             */
+            hideOnSite?: boolean | null;
             headline?: string | null;
             areas?:
               | {
@@ -2103,6 +2291,7 @@ export interface PagesSelect<T extends boolean = true> {
         'hero-slider'?:
           | T
           | {
+              hideOnSite?: T;
               slides?:
                 | T
                 | {
@@ -2118,6 +2307,7 @@ export interface PagesSelect<T extends boolean = true> {
         'hero-media-pair'?:
           | T
           | {
+              hideOnSite?: T;
               image?: T;
               video?: T;
               videoPosition?: T;
@@ -2129,6 +2319,7 @@ export interface PagesSelect<T extends boolean = true> {
         'campaign-hero'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               subheadline?: T;
@@ -2142,6 +2333,7 @@ export interface PagesSelect<T extends boolean = true> {
         'intro-block'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               body?: T;
@@ -2155,6 +2347,7 @@ export interface PagesSelect<T extends boolean = true> {
         'portfolio-teaser'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               subtitle?: T;
@@ -2166,6 +2359,7 @@ export interface PagesSelect<T extends boolean = true> {
         'services-teaser'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               services?: T;
@@ -2176,6 +2370,7 @@ export interface PagesSelect<T extends boolean = true> {
         'testimonial-spread'?:
           | T
           | {
+              hideOnSite?: T;
               testimonial?: T;
               id?: T;
               blockName?: T;
@@ -2183,6 +2378,7 @@ export interface PagesSelect<T extends boolean = true> {
         'testimonials-grid'?:
           | T
           | {
+              hideOnSite?: T;
               testimonials?: T;
               columns?: T;
               id?: T;
@@ -2191,6 +2387,7 @@ export interface PagesSelect<T extends boolean = true> {
         'about-preview'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               body?: T;
@@ -2203,6 +2400,7 @@ export interface PagesSelect<T extends boolean = true> {
         'blog-teaser'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               posts?: T;
@@ -2213,6 +2411,7 @@ export interface PagesSelect<T extends boolean = true> {
         'contact-split'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               body?: T;
@@ -2224,6 +2423,7 @@ export interface PagesSelect<T extends boolean = true> {
         'image-pair'?:
           | T
           | {
+              hideOnSite?: T;
               images?:
                 | T
                 | {
@@ -2237,6 +2437,7 @@ export interface PagesSelect<T extends boolean = true> {
         'pull-quote'?:
           | T
           | {
+              hideOnSite?: T;
               quote?: T;
               attribution?: T;
               style?: T;
@@ -2246,6 +2447,7 @@ export interface PagesSelect<T extends boolean = true> {
         'process-steps'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               steps?:
@@ -2261,6 +2463,7 @@ export interface PagesSelect<T extends boolean = true> {
         'pricing-cards'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               service?: T;
@@ -2271,6 +2474,7 @@ export interface PagesSelect<T extends boolean = true> {
         'cta-banner'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               body?: T;
               ctaLabel?: T;
@@ -2282,6 +2486,7 @@ export interface PagesSelect<T extends boolean = true> {
         'newsletter-form'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               body?: T;
               placeholder?: T;
@@ -2292,6 +2497,7 @@ export interface PagesSelect<T extends boolean = true> {
         'faq-accordion'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               entries?: T;
               id?: T;
@@ -2300,6 +2506,7 @@ export interface PagesSelect<T extends boolean = true> {
         'rich-text-block'?:
           | T
           | {
+              hideOnSite?: T;
               content?: T;
               id?: T;
               blockName?: T;
@@ -2307,6 +2514,7 @@ export interface PagesSelect<T extends boolean = true> {
         'media-block'?:
           | T
           | {
+              hideOnSite?: T;
               image?: T;
               caption?: T;
               width?: T;
@@ -2316,6 +2524,7 @@ export interface PagesSelect<T extends boolean = true> {
         spacer?:
           | T
           | {
+              hideOnSite?: T;
               size?: T;
               id?: T;
               blockName?: T;
@@ -2517,6 +2726,7 @@ export interface PortfolioCategoriesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2568,6 +2778,7 @@ export interface PortfolioSeriesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
   _status?: T;
 }
 /**
@@ -2668,6 +2879,8 @@ export interface ServicesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  deletedAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2719,6 +2932,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'hero-slider'?:
           | T
           | {
+              hideOnSite?: T;
               slides?:
                 | T
                 | {
@@ -2734,6 +2948,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'hero-media-pair'?:
           | T
           | {
+              hideOnSite?: T;
               image?: T;
               video?: T;
               videoPosition?: T;
@@ -2745,6 +2960,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'campaign-hero'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               subheadline?: T;
@@ -2758,6 +2974,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'intro-block'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               body?: T;
@@ -2771,6 +2988,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'portfolio-teaser'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               subtitle?: T;
@@ -2782,6 +3000,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'services-teaser'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               services?: T;
@@ -2792,6 +3011,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'testimonial-spread'?:
           | T
           | {
+              hideOnSite?: T;
               testimonial?: T;
               id?: T;
               blockName?: T;
@@ -2799,6 +3019,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'testimonials-grid'?:
           | T
           | {
+              hideOnSite?: T;
               testimonials?: T;
               columns?: T;
               id?: T;
@@ -2807,6 +3028,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'about-preview'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               body?: T;
@@ -2819,6 +3041,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'blog-teaser'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               posts?: T;
@@ -2829,6 +3052,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'contact-split'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               body?: T;
@@ -2840,6 +3064,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'image-pair'?:
           | T
           | {
+              hideOnSite?: T;
               images?:
                 | T
                 | {
@@ -2853,6 +3078,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'pull-quote'?:
           | T
           | {
+              hideOnSite?: T;
               quote?: T;
               attribution?: T;
               style?: T;
@@ -2862,6 +3088,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'process-steps'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               steps?:
@@ -2877,6 +3104,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'pricing-cards'?:
           | T
           | {
+              hideOnSite?: T;
               eyebrow?: T;
               headline?: T;
               service?: T;
@@ -2887,6 +3115,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'cta-banner'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               body?: T;
               ctaLabel?: T;
@@ -2898,6 +3127,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'newsletter-form'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               body?: T;
               placeholder?: T;
@@ -2908,6 +3138,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'faq-accordion'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               entries?: T;
               id?: T;
@@ -2916,6 +3147,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'rich-text-block'?:
           | T
           | {
+              hideOnSite?: T;
               content?: T;
               id?: T;
               blockName?: T;
@@ -2923,6 +3155,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'media-block'?:
           | T
           | {
+              hideOnSite?: T;
               image?: T;
               caption?: T;
               width?: T;
@@ -2932,6 +3165,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         spacer?:
           | T
           | {
+              hideOnSite?: T;
               size?: T;
               id?: T;
               blockName?: T;
@@ -2939,6 +3173,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'city-highlight'?:
           | T
           | {
+              hideOnSite?: T;
               name?: T;
               description?: T;
               image?: T;
@@ -2948,6 +3183,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'service-for-city'?:
           | T
           | {
+              hideOnSite?: T;
               service?: T;
               localHeadline?: T;
               localDescription?: T;
@@ -2957,6 +3193,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'local-locations-list'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               locations?:
                 | T
@@ -2972,6 +3209,7 @@ export interface LocalLandingPagesSelect<T extends boolean = true> {
         'nearby-areas-grid'?:
           | T
           | {
+              hideOnSite?: T;
               headline?: T;
               areas?:
                 | T

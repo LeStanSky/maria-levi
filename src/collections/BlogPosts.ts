@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { blogBlocks } from '../blocks/blog'
-import { isAdminOrEditor, publicRead } from '../fields/access'
+import { isAdminOrEditor, publishedOrSignedIn } from '../fields/access'
 import { seoFields } from '../fields/seo'
 import { slugField } from '../fields/slug'
 import { createRedirectHook } from '../hooks/createRedirect'
@@ -16,7 +16,7 @@ export const BlogPosts: CollectionConfig = {
     },
   },
   access: {
-    read: publicRead,
+    read: publishedOrSignedIn,
     create: isAdminOrEditor,
     update: isAdminOrEditor,
     delete: isAdminOrEditor,
