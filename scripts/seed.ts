@@ -21,7 +21,10 @@ async function main() {
       { name: 'Commercial Photography', slug: 'commercial', displayOrder: 4 },
     ]
     for (const cat of cats) {
-      await payload.create({ collection: 'portfolio-categories', data: cat as never })
+      await payload.create({
+        collection: 'portfolio-categories',
+        data: { ...cat, _status: 'published' } as never,
+      })
     }
     console.info(`  Created ${cats.length} categories.`)
   } else {
@@ -194,7 +197,10 @@ async function main() {
     ]
 
     for (const svc of services) {
-      await payload.create({ collection: 'services', data: svc as never })
+      await payload.create({
+        collection: 'services',
+        data: { ...svc, _status: 'published' } as never,
+      })
     }
     console.info(`  Created ${services.length} services.`)
   } else {
@@ -644,7 +650,10 @@ async function main() {
     ]
 
     for (const city of cities) {
-      await payload.create({ collection: 'local-landing-pages', data: city as never })
+      await payload.create({
+        collection: 'local-landing-pages',
+        data: { ...city, _status: 'published' } as never,
+      })
     }
     console.info(`  Created ${cities.length} local landing pages.`)
   } else {
